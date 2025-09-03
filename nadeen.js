@@ -205,10 +205,6 @@ var {
 
 //Run the function
 
-    const {
-        version,
-        isLatest
-    } = await fetchLatestBaileysVersion()
     console.log(`using WA v${version.join('.')}, isLatest: ${isLatest}`)
     const {
         state,
