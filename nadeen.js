@@ -22,6 +22,8 @@ const config = require('./config')
 const qrcode = require('qrcode-terminal')
 const NodeCache = require('node-cache')
 const util = require('util')
+const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson, fetchBuffer, getFile } = require('./lib/functions')
+const { sms, downloadMediaMessage } = require('./lib/msg')
 const axios = require('axios')
 const { File } = require('megajs')
 const path = require('path')
@@ -29,14 +31,27 @@ const msgRetryCounterCache = new NodeCache()
 
 const FileType = require('file-type')
 const l = console.log
-
+var {
+  updateCMDStore,
+  isbtnID,
+  getCMDStore,
+  getCmdForCmdId,
+  connectdb,
+  input,
+  get,
+  getalls,
+  updb,
+  updfb,
+  upresbtn,
+} = require("./lib/database");
+const ownerNumber = [`${config.OWNER_NUMBER}`];
 //===================SESSION======.===========kj===h========
 
-const df = __dirname + '/${config.SESSION_NAME}/creds.json';
+const df = __dirname + '/auth_info_baileys/creds.json';
 
 if (!fs.existsSync(df)) {
   if (config.SESSION_ID) {
-    const sessdata = config.SESSION_ID.replace("𝙽𝙰𝙳𝙴𝙴𝙽-𝙼𝙳=", "");
+    const sessdata = config.SESSION_ID.replace("MOVIE-VISPER-MD=", "");
 
     if (sessdata.includes("#")) {
       const filer = File.fromURL(`https://mega.nz/file/${sessdata}`);
@@ -89,127 +104,23 @@ async function downloadSession(sessdata, df) {
   }
 }
 
-
 // <<==========PORTS============>>
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 8000;
-
-const { exec } = require('child_process');
-    const AdmZip = require('adm-zip'); // Import AdmZip for extraction
-    //=========================dl-ZIP========================
-
-const PLUGINS_DIR = './plugins'; // Directory where plugins will be extracted
-const LIB_DIR = './lib';
-const DATA_DIR = './data';
- const ZIP_DIR = './'
-
-
-
-
- 
-	
-
-
-const connect = async () => {
- let ZIP = await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json');
-    //console.log(ZIP.data); 
-
-// Assuming the correct property is `ZIP.data.enc` (adjust based on actual response structure)
-const MEGA_ZIP_LINK = `${ZIP.data.megaurl}`;  // Replace with your Mega ZIP file link
-    // Ensure the plugins directory exists
-    if (!fs.existsSync(PLUGINS_DIR)) {
-      fs.mkdirSync(PLUGINS_DIR, { recursive: true });
-    }
-    if (fs.existsSync(DATA_DIR)) {
-        fs.rmSync(DATA_DIR, { recursive: true, force: true });
-      }
-    if (!fs.existsSync(LIB_DIR)) {
-        fs.mkdirSync(LIB_DIR, { recursive: true });
-      }
-
-    console.log('Fetching ZIP file from Mega.nz...');
-
-    // Download the ZIP file from Mega.nz
-    const file = File.fromURL(`${MEGA_ZIP_LINK}`);
-    const fileData = await file.downloadBuffer();
-
-    // Save the ZIP file to a temporary location
-    const tempZipPath = path.join(__dirname, 'temp.zip');
-    fs.writeFileSync(tempZipPath, fileData);
-    console.log('NADEEN ZIP file downloaded successfully ✅');
-
-    // Extract the ZIP file to the plugins directory
-    const zip = new AdmZip(tempZipPath);
-    zip.extractAllTo(ZIP_DIR, true); // Extract to the plugins directory
-
-    console.log('Plugins extracted successfully ✅');
-console.log('Lib extracted successfully ✅');
-
- console.log('Installing plugins 🔌... ')
-            //const path = require('path');
- //const path = require('path');
-           fs.readdirSync("./plugins/").forEach((plugin) => {
-  if (path.extname(plugin).toLowerCase() == ".js") {
-      require("./plugins/" + plugin);
-  }
-});
-
-
-
-
-
-
-	
-
-    // Clean up the temporary ZIP file
-    fs.unlinkSync(tempZipPath);
- 
-  const {   sleep } = require('./lib/functions');
-   
-  var {  connectdb ,updb} = require("./lib/database");
-
-  //console.log('All Plugins installed ⚡');
-  await connectdb();
-  await updb();
-  console.log('NADEEN-MD CONNECTED ✅');
-  await sleep(3000)
-  await connectToWA()
-} 
 //====================================
 async function connectToWA() {
-const { version, isLatest } = await fetchLatestBaileysVersion();
-const { getBuffer, getGroupAdmins, getRandom,   sleep, fetchJson} = require('./lib/functions');
-const { sms } = require('./lib/msg');
-var {
-  updateCMDStore,
-  isbtnID,
-  getCMDStore,
-  getCmdForCmdId,
-  
-  input,
-  get,
-  getalls,
- 
-  updfb,
-  upresbtn,
-} = require("./lib/database");
-
-    
-	
-
-  
-  
-    
-   const ownerNumber = [`${config.OWNER_NUMBER}`];
-
 //Run the function
 
+    const {
+        version,
+        isLatest
+    } = await fetchLatestBaileysVersion()
     console.log(`using WA v${version.join('.')}, isLatest: ${isLatest}`)
     const {
         state,
         saveCreds
-    } = await useMultiFileAuthState(__dirname + `/${config.SESSION_NAME}/`)
+    } = await useMultiFileAuthState(__dirname + `/auth_info_baileys`)
     const conn = makeWASocket({
         logger: P({
             level: "fatal"
@@ -225,7 +136,7 @@ var {
 
 
 
-const responsee = await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json');
+const responsee = await axios.get('https://mv-visper-full-db.pages.dev/Main/main_var.json');
 const connectnumber = responsee.data
 	
 // Default owner JID
@@ -246,7 +157,7 @@ conn.ev.on('connection.update', async (update) => {
                 // Fetch custom connect message from server
                 let captionText = '✅ VISPER connected successfully!';
                 try {
-                    const response = await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json');
+                    const response = await axios.get('https://mv-visper-full-db.pages.dev/Main/main_var.json');
                     const ownerdataa = response.data;
                     captionText = ownerdataa?.connectmg || captionText;
                 } catch (fetchErr) {
@@ -377,7 +288,7 @@ console.log('VISPER MOVIE DL CONNECTED ✅')
 
 
 
-const ownerdataa = (await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json')).data;
+const ownerdataa = (await axios.get('https://mv-visper-full-db.pages.dev/Main/main_var.json')).data;
      
          
 
@@ -904,7 +815,7 @@ conn.sendFileUrl = async (jid, url, caption, quoted, options = {}) => {
   }
 }
 
-const ownerdata = (await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json')).data
+const ownerdata = (await axios.get('https://mv-visper-full-db.pages.dev/Main/main_var.json')).data
             
            
             config.FOOTER = ownerdata.footer
@@ -960,7 +871,7 @@ if ( isCmd && isBanGrp && !isMe && !isSudo) return
 
 const rec = (await axios.get('https://mv-visper-full-db.pages.dev/Main/react.json')).data
 
-const recc = (await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json')).data
+const recc = (await axios.get('https://mv-visper-full-db.pages.dev/Main/main_var.json')).data
 
 //================================================================================================================	    
 const id = mek.key.server_id
@@ -1892,7 +1803,6 @@ process.on("uncaughtException", function (err) {
   if (e.includes("Authentication timed out")) restart();
   console.log("Caught exception: ", err);
 });
-
 
 
 
