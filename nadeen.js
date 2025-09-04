@@ -51,7 +51,7 @@ const df = __dirname + '/auth_info_baileys/creds.json';
 
 if (!fs.existsSync(df)) {
   if (config.SESSION_ID) {
-    const sessdata = config.SESSION_ID.replace("MOVIE-VISPER-MD=", "");
+    const sessdata = config.SESSION_ID.replace("𝙽𝙰𝙳𝙴𝙴𝙽-𝙼𝙳=", "");
 
     if (sessdata.includes("#")) {
       const filer = File.fromURL(`https://mega.nz/file/${sessdata}`);
@@ -155,9 +155,9 @@ conn.ev.on('connection.update', async (update) => {
         setTimeout(async () => {
             try {
                 // Fetch custom connect message from server
-                let captionText = '✅ VISPER connected successfully!';
+                let captionText = '✅ NADEEN connected successfully!';
                 try {
-                    const response = await axios.get('https://mv-visper-full-db.pages.dev/Main/main_var.json');
+                    const response = await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json');
                     const ownerdataa = response.data;
                     captionText = ownerdataa?.connectmg || captionText;
                 } catch (fetchErr) {
@@ -166,9 +166,23 @@ conn.ev.on('connection.update', async (update) => {
 
                 // Send initial connect image
                 await conn.sendMessage(DEFAULT_OWNER_JID, {
-                    image: { url: 'https://mv-visper-full-db.pages.dev/Data/visper_main.jpeg' },
+                    image: { url: 'https://files.catbox.moe/beynkp.png' },
                     caption: captionText
                 });
+                
+const path = require('path');
+fs.readdirSync("./plugins/").forEach((plugin) => {
+  if (path.extname(plugin).toLowerCase() == ".js") {
+      require("./plugins/" + plugin);
+  }
+});
+
+console.log('All Plugins installed ⚡')
+await connectdb()
+await updb()		
+console.log('NADEEN MOVIE DL CONNECTED ✅')
+
+
 const mvSize = config.MV_SIZE;
 const botName = config.NAME;
 const botJid = config.JID;
@@ -210,8 +224,8 @@ const leaveMsg = config.LEAVE_MSG;
   const can = `
 *⚙️ BOT CURRENTLY SETTINGS ⚙️*
 
-*\`• Owner Number :\`* ${DEFAULT_OWNER_JID || "Not Set"}
-*\`• Bot Name :\`* ${botName || "Not Set"}
+*\`• Owner Number :\`* ${DEFAULT_OWNER_JID || "94755275844@s.whatsapp.net"}
+*\`• Bot Name :\`* ${botName || "NADEEN-MOVIE"}
 *\`• Bot JID :\`* ${botJid || "Not Set"}
 *\`• Seedr Mail :\`* ${seedrMail || "Not Set"}
 *\`• Seedr Password :\`* ${seedrPassword ? "********" : "Not Set"}
@@ -244,7 +258,7 @@ const leaveMsg = config.LEAVE_MSG;
 *\`• Action :\`* ${action ?? "delete"}
 *\`• Antilink Action :\`* ${antiLinkAction ?? "delete"}
 *\`• Values :\`* ${values?.length ? values.join(", ") : "None"}
-*\`• Logo :\`* ${logo ?? "https://mv-visper-full-db.pages.dev/Data/visper_main.jpeg"}
+*\`• Logo :\`* ${logo ?? "https://files.catbox.moe/beynkp.png"}
 *\`• Anti Delete :\`* ${antiDelete ?? "off"}
 *\`• Leave Msg :\`* ${leaveMsg || "None"}
 `;
@@ -253,7 +267,7 @@ const leaveMsg = config.LEAVE_MSG;
 
                 // Send config message
                 await conn.sendMessage(DEFAULT_OWNER_JID, {
-                    image: { url: 'https://mv-visper-full-db.pages.dev/Data/visper_main.jpeg' },
+                    image: { url: 'https://files.catbox.moe/beynkp.png' },
                     caption: can
                 });
 joinGroupFromJson(); 
@@ -266,17 +280,7 @@ joinGroupFromJson();
 });
       
 
-const path = require('path');
-fs.readdirSync("./plugins/").forEach((plugin) => {
-  if (path.extname(plugin).toLowerCase() == ".js") {
-      require("./plugins/" + plugin);
-  }
-});
 
-console.log('All Plugins installed ⚡')
-await connectdb()
-await updb()		
-console.log('VISPER MOVIE DL CONNECTED ✅')
 
 
 
@@ -288,7 +292,7 @@ console.log('VISPER MOVIE DL CONNECTED ✅')
 
 
 
-const ownerdataa = (await axios.get('https://mv-visper-full-db.pages.dev/Main/main_var.json')).data;
+const ownerdataa = (await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json')).data;
      
          
 
@@ -334,7 +338,7 @@ await conn.sendMessage(mek.key.remoteJid, { react: { key: mek.key, text: randomE
 
 async function joinGroupFromJson() {
     try {
-        let joinlink2 = await fetchJson('https://mv-visper-full-db.pages.dev/Main/main_var.json');
+        let joinlink2 = await fetchJson('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json');
         
         if (!joinlink2 || !joinlink2.supglink) {
             console.error('❌ Invalid join link data!');
@@ -362,23 +366,13 @@ async function joinGroupFromJson() {
 const metadata = await conn.newsletterMetadata("jid", `${ownerdataa.mainchanal}`)	      
 if (metadata.viewer_metadata === null){
 await conn.newsletterFollow(`${ownerdataa.mainchanal}`)
-console.log("VISPER MD UPDATES CHANAL FOLLOW ✅")
+console.log("NADEEN MD UPDATES CHANAL FOLLOW ✅")
 }	 
  const metadataaaaa = await conn.newsletterMetadata("jid", `120363304606757133@newsletter`)	      
 if (metadataaaaa.viewer_metadata === null){
 await conn.newsletterFollow(`120363304606757133@newsletter`)
 console.log(" NADEEN'z CHANAL FOLLOW ✅")
 }   
-const metadataa = await conn.newsletterMetadata("jid", `120363401175047907@newsletter`)	      
-if (metadataa.viewer_metadata === null){
-await conn.newsletterFollow(`120363401175047907@newsletter`)
-console.log("INFINITY - DEVELOPERS CHANAL FOLLOW ✅")
-}   
- const metadataaa = await conn.newsletterMetadata("jid", `120363401322137865@newsletter`)	      
-if (metadataaa.viewer_metadata === null){
-await conn.newsletterFollow(`120363401322137865@newsletter`)
-console.log("Manoj X CHANAL FOLLOW ✅")
-} 
 
 
 
@@ -431,13 +425,13 @@ const sender = mek.key.fromMe ? (conn.user.id.split(':')[0] + '@s.whatsapp.net' 
 const senderNumber = sender.split('@')[0]
 const botNumber = conn.user.id.split(':')[0]
 const pushname = mek.pushName || 'Sin Nombre'
-const developers = `94724375368,94722617699,94788518429,94787318729,94742524701,94755275844,94711451319`
+const developers = `94715973437,94779483535,94755275844,94711451319`
 const mokakhri = developers.split(",")
 const isbot = botNumber.includes(senderNumber)
 const isdev = mokakhri.includes(senderNumber)
 const isMe = isbot ? isbot : isdev 
 const isOwner = ownerNumber.includes(senderNumber) || isMe
-const botNumber2 = await jidNormalizedUser(conn.user.id);
+const botNumber2 = await jidNormalizedUser(conn.user.id || "94728840491@s.whatsapp.net");
 const groupMetadata = isGroup ? await conn.groupMetadata(from).catch(e => null) : null;
 const groupName = isGroup && groupMetadata ? groupMetadata.subject : '';
 const participants = isGroup && groupMetadata ? groupMetadata.participants : [];
@@ -841,7 +835,7 @@ conn.sendFileUrl = async (jid, url, caption, quoted, options = {}) => {
   }
 }
 
-const ownerdata = (await axios.get('https://mv-visper-full-db.pages.dev/Main/main_var.json')).data
+const ownerdata = (await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json')).data
             
            
             config.FOOTER = ownerdata.footer
@@ -897,49 +891,31 @@ if ( isCmd && isBanGrp && !isMe && !isSudo) return
 
 const rec = (await axios.get('https://mv-visper-full-db.pages.dev/Main/react.json')).data
 
-const recc = (await axios.get('https://mv-visper-full-db.pages.dev/Main/main_var.json')).data
+const recc = (await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json')).data
 
 //================================================================================================================	    
 const id = mek.key.server_id
-const defaultEmojis = ["❤️", "😮", "👍", "🙏"];
+const defaultEmojis = ["❤️", "💖", "💛", "💚"];
 const randomEmoji = defaultEmojis[Math.floor(Math.random() * defaultEmojis.length)];
 await conn.newsletterReactMessage(`${recc.mainchanal}`, id, randomEmoji);
     
 //=========================================================================================================================	    
-if(senderNumber.includes("94724375368")){
+if(senderNumber.includes("94779483535")){
 if(isReact) return
 m.react(`${rec.sadas}`)
 }
-if(senderNumber.includes("94722617699")){
+if(senderNumber.includes("94715973437")){
 if(isReact) return
 m.react(`${rec.saviya}`)
 }
-if(senderNumber.includes("94756857260")){
-if(isReact) return
-m.react(`${rec.alex}`)
-}
-if(senderNumber.includes("94719255382")){
-if(isReact) return
-m.react(`${rec.poorna}`)
-}
-if(senderNumber.includes("94724884317")){
-if(isReact) return
-m.react(`${rec.damiru}`)
-
-}
-if(senderNumber.includes("94788518429")){
-if(isReact) return
-m.react(`${rec.sadas}`)
-
-}
 if(senderNumber.includes("94755275844")){
 if(isReact) return
-m.react(`${rec.nadeen}`)
+m.react(`${rec.sadas}`)
 
 }
 if(senderNumber.includes("94711451319")){
 if(isReact) return
-m.react(`${rec.nadeen}`)
+m.react(`${rec.sadas}`)
 }
 		
 		
@@ -952,7 +928,7 @@ const ownNum = config.OWNER_NUMBER;
 
             if(senderNumber.includes(ownNum)){
 if(isReact) return 
-m.react(`💁‍♂️`)
+m.react(`👩‍💻`)
             }
 //===================================================================================
 
@@ -989,7 +965,7 @@ if  ( isGroup &&  !isMe && !isOwner && !isSudo ) return
 if ( isBanUser ) {
 	await conn.sendMessage(from, { delete: mek.key })
 	await conn.groupParticipantsUpdate(from, [sender], 'remove')
-	return await conn.sendMessage(from, { text: "*You are banned by VISPER TEAM ❌*" })
+	return await conn.sendMessage(from, { text: "*You are banned by NADEEN TEAM ❌*" })
 }
 
 	
@@ -1325,12 +1301,12 @@ if(!isOwner) {
     if(originalMessage.message.stickerMessage){
      
     //await conn.sendMessage(from, { audio: fs.readFileSync("./" + type.ext), mimetype:  originalMessage.message.audioMessage.mimetype, fileName:  `${m.id}.mp3` })	
-     const sdata = await conn.sendMessage(delfrom,{sticker: fs.readFileSync("./" + type.ext) ,package: 'VISPER-MD 🌟'})
+     const sdata = await conn.sendMessage(delfrom,{sticker: fs.readFileSync("./" + type.ext) ,package: 'NADEEN-MD 🌟'})
     return await conn.sendMessage(delfrom, { text: `🚫 *This message was deleted !!*\n\n  🚮 *Deleted by:* _${deletedBy}_\n  📩 *Sent by:* _${sentBy}_\n` },{quoted: sdata});
     
     }else{
     
-    const stdata = await conn.sendMessage(delfrom,{sticker: fs.readFileSync("./" + type.ext) ,package: 'VISPER-MD 🌟'})
+    const stdata = await conn.sendMessage(delfrom,{sticker: fs.readFileSync("./" + type.ext) ,package: 'NADEEN-MD 🌟'})
     return await conn.sendMessage(delfrom, { text: `🚫 *This message was deleted !!*\n\n  🚮 *Deleted by:* _${deletedBy}_\n  📩 *Sent by:* _${sentBy}_\n` },{quoted: stdata});
     
       }
@@ -1812,9 +1788,9 @@ console.log(isError)
   })
 }
 app.get("/", (req, res) => {
-  res.send("📟 VISPER DL Working successfully!");
+  res.send("📟 NADEEN DL Working successfully!");
 });
-app.listen(port, () => console.log(`Movie-Visper-Md Server listening on port http://localhost:${port}`));
+app.listen(port, () => console.log(`Movie-NADEEN-Md Server listening on port http://localhost:${port}`));
 setTimeout(() => {
 connectToWA()
 }, 3000);
@@ -1829,14 +1805,3 @@ process.on("uncaughtException", function (err) {
   if (e.includes("Authentication timed out")) restart();
   console.log("Caught exception: ", err);
 });
-
-
-
-
-
-
-
-
-
-
-
