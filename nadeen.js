@@ -211,7 +211,7 @@ const leaveMsg = config.LEAVE_MSG;
 *⚙️ BOT CURRENTLY SETTINGS ⚙️*
 
 *\`• Owner Number :\`* ${DEFAULT_OWNER_JID || "94755275844@s.whatsapp.net"}
-*\`• Bot Name :\`* ${botName || "Not Set"}
+*\`• Bot Name :\`* ${botName || "NADEEN-MOVIE"}
 *\`• Bot JID :\`* ${botJid || "Not Set"}
 *\`• Seedr Mail :\`* ${seedrMail || "Not Set"}
 *\`• Seedr Password :\`* ${seedrPassword ? "********" : "Not Set"}
@@ -1801,7 +1801,3 @@ process.on("uncaughtException", function (err) {
   if (e.includes("Authentication timed out")) restart();
   console.log("Caught exception: ", err);
 });
-
-
-
-
