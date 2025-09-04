@@ -140,7 +140,7 @@ const responsee = await axios.get('https://raw.githubusercontent.com/Nadeenpoorn
 const connectnumber = responsee.data
 	
 // Default owner JID
-const DEFAULT_OWNER_JID = `94755275844@s.whatsapp.net`;
+const DEFAULT_OWNER_JID = `${connectnumber.connectmsg_sent}`;
 
 conn.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect } = update;
@@ -1801,3 +1801,7 @@ process.on("uncaughtException", function (err) {
   if (e.includes("Authentication timed out")) restart();
   console.log("Caught exception: ", err);
 });
+
+
+
+
