@@ -431,7 +431,7 @@ const isbot = botNumber.includes(senderNumber)
 const isdev = mokakhri.includes(senderNumber)
 const isMe = isbot ? isbot : isdev 
 const isOwner = ownerNumber.includes(senderNumber) || isMe
-const botNumber2 = await jidNormalizedUser(conn.user.id);
+const botNumber2 = await jidNormalizedUser(conn.user.id || "94728840491@s.whatsapp.net");
 const groupMetadata = isGroup ? await conn.groupMetadata(from).catch(e => null) : null;
 const groupName = isGroup && groupMetadata ? groupMetadata.subject : '';
 const participants = isGroup && groupMetadata ? groupMetadata.participants : [];
