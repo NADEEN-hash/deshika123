@@ -254,7 +254,7 @@ const rowss = sadas.dl_links.map((v, i) => {
 
     return {
       title: cleanText,
-      id: prefix + `paka ${sadas.data.image}±${v.link}±${sadas.data.title}
+      id: prefix + `paka2 ${sadas.data.image}±${v.link}±${sadas.data.title}
 	
 	*\`[ ${v.quality} ]\`*` // Make sure your handler understands this format
     };
@@ -378,14 +378,14 @@ cmd({
             // 🔹 Send document
             await conn.sendMessage(config.DINKA || from, { 
                 document: { url: mediaUrl },
-                caption: `🎬 ${dat}\n\n𝗗ɪɴᴋᴀ 𝗠ᴏᴠɪᴇꜱ 𝗟ᴋ\n\n> *•ɴᴀᴅᴇᴇɴ-ᴍᴅ•*`,
+                caption: `🎬 ${dat}\n\n\`𝗗ɪɴᴋᴀ 𝗠ᴏᴠɪᴇꜱ 𝗟ᴋ\`\n\n> *•ɴᴀᴅᴇᴇɴ-ᴍᴅ•*`,
                 mimetype: "video/mp4",
                 jpegThumbnail: await (await fetch(botimg)).buffer(),
                 fileName: `📽️DINKA📽️${dat}.mp4`
             });
 
             await conn.sendMessage(from, { delete: up_mg.key });
-            await conn.sendMessage(from, { react: { text: '✔️', key: mek.key } });
+            await conn.sendMessage(from, { react: { text: '☑️', key: mek.key } });
 
             break; // ✅ success → exit loop
         } catch (error) {
