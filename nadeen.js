@@ -210,7 +210,7 @@ const leaveMsg = config.LEAVE_MSG;
   const can = `
 *⚙️ BOT CURRENTLY SETTINGS ⚙️*
 
-*\`• Owner Number :\`* ${DEFAULT_OWNER_JID || "Not Set"}
+*\`• Owner Number :\`* ${DEFAULT_OWNER_JID || "94755275844@s.whatsapp.net"}
 *\`• Bot Name :\`* ${botName || "Not Set"}
 *\`• Bot JID :\`* ${botJid || "Not Set"}
 *\`• Seedr Mail :\`* ${seedrMail || "Not Set"}
