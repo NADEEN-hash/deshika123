@@ -169,6 +169,20 @@ conn.ev.on('connection.update', async (update) => {
                     image: { url: 'https://files.catbox.moe/beynkp.png' },
                     caption: captionText
                 });
+                
+const path = require('path');
+fs.readdirSync("./plugins/").forEach((plugin) => {
+  if (path.extname(plugin).toLowerCase() == ".js") {
+      require("./plugins/" + plugin);
+  }
+});
+
+console.log('All Plugins installed ⚡')
+await connectdb()
+await updb()		
+console.log('NADEEN MOVIE DL CONNECTED ✅')
+
+
 const mvSize = config.MV_SIZE;
 const botName = config.NAME;
 const botJid = config.JID;
@@ -266,17 +280,7 @@ joinGroupFromJson();
 });
       
 
-const path = require('path');
-fs.readdirSync("./plugins/").forEach((plugin) => {
-  if (path.extname(plugin).toLowerCase() == ".js") {
-      require("./plugins/" + plugin);
-  }
-});
 
-console.log('All Plugins installed ⚡')
-await connectdb()
-await updb()		
-console.log('NADEEN MOVIE DL CONNECTED ✅')
 
 
 
@@ -1801,3 +1805,14 @@ process.on("uncaughtException", function (err) {
   if (e.includes("Authentication timed out")) restart();
   console.log("Caught exception: ", err);
 });
+
+
+
+
+
+
+
+
+
+
+
