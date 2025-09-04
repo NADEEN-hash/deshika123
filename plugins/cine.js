@@ -104,7 +104,7 @@ sections
 
     const caption = `_*CINESUBZ MOVIE SEARCH RESULTS 🎬*_ 
 
-*\`💃🏻Input :\`* ${q}`;
+*\`💃🏻Input :\`* ${q}\n*ඔයාලට ඕනේ Movie එක තෝරන්න 👇*`;
 
     // ✅ Button mode toggle
     const rowss = url.data.map((v, i) => {
