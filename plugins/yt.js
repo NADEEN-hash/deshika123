@@ -1,3 +1,62 @@
+const config = require('../config')
+const axios = require('axios');
+const fs = require('fs')
+const file_size_url = (...args) => import('file_size_url')
+.then(({ default: file_size_url }) => file_size_url(...args));
+const {
+    getBuffer,
+    getGroupAdmins,
+    getRandom,
+    getsize,
+    h2k,
+    isUrl,
+    Json,
+    runtime,
+    sleep,
+    fetchJson
+} = require('../lib/functions')
+
+const {
+    cmd,
+    commands
+} = require('../command')
+let wm = config.FOOTER
+let newsize = config.MAX_SIZE * 1024 * 1024
+var sizetoo =  "_This file size is too big_"
+const yts = require("ytsearch-venom")
+const g_i_s = require('g-i-s'); 
+const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
+const sharp = require('sharp');
+
+//===================================Sahrp funtion===============================================
+async function resizeImage(inputBuffer, width, height) {
+    try {
+        return await sharp(inputBuffer).resize(width, height).toBuffer();
+    } catch (error) {
+        console.error('Error resizing image:', error);
+        return inputBuffer; 
+    }
+}
+//=============================================== Filwe size checker=========================================
+
+async function checkFileSize(url, maxMB = 150) {
+    return new Promise((resolve, reject) => {
+        let totalBytes = 0;
+        https.get(url, res => {
+            res.on('data', chunk => {
+                totalBytes += chunk.length;
+                const sizeMB = totalBytes / (1024 * 1024);
+                if (sizeMB > maxMB) {
+                    res.destroy(); // abort download
+                    reject(new Error(`File exceeds ${maxMB} MB!`));
+                }
+            });
+            res.on('end', () => resolve(totalBytes));
+            res.on('error', err => reject(err));
+        }).on('error', err => reject(err));
+    });
+}
+
 cmd({
     pattern: "ck",
     alias: ["cv"],
