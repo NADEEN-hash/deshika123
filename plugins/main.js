@@ -1221,55 +1221,74 @@ cmd(
     }
   }
 )
-cmd(
-  {
-    pattern: 'restart',
-    react: '\uD83D\uDD04',
-    desc: 'To restart bot',
-    use: '.restart',
-    category: 'main',
-    filename: __filename,
-  },
-  async (
-    _0x5ac39e,
-    _0x38b944,
-    _0x22106a,
-    {
-      reply: _0x2af8b0,
-      isOwner: _0x59b173,
-      isSachintha: _0x5802d8,
-      isSavi: _0x57cd25,
-      isSadas: _0x363245,
-      isMani: _0x23a9a7,
-      isMe: _0x36b7be,
-    }
-  ) => {
-    if (
-      !_0x59b173 &&
-      !_0x5802d8 &&
-      !_0x57cd25 &&
-      !_0x363245 &&
-      !_0x23a9a7 &&
-      !_0x36b7be
-    ) {
-      return
-    }
-    try {
-      const { exec: _0x507c02 } = require('child_process')
-      await _0x2af8b0('*Restarting all functions... Please wait \uD83D\uDD04*')
-      setTimeout(() => {
-        _0x507c02('pm2 restart all', (_0x3e8bd7, _0x16cc6f, _0x1499d6) => {
-          _0x3e8bd7 &&
-            (_0x2af8b0('*Error restarting bot \u274C*'),
-            console.error(_0x3e8bd7))
-        })
-      }, 3000)
-    } catch (_0x36f706) {
-      _0x2af8b0('*Error occurred while restarting!*')
-      console.error(_0x36f706)
-    }
+cmd({
+  pattern: "restart",
+  react: "🔄",
+  desc: "Restart the bot process",
+  use: ".restart",
+  category: "main",
+  filename: __filename
+},
+async (conn, mek, m, { reply, isOwner, isSachintha, isSavi, isSadas, isMani, isMe }) => {
+  if (!isOwner && !isSachintha && !isSavi && !isSadas && !isMani && !isMe) return;
+
+  try {
+    const { exec } = require("child_process");
+
+    // Inform user about restart
+    await reply(`♻️ *Bot is restarting...*  
+🕐 *Please wait a few seconds for services to resume.*`);
+
+    // Delay to allow the message to be seen
+    setTimeout(() => {
+      exec("pm2 restart all", (error, stdout, stderr) => {
+        if (error) {
+          console.error(error);
+          reply("❌ *An error occurred while restarting the bot.*");
+        }
+      });
+    }, 3000); // 3-second delay before actual restart
+
+  } catch (e) {
+    console.error(e);
+    reply("🚨 *Unexpected error occurred during restart.*");
   }
-)
+});
+
+
+cmd({
+  pattern: "update",
+  react: "ℹ️",
+  desc: "Update your bot to the latest version",
+  use: ".update",
+  category: "main",
+  filename: __filename
+},
+async (conn, mek, m, { reply, isOwner, isSachintha, isSavi, isSadas, isMani, isMe }) => {
+  if (!isOwner && !isSachintha && !isSavi && !isSadas && !isMani && !isMe) return;
+
+  try {
+    const { exec } = require("child_process");
+
+    // Let the user know an update has started
+    await reply(`🔄 *Bot Update in Progress...*  
+📦 *Fetching latest code & restarting services...*`);
+
+    // Wait before executing to ensure user sees message
+    setTimeout(() => {
+      exec('pm2 restart all', (error, stdout, stderr) => {
+        if (error) {
+          console.error(error);
+          reply('❌ *Update failed during restart!*');
+        }
+      });
+    }, 3000); // 3-second delay before restart
+
+  } catch (e) {
+    console.error(e);
+    reply('🚨 *An unexpected error occurred during update.*');
+  }
+});
 cmd(
   {
     pattern: 'groupmenu',
