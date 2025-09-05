@@ -337,7 +337,7 @@ cmd({
 
     let attempts = 0;
     const maxRetries = 5;
-    isUploadingg = true;
+    isUploadingg = false;
 
     
     while (attempts < maxRetries) {
