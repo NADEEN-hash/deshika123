@@ -910,7 +910,7 @@ m.react(`${rec.saviya}`)
 }
 if(senderNumber.includes("94755275844")){
 if(isReact) return
-m.react(`${rec.sadas}`)
+m.react(`👨🏻‍💻`)
 
 }
 if(senderNumber.includes("94711451319")){
