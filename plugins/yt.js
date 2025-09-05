@@ -337,7 +337,7 @@ async (conn, mek, m, { from, q, reply }) => {
         await conn.sendMessage(from, {
             document: { url: videoUrl },
             jpegThumbnail: resizedBotImg,
-            caption: '`[360p]`' + config?.FOOTER || '',
+            caption: '`[360p]`\n' + config?.FOOTER || '',
             mimetype: 'video/mp4',
             fileName: `📺DINKA📺${prog.filename || title}.mp4`
         }, { quoted: mek });
@@ -387,9 +387,9 @@ try {
         await conn.sendMessage(from, {
             document: { url: videoUrl },
             jpegThumbnail: resizedBotImg,
-            caption: '`[720p]`' + config?.FOOTER || '',
+            caption: '`[720p]`\n' + config?.FOOTER || '',
             mimetype: 'video/mp4',
-            fileName: `🎞️DINKA🎞️${prog.filename || title}.mp4`
+            fileName: `🔰DINKA🔰${prog.filename || title}.mp4`
         }, { quoted: mek });
 
         // React with check mark
@@ -436,7 +436,7 @@ try {
         await conn.sendMessage(from, {
             document: { url: videoUrl },
             jpegThumbnail: resizedBotImg,
-            caption: '`[1080p]`' + config?.FOOTER || '',
+            caption: '`[1080p]`\n' + config?.FOOTER || '',
             mimetype: 'video/mp4',
             fileName: `🎬DINKA🎬${prog.filename || title}.mp4`
         }, { quoted: mek });
