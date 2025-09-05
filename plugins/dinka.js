@@ -131,7 +131,7 @@ sections
   };
 
 	
-if (config.BUTTON === "true") {
+if (config.BUTTON2 === "true") {
       await conn.sendMessage(from, {
     image: { url: config.LOGO },
     caption: caption,
@@ -272,7 +272,7 @@ const rowss = sadas.dl_links.map((v, i) => {
   };
 
 	
-if (config.BUTTON === "true") {
+if (config.BUTTON2 === "true") {
       await conn.sendMessage(from, {
     image: { url: sadas.data.image.replace(/-\d+x\d+(?=\.jpg)/, '') },
     caption: msg,
