@@ -51,9 +51,9 @@ async (conn, m, mek, {
       await conn.sendMessage(from, { react: { text: '❌', key: mek.key } });
       return await conn.sendMessage(from, {
         text: "*`You are not a premium user⚠️`*\n\n" +
-              "*Send a message to one of the 2 numbers below and buy Lifetime premium 🎉.*\n\n" +
-              "_Price : 200 LKR ✔️_\n\n" +
-              "*👨‍💻Contact us : 0778500326 , 0722617699*"
+              "*Send a message to one of the 2 numbers below and buy Your premium Package🎉.*\n\n" +
+              "`📕 Rs.150/= : 7 Days`\n`📗 Rs.200/= : 14 Days`\n`📘 Rs.350/= : 30 Days`\n`📙 Rs.500/= : 50 Days`\n\n" +
+              "*👨‍💻Contact us : 0711451319 , 0755275844*"
       }, { quoted: mek });
     }
 
@@ -104,7 +104,7 @@ sections
 
     const caption = `_*CINESUBZ MOVIE SEARCH RESULTS 🎬*_ 
 
-*\`💃🏻Input :\`* ${q}\n*ඔයාලට ඕනේ Movie එක තෝරන්න 👇*`;
+*\`💃🏻Input :\`* ${q}`;
 
     // ✅ Button mode toggle
     const rowss = url.data.map((v, i) => {
@@ -828,719 +828,690 @@ cmd(
     }
   }
 )
-cmd(
-  {
-    pattern: 'cinetv',
-    react: '\uD83D\uDD0E',
-    category: 'movie',
-    alias: ['ctv'],
-    desc: 'cinesubz.co tv shows search',
-    use: '.cinetv  2025',
-    filename: __filename,
-  },
-  async (
-    _0x26e8c3,
-    _0x8b41d6,
-    _0x4734a0,
-    {
-      from: _0x5174da,
-      q: _0x27092c,
-      prefix: _0x1c13d8,
-      isMe: _0x2f4d82,
-      isSudo: _0x1cb0ec,
-      isPre: _0x24e476,
-      isOwner: _0x2539d1,
-      reply: _0x5c49c7,
+
+
+//=====================================================================================================================
+
+cmd({
+    pattern: "cinetv",	
+    react: '🔎',
+    category: "movie",
+alias: ["ctv"],
+        desc: "cinesubz.co tv shows search",
+    use: ".cinetv  2025",
+    filename: __filename
+},
+async (conn, m, mek, { from, q, prefix, isMe, isSudo, isPre, isOwner, reply }) => {
+try{
+
+
+const pr = (await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json')).data;
+
+// convert string to boolean
+const isFree = pr.mvfree === "true";
+
+// if not free and not premium or owner
+if (!isFree && !isMe && !isPre) {
+    await conn.sendMessage(from, { react: { text: '❌', key: mek.key } });
+    return await conn.sendMessage(from, {
+    text: "*`You are not a premium user⚠️`*\n\n" +
+          "*Send a message to one of the 2 numbers below and buy Lifetime premium 🎉.*\n\n" +
+          "_Price : 200 LKR ✔️_\n\n" +
+          "*👨‍💻Contact us : 0778500326 , 0722617699*"
+}, { quoted: mek });
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		if( config.MV_BLOCK == "true" && !isMe && !isSudo && !isOwner ) {
+	await conn.sendMessage(from, { react: { text: '❌', key: mek.key } });
+            return await conn.sendMessage(from, { text: "*This command currently only works for the Bot owner. To disable it for others, use the .settings command 👨‍🔧.*" }, { quoted: mek });
+
+}
+ if(!q) return await reply('*please give me text !..*')
+let url = await fetchJson(`https://darksadas-yt-cinesubz-tv-search.vercel.app/?query=${q}`)
+	
+
+  if (!url || !url.data || url.data.length === 0) 
+	{
+		await conn.sendMessage(from, { react: { text: '❌', key: mek.key } });
+            return await conn.sendMessage(from, { text: '*No results found ❌*' }, { quoted: mek });
+	}
+var srh = [];  
+for (var i = 0; i < url.data.length; i++) {
+srh.push({
+title: url.data[i].title.replace("Sinhala Subtitles | සිංහල උපසිරැසි සමඟ", "").replace("Sinhala Subtitle | සිංහල උපසිරැසි සමඟ", "")|| 'Result not found',
+description: '',
+rowId: prefix + 'cinetvdl ' + url.data[i].link
+});
+}
+
+const sections = [{
+title: "cinesubz.co results",
+rows: srh
+}	  
+]
+const listMessage = {
+text: `_*CINESUBZ TV SHOWS RESULTS 📺*_
+
+*\`🔎Input :\`* ${q}`,
+footer: config.FOOTER,
+title: 'cinesubz.co results',
+buttonText: '*Reply Below Number 🔢*',
+sections
+}
+ const caption = `_*CINESUBZ TV SHOWS RESULTS 📺*_
+
+*\`Input :\`* ${q}`;
+
+    // ✅ Button mode toggle
+    const rowss = url.data.map((v, i) => {
+    // Clean size and quality text by removing common tags
+    const cleanText = `${url.data[i].title}`
+      .replace(/WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|Telegram BluRay SD|Telegram BluRay HD|Direct BluRay SD|Direct BluRay HD|Direct BluRay FHD|FHD|HD|SD|Telegram BluRay FHD/gi, "")
+      .trim() || "No info";
+
+    return {
+      title: cleanText,
+      id: prefix + `cinetvdl ${url.data[i].link}` // Make sure your handler understands this format
+    };
+  });
+
+  // Compose the listButtons object
+  const listButtons = {
+    title: "Choose a Movie :)",
+    sections: [
+      {
+        title: "Available Links",
+        rows: rowss
+      }
+    ]
+  };
+
+	
+if (config.BUTTON === "true") {
+      await conn.sendMessage(from, {
+    image: { url: config.LOGO },
+    caption: caption,
+    footer: config.FOOTER,
+    buttons: [
+
+	    
+      {
+        buttonId: "download_list",
+        buttonText: { displayText: "🎥 Select Option" },
+        type: 4,
+        nativeFlowInfo: {
+          name: "single_select",
+          paramsJson: JSON.stringify(listButtons)
+        }
+      }
+	    
+    ],
+    headerType: 1,
+    viewOnce: true
+  }, { quoted: mek });
+    } else {
+      await conn.listMessage(from, listMessage,mek)
     }
-  ) => {
-    try {
-      if (!_0x27092c) {
-        return await _0x5c49c7('*please give me text !..*')
-      }
-      let _0x4a6c13 = await fetchJson(
-        'https://darksadas-yt-cinesubz-tv-search.vercel.app/?query=' + _0x27092c
-      )
-      if (!_0x4a6c13 || !_0x4a6c13.data || _0x4a6c13.data.length === 0) {
-        return (
-          await _0x26e8c3.sendMessage(_0x5174da, {
-            react: {
-              text: '\u274C',
-              key: _0x4734a0.key,
-            },
-          }),
-          await _0x26e8c3.sendMessage(
-            _0x5174da,
-            { text: '*No results found \u274C*' },
-            { quoted: _0x4734a0 }
-          )
-        )
-      }
-      var _0x8c8e7d = []
-      for (var _0x41c48a = 0; _0x41c48a < _0x4a6c13.data.length; _0x41c48a++) {
-        _0x8c8e7d.push({
-          title:
-            _0x4a6c13.data[_0x41c48a].title
-              .replace('Sinhala Subtitles | සිංහල උපසිරැසි සමඟ', '')
-              .replace('Sinhala Subtitle | සිංහල උපසිරැසි සමඟ', '') ||
-            'Result not found',
-          description: '',
-          rowId: _0x1c13d8 + 'cinetvdl ' + _0x4a6c13.data[_0x41c48a].link,
+} catch (e) {
+    console.log(e)
+  await conn.sendMessage(from, { text: '🚩 *Error !!*' }, { quoted: mek } )
+}
+})
+
+cmd({
+    pattern: "cinetvdl",	
+    react: '🎥',
+     desc: "moive downloader",
+    filename: __filename
+},
+async (conn, m, mek, { from, q, isMe, prefix, reply }) => {
+try{
+if (!q || !q.includes('https://cinesubz.net/tvshows')) {
+    console.log('Invalid input:', q);
+    return await reply('*❗ This is a movie, please use .mv command.*');
+}
+
+let sadas = await cinesubz_tvshow_info(q)
+let msg = `*📽️ 𝗧ɪᴛʟᴇ ➮* *_${sadas.data.title || 'N/A'}_*
+
+*📅 𝗥ᴇʟᴇꜱᴇᴅ ᴅᴀᴛᴇ ➮* _${sadas.data.date || 'N/A'}_
+*🌎 𝗖ᴏᴜɴᴛʀʏ ➮* _${sadas.data.country || 'N/A'}_
+*💃 𝗥ᴀᴛɪɴɢ ➮* _${sadas.data.imdb || 'N/A'}_
+*⏰ 𝗥ᴜɴᴛɪᴍᴇ ➮* _${sadas.data.runtime || 'N/A'}_
+*💁‍♂️ 𝗦ᴜʙᴛɪᴛʟᴇ ʙʏ ➮* _${sadas.data.director || 'N/A'}_
+*🎭 𝗚ᴇɴᴀʀᴇꜱ ➮* ${sadas.data.category.join(', ') || 'N/A'}
+`
+
+ 
+var rows = [];  
+
+rows.push(
+    { buttonId: prefix + 'ctdetailss ' + q, buttonText: { displayText: 'Details Card' }, type: 1 },
+    { buttonId: prefix + 'dlc ' + q, buttonText: { displayText: 'All Epishodes Send\n' }, type: 1 }
+);
+	
+  sadas.data.episodes.map((v) => {
+	rows.push({
+        buttonId: prefix + `cinefirstdl ${sadas.data.mainImage}±${v.link}±${sadas.data.title} *\`${v.number}\`*`,
+        buttonText: { displayText: `${v.number}` },
+        type: 1
+          }
+		 
+		  //{buttonId: prefix + 'cdetails ' + q, buttonText: {displayText: 'Details send'}, type: 1}
+		 
+		 
+		 );
         })
+
+
+
+
+  
+const buttonMessage = {
+ 
+image: {url: sadas.data.mainImage.replace("-200x300", "")},	
+  caption: msg,
+  footer: config.FOOTER,
+  buttons: rows,
+  headerType: 4
+}
+
+const rowss = sadas.data.episodes.map((v, i) => {
+    // Clean size and quality text by removing common tags
+    const cleanText = `${v.number}`
+      .replace(/WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|Telegram BluRay SD|Telegram BluRay HD|Direct BluRay SD|Direct BluRay HD|Direct BluRay FHD|FHD|HD|SD|Telegram BluRay FHD/gi, "")
+      .trim() || "No info";
+
+    return {
+      title: cleanText,
+      id: prefix + `cinefirstdl ${sadas.data.mainImage}±${v.link}±${sadas.data.title} *\`${v.number}\`*` // Make sure your handler understands this format
+    };
+  });
+
+
+const listButtons = {
+    title: "🎬 Choose a download link :)",
+    sections: [
+      {
+        title: "Available Links",
+        rows: rowss
       }
-      const _0xbee07a = [
-          {
-            title: 'cinesubz.co results',
-            rows: _0x8c8e7d,
-          },
-        ],
-        _0x436667 = {
-          text:
-            '_*CINESUBZ TV SHOWS RESULTS \uD83D\uDCFA*_\n\n*`Input :`* ' +
-            _0x27092c,
-          footer: config.FOOTER,
-          title: 'cinesubz.co results',
-          buttonText: '*Reply Below Number \uD83D\uDD22*',
-          sections: _0xbee07a,
+    ]
+  };
+
+
+	if (config.BUTTON === "true") {
+      await conn.sendMessage(from, {
+    image: { url: sadas.data.mainImage.replace("-200x300", "")},
+    caption: msg,
+    footer: config.FOOTER,
+    buttons: [
+{
+            buttonId: prefix + 'ctdetailss ' + q,
+            buttonText: { displayText: "Details Send" },
+            type: 1
         },
-        _0xf24444 =
-          '_*CINESUBZ TV SHOWS RESULTS \uD83D\uDCFA*_\n\n*`Input :`* ' +
-          _0x27092c,
-        _0x893bd9 = _0x4a6c13.data.map((_0x4a8915, _0x3bc549) => {
-          const _0x4dc824 =
-            ('' + _0x4a6c13.data[_0x3bc549].title)
-              .replace(
-                /WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|Telegram BluRay SD|Telegram BluRay HD|Direct BluRay SD|Direct BluRay HD|Direct BluRay FHD|FHD|HD|SD|Telegram BluRay FHD/gi,
-                ''
-              )
-              .trim() || 'No info'
-          return {
-            title: _0x4dc824,
-            id: _0x1c13d8 + ('cinetvdl ' + _0x4a6c13.data[_0x3bc549].link),
-          }
-        }),
-        _0x3b6699 = {
-          title: 'Choose a Movie :)',
-          sections: [
-            {
-              title: 'Available Links',
-              rows: _0x893bd9,
-            },
-          ],
-        }
-      config.BUTTON === 'true'
-        ? await _0x26e8c3.sendMessage(
-            _0x5174da,
-            {
-              image: { url: config.LOGO },
-              caption: _0xf24444,
-              footer: config.FOOTER,
-              buttons: [
-                {
-                  buttonId: 'download_list',
-                  buttonText: { displayText: '\uD83C\uDFA5 Select Option' },
-                  type: 4,
-                  nativeFlowInfo: {
-                    name: 'single_select',
-                    paramsJson: JSON.stringify(_0x3b6699),
-                  },
-                },
-              ],
-              headerType: 1,
-              viewOnce: true,
-            },
-            { quoted: _0x4734a0 }
-          )
-        : await _0x26e8c3.listMessage(_0x5174da, _0x436667, _0x4734a0)
-    } catch (_0x14bc34) {
-      console.log(_0x14bc34)
-      await _0x26e8c3.sendMessage(
-        _0x5174da,
-        { text: '\uD83D\uDEA9 *Error !!*' },
-        { quoted: _0x4734a0 }
-      )
-    }
-  }
-)
-cmd(
-  {
-    pattern: 'cinetvdl',
-    react: '\uD83C\uDFA5',
-    desc: 'moive downloader',
-    filename: __filename,
-  },
-  async (
-    _0x3e1962,
-    _0x2a20f7,
-    _0x41211e,
-    {
-      from: _0x562de0,
-      q: _0x4ebbc2,
-      isMe: _0x30367e,
-      prefix: _0x2fec6e,
-      reply: _0x1a0b46,
-    }
-  ) => {
-    try {
-      if (!_0x4ebbc2 || !_0x4ebbc2.includes('https://cinesubz.net/tvshows')) {
-        return (
-          console.log('Invalid input:', _0x4ebbc2),
-          await _0x1a0b46('*\u2757 This is a movie, please use .mv command.*')
-        )
-      }
-      let _0xcd4bd5 = await cinesubz_tvshow_info(_0x4ebbc2),
-        _0x565161 =
-          '*\u2618️ \uD835\uDDE7ɪᴛʟᴇ \u27AE* *_' +
-          (_0xcd4bd5.data.title || 'N/A') +
-          '_*\n\n*\uD83D\uDCC5 \uD835\uDDE5ᴇʟᴇꜱᴇᴅ ᴅᴀᴛᴇ \u27AE* _' +
-          (_0xcd4bd5.data.date || 'N/A') +
-          '_\n*\uD83C\uDF0E \uD835\uDDD6ᴏᴜɴᴛʀʏ \u27AE* _' +
-          (_0xcd4bd5.data.country || 'N/A') +
-          '_\n*\uD83D\uDC83 \uD835\uDDE5ᴀᴛɪɴɢ \u27AE* _' +
-          (_0xcd4bd5.data.imdb || 'N/A') +
-          '_\n*\u23F0 \uD835\uDDE5ᴜɴᴛɪᴍᴇ \u27AE* _' +
-          (_0xcd4bd5.data.runtime || 'N/A') +
-          '_\n*\uD83D\uDC81‍\u2642️ \uD835\uDDE6ᴜʙᴛɪᴛʟᴇ ʙʏ \u27AE* _' +
-          (_0xcd4bd5.data.director || 'N/A') +
-          '_\n*\uD83C\uDFAD \uD835\uDDDAᴇɴᴀʀᴇꜱ \u27AE* ' +
-          (_0xcd4bd5.data.category.join(', ') || 'N/A') +
-          '\n'
-      var _0x178337 = []
-      _0x178337.push(
-        {
-          buttonId: _0x2fec6e + 'ctdetailss ' + _0x4ebbc2,
-          buttonText: { displayText: 'Details Card' },
-          type: 1,
+	    {
+            buttonId: prefix + 'dlc ' + q,
+            buttonText: { displayText: "All Epishodes Send" },
+            type: 1
         },
-        {
-          buttonId: _0x2fec6e + 'dlc ' + _0x4ebbc2,
-          buttonText: { displayText: 'All Epishodes Send\n' },
-          type: 1,
+	    
+      {
+        buttonId: "download_list",
+        buttonText: { displayText: "🎥 Select Option" },
+        type: 4,
+        nativeFlowInfo: {
+          name: "single_select",
+          paramsJson: JSON.stringify(listButtons)
         }
-      )
-      _0xcd4bd5.data.episodes.map((_0x1a4a46) => {
-        _0x178337.push({
-          buttonId:
-            _0x2fec6e +
-            ('cinefirstdl ' +
-              _0xcd4bd5.data.mainImage +
-              '\xB1' +
-              _0x1a4a46.link +
-              '\xB1' +
-              _0xcd4bd5.data.title +
-              ' *`' +
-              _0x1a4a46.number +
-              '`*'),
-          buttonText: { displayText: '' + _0x1a4a46.number },
-          type: 1,
-        })
-      })
-      const _0x2cdd59 = {
-          image: { url: _0xcd4bd5.data.mainImage.replace('-200x300', '') },
-          caption: _0x565161,
-          footer: config.FOOTER,
-          buttons: _0x178337,
-          headerType: 4,
-        },
-        _0x25dd9c = _0xcd4bd5.data.episodes.map((_0x2f56fd, _0x348ae4) => {
-          const _0x2445a7 =
-            ('' + _0x2f56fd.number)
-              .replace(
-                /WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|Telegram BluRay SD|Telegram BluRay HD|Direct BluRay SD|Direct BluRay HD|Direct BluRay FHD|FHD|HD|SD|Telegram BluRay FHD/gi,
-                ''
-              )
-              .trim() || 'No info'
-          return {
-            title: _0x2445a7,
-            id:
-              _0x2fec6e +
-              ('cinefirstdl ' +
-                _0xcd4bd5.data.mainImage +
-                '\xB1' +
-                _0x2f56fd.link +
-                '\xB1' +
-                _0xcd4bd5.data.title +
-                ' *`' +
-                _0x2f56fd.number +
-                '`*'),
-          }
-        }),
-        _0x2e9278 = {
-          title: '\uD83C\uDFAC Choose a download link :)',
-          sections: [
-            {
-              title: 'Available Links',
-              rows: _0x25dd9c,
-            },
-          ],
-        }
-      if (config.BUTTON === 'true') {
-        await _0x3e1962.sendMessage(
-          _0x562de0,
-          {
-            image: { url: _0xcd4bd5.data.mainImage.replace('-200x300', '') },
-            caption: _0x565161,
-            footer: config.FOOTER,
-            buttons: [
-              {
-                buttonId: _0x2fec6e + 'ctdetailss ' + _0x4ebbc2,
-                buttonText: { displayText: 'Details Send' },
-                type: 1,
-              },
-              {
-                buttonId: _0x2fec6e + 'dlc ' + _0x4ebbc2,
-                buttonText: { displayText: 'All Epishodes Send' },
-                type: 1,
-              },
-              {
-                buttonId: 'download_list',
-                buttonText: { displayText: '\uD83C\uDFA5 Select Option' },
-                type: 4,
-                nativeFlowInfo: {
-                  name: 'single_select',
-                  paramsJson: JSON.stringify(_0x2e9278),
-                },
-              },
-            ],
-            headerType: 1,
-            viewOnce: true,
-          },
-          { quoted: _0x41211e }
-        )
-      } else {
-        return await _0x3e1962.buttonMessage(_0x562de0, _0x2cdd59, _0x41211e)
       }
-    } catch (_0x53b9e2) {
-      console.log(_0x53b9e2)
-      await _0x3e1962.sendMessage(
-        _0x562de0,
-        { text: '\uD83D\uDEA9 *Error !!*' },
-        { quoted: _0x41211e }
-      )
+	    
+    ],
+    headerType: 1,
+    viewOnce: true
+  }, { quoted: mek });
+    } else {
+      return await conn.buttonMessage(from, buttonMessage, mek)
     }
-  }
-)
-cmd(
-  {
-    pattern: 'cinefirstdl',
-    react: '\uD83C\uDFAC',
-    alias: ['tv'],
-    desc: 'Movie downloader',
-    filename: __filename,
-  },
-  async (
-    _0xbdb83a,
-    _0x316bfb,
-    _0x3f3389,
-    {
-      from: _0x27078e,
-      q: _0x5dfd62,
-      prefix: _0x560f26,
-      isMe: _0x12ae6d,
-      reply: _0x28f0fd,
-    }
-  ) => {
-    try {
-      if (!_0x5dfd62) {
-        return await _0x28f0fd(
-          '*\u26A0️ Please provide a valid search query or URL.*'
-        )
-      }
-      console.log('[CINE-FIRSTDL] Query:', _0x5dfd62)
-      const [_0x12b5ec, _0x4d5146, _0x2ad128] = _0x5dfd62.split('\xB1')
-      if (!_0x4d5146) {
-        return await _0x28f0fd(
-          '*\uD83D\uDEAB Invalid format. Expected "link\xB1imageURL".*'
-        )
-      }
-      const _0x14323e = await cinesubz_tv_firstdl(_0x4d5146)
-      if (!_0x14323e?.dl_links?.length) {
-        return await _0xbdb83a.sendMessage(
-          _0x27078e,
-          { text: '*\u274C No download links found!*' },
-          { quoted: _0x3f3389 }
-        )
-      }
-      const _0x4c34cf = _0x14323e.dl_links.map((_0x59285b) => ({
-          title: _0x59285b.quality + ' - ' + _0x59285b.size,
-          description: '',
-          rowId:
-            _0x560f26 +
-            ('tvdll ' +
-              _0x12b5ec +
-              '&' +
-              _0x2ad128 +
-              '&' +
-              _0x59285b.direct_link),
-        })),
-        _0x12e035 = [
-          {
-            title: '`\uD83D\uDD22 Select your want quality below⤵`',
-            rows: _0x4c34cf,
-          },
-        ],
-        _0x25d8d5 =
-          '*\uD83C\uDF7F Episode Title:* ' +
-          _0x2ad128
-      if (config.BUTTON === 'true') {
-        return await _0xbdb83a.sendMessage(
-          _0x27078e,
-          {
-            text: _0x25d8d5,
-            footer: config.FOOTER,
-            title: '\uD83D\uDCFA Cinesubz.lk Download Options',
-            buttonText: '\uD83C\uDFAC Select Quality',
-            sections: _0x12e035,
-          },
-          { quoted: _0x3f3389 }
-        )
-      } else {
-        const _0x1783e7 = {
-          text: _0x25d8d5,
-          footer: config.FOOTER,
-          title: '\uD83D\uDCFA Cinesubz.lk Download Options',
-          buttonText: '\uD83D\uDD3D Tap to select quality',
-          sections: _0x12e035,
-        }
-        return await _0xbdb83a.listMessage(_0x27078e, _0x1783e7, _0x3f3389)
-      }
-    } catch (_0x804bc9) {
-      console.error('[CINE-FIRSTDL ERROR]', _0x804bc9)
-      await _0x28f0fd(
-        '\uD83D\uDEAB *An unexpected error occurred!*\n\n' +
-          _0x804bc9.message || _0x804bc9
-      )
-    }
-  }
-)
-cmd(
-  {
-    pattern: 'tvdll',
-    react: '\u2B07️',
+
+} catch (e) {
+    console.log(e)
+  await conn.sendMessage(from, { text: '🚩 *Error !!*' }, { quoted: mek } )
+}
+})
+
+//newtv
+let isUploadingg = false; // Track upload status
+
+
+
+
+
+const cinesubzDownBase2 = "https://drive2.cscloud12.online";
+const apilinkcine2 = "https://cinesubz-store.vercel.app/";
+
+cmd({
+    pattern: "pakatv",
+    react: "⬇️",
     dontAddCommandList: true,
-    filename: __filename,
-  },
-  async (
-    _0x39918d,
-    _0x4667c4,
-    _0x5ca607,
-    { from: _0x2a4f6f, q: _0x2e19c8, isMe: _0x4d9596, reply: _0x5582d6 }
-  ) => {
-    if (!_0x2e19c8) {
-      return await _0x5582d6('*Please provide a direct URL!*')
+    filename: __filename
+}, async (conn, mek, m, { from, q, isMe, reply }) => {
+    if (!q) {
+        return await reply('*Please provide a direct URL!*');
     }
-    try {
-      console.log('Query:', _0x2e19c8)
-      await _0x39918d.sendMessage(
-        _0x2a4f6f,
-        { text: '*Downloading your movie..\u2B07️*' },
-        { quoted: _0x4667c4 }
-      )
-      const [_0x27ff54, _0x2579d9, _0x532ce2] = _0x2e19c8.split('&')
-      if (!_0x27ff54 || !_0x2579d9 || !_0x532ce2) {
-        return await _0x5582d6(
-          '*Invalid format. Make sure all 3 parts are provided with `&` separator.*'
-        )
-      }
-      const _0x1fa479 = await download(_0x532ce2)
-      console.log(_0x1fa479)
-      const _0x3b707a = _0x1fa479.result.direct.trim(),
-        _0x2efabf = _0x27ff54.trim(),
-        _0x32dcf0 = await fetch(_0x2efabf),
-        _0x95dbe6 = await _0x32dcf0.buffer(),
-        _0xe8acef = await resizeImage(_0x95dbe6, 200, 200),
-        _0x3bb86b = Date.now(),
-        _0x196c29 = {
-          document: { url: _0x3b707a },
-          caption: '*\uD83C\uDFAC* ' + _0x2579d9 + '\n\n' + config.NAME,
-          jpegThumbnail: _0xe8acef,
-          mimetype: 'video/mp4',
-          fileName: _0x2579d9 + '.mp4',
+
+    if (isUploadingg) {
+        return await conn.sendMessage(from, { 
+            text: '*A Episode is already being uploaded. Please wait a while before uploading another one.* ⏳', 
+            quoted: mek 
+        });
+    }
+
+    let attempts = 0;
+    const maxRetries = 5;
+    isUploadingg = false;
+
+    
+    while (attempts < maxRetries) {
+        try {
+            const [datae, datas, dat] = q.split("±");
+            let url = datas;
+            let mediaUrl = url;
+            let downloadUrls = null;
+
+            // 🔹 Check only if it's from Cinesubz
+            if (url.includes(cinesubzDownBase2)) {
+                const check = await fetchJson(`${apilinkcine2}api/get/?url=${encodeURIComponent(url)}`);
+
+                if (check?.isUploaded === false) {
+                    // New upload case
+                    const urlApi = `https://manojapi.infinityapi.org/api/v1/cinesubz-download?url=${encodeURIComponent(url)}&apiKey=sadasthemi20072000`; 
+                    const getDownloadUrls = await axios.get(urlApi);
+
+                    downloadUrls = getDownloadUrls.data.results;
+
+                    // Save in DB
+                    const payload = { url, downloadUrls, uploader: "VISPER-MD" }; 
+                    await axios.post(`${apilinkcine2}api/save`, payload);
+
+                } else {
+                    // Already uploaded
+                    downloadUrls = check.downloadUrls;
+                }
+
+                // Pick best available link
+                mediaUrl =
+                     downloadUrls.direct ||
+                    downloadUrls?.gdrive2 
+            }
+
+            // 🔹 Thumbnail
+            const botimg = datae;
+
+            await conn.sendMessage(from, { react: { text: '⬆️', key: mek.key } });
+            const up_mg = await conn.sendMessage(from, { text: '*Uploading your movie..⬆️*' });
+
+            // 🔹 Send document
+            await conn.sendMessage(config.JID || from, { 
+                document: { url: mediaUrl },
+                caption: `🎞️ ${dat}\n\n${config.FOOTER}`,
+                mimetype: "video/mp4",
+                jpegThumbnail: await (await fetch(botimg)).buffer(),
+                fileName: `${dat}.mp4`
+            });
+
+            await conn.sendMessage(from, { delete: up_mg.key });
+            await conn.sendMessage(from, { react: { text: '✔️', key: mek.key } });
+
+            break; // ✅ success → exit loop
+        } catch (error) {
+            attempts++;
+            console.error(`Attempt ${attempts}: Error fetching or sending:`, error);
         }
-      await _0x39918d.sendMessage(_0x2a4f6f, {
-        react: {
-          text: '\u2B06️',
-          key: _0x4667c4.key,
-        },
-      })
-      await _0x39918d.sendMessage(
-        _0x2a4f6f,
-        { text: '*Uploading your movie..\u2B06️*' },
-        { quoted: _0x4667c4 }
-      )
-      await _0x39918d.sendMessage(config.JID || _0x2a4f6f, _0x196c29)
-      await _0x39918d.sendMessage(_0x2a4f6f, {
-        react: {
-          text: '\u2714️',
-          key: _0x4667c4.key,
-        },
-      })
-    } catch (_0x19bbef) {
-      console.error('\u274C Error:', _0x19bbef)
-      await _0x39918d.sendMessage(
-        _0x2a4f6f,
-        { text: '*\u274C Error fetching or sending.*' },
-        { quoted: _0x4667c4 }
-      )
     }
+
+    if (attempts >= maxRetries) {
+        await conn.sendMessage(from, { text: "*Error fetching at this moment. Please try again later ❗*" }, { quoted: mek });
+    }
+
+    isUploadingg = false;
+});
+
+//newtv
+
+cmd({
+  pattern: "cinefirstdl",	
+  react: '🎬',
+  alias: ["tv"],
+  desc: "Movie downloader",
+  filename: __filename
+}, async (conn, m, mek, { from, q, prefix, isMe, reply }) => {
+  try {
+    if (!q) return await reply('*⚠️ Please provide a valid search query or URL.*');
+
+    console.log('[CINE-FIRSTDL] Query:', q);
+    
+    const [dllink, img, title] = q.split("±");
+
+    if (!img) return await reply('*🚫 Invalid format. Expected "link±imageURL".*');
+
+    const results = await cinesubz_tv_firstdl(img);
+    if (!results?.dl_links?.length) {
+      return await conn.sendMessage(from, { text: '*❌ No download links found!*' }, { quoted: mek });
+    }
+
+    const rows = results.dl_links.map(dl => ({
+      title: `${dl.quality} - ${dl.size}`,
+      description: '',
+      rowId: prefix + `pakatv ${dllink}&${dl.direct_link}&${title}`
+    }));
+
+    const sections = [{
+      title: "🎥 Select your preferred quality below:",
+      rows
+    }];
+
+    const caption = `*🍿 Episode Title:* ${title}_*_\n\n*🔢 Choose a quality from the list below:*`;
+
+    // 💬 Toggle List Message or Button Mode
+    if (config.BUTTON === "true") {
+      return await conn.sendMessage(from, {
+        text: caption,
+        footer: config.FOOTER,
+        title: '📺 Cinesubz.lk Download Options',
+        buttonText: "🎬 Select Quality",
+        sections
+      }, { quoted: mek });
+    } else {
+      const listMessage = {
+        text: caption,
+        footer: config.FOOTER,
+        title: '📺 Cinesubz.lk Download Options',
+        buttonText: '🔽 Tap to select quality',
+        sections
+      };
+      return await conn.listMessage(from, listMessage, mek);
+    }
+
+  } catch (err) {
+    console.error('[CINE-FIRSTDL ERROR]', err);
+    await reply('🚫 *An unexpected error occurred!*\n\n' + err.message || err);
   }
-)
-cmd(
-  {
-    pattern: 'dlc',
-    react: '\u2B07️',
-    filename: __filename,
-  },
-  async (
-    _0x18a6ad,
-    _0x132031,
-    _0x1ff96a,
-    { from: _0x1b4c1e, q: _0x8b1f11, reply: _0x3f6009, prefix: _0x508f13 }
-  ) => {
-    if (!_0x8b1f11) {
-      return _0x3f6009('*කරුණාකර Cinesubz URL එකක් ලබා දෙන්න !*')
-    }
-    try {
-      const _0x2e4a4c = await cinesubz_tvshow_info(_0x8b1f11)
-      if (
-        !_0x2e4a4c.data ||
-        !Array.isArray(_0x2e4a4c.data.episodes) ||
-        _0x2e4a4c.data.episodes.length === 0
-      ) {
-        return _0x3f6009('\u274C Episode එකක්වත් හමු නොවුණා.')
-      }
-      const _0x1439f3 = _0x2e4a4c.data.episodes,
-        _0x4f06c8 = _0x1439f3
-          .map((_0x3b3500) => _0x3b3500.link)
-          .filter(Boolean),
-        _0x3dd1d3 =
-          _0x2e4a4c.data.mainImage ||
-          'https://files.catbox.moe/3mvn78.png',
-        _0x4d21e5 = _0x2e4a4c.data.title || 'Cinesubz_Show',
-        _0x2a0d78 = await cinesubz_tv_firstdl(_0x4f06c8[0]),
-        _0x2210b5 = ['360', '480', '720', '1080'],
-        _0x1d049e = Object.values(_0x2a0d78.dl_links || {}).filter(
-          (_0x2d61e3) =>
-            _0x2210b5.some((_0x4c155e) =>
-              _0x2d61e3.quality?.toLowerCase().includes(_0x4c155e)
-            )
-        )
-      if (!_0x1d049e.length) {
-        return (
-          console.log(
-            '\u274C No valid quality matches. Found:',
-            _0x2a0d78.dl_links
-          ),
-          _0x3f6009('\u274C Valid quality options not found.')
-        )
-      }
-      let _0x442830 = _0x1d049e.map((_0x2c8790) => ({
-        title: _0x2c8790.quality + ' - ' + (_0x2c8790.size || 'Unknown Size'),
-        rowId:
-          _0x508f13 +
-          'dlcq ' +
-          _0x2c8790.quality +
-          '|' +
-          _0x8b1f11 +
-          '|' +
-          _0x4d21e5,
-      }))
-      const _0x56cce2 = [
-          {
-            title: '_\uD83C\uDFAC Download Quality තෝරන්න_',
-            rows: _0x442830,
-          },
-        ],
-        _0x219b4c = {
-          text: '\uD83C\uDF9E *' + _0x4d21e5 + '*\n',
-          footer: config.FOOTER,
-          title: '\uD83D\uDCFA [Cinesubz Downloader]',
-          buttonText: '\uD83D\uDD3D Quality තෝරන්න',
-          sections: _0x56cce2,
-        },
-        _0x4f85ac = '\uD83C\uDF9E *' + _0x4d21e5 + '*\n',
-        _0x16308d = _0x1d049e.map((_0x168058, _0x3c1acb) => {
-          const _0xf58c4a =
-            (_0x168058.quality + ' - ' + (_0x168058.size || 'Unknown Size'))
-              .replace(
-                /WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|Telegram BluRay SD|Telegram BluRay HD|Direct BluRay SD|Direct BluRay HD|Direct BluRay FHD|FHD|HD|SD|Telegram BluRay FHD/gi,
-                ''
-              )
-              .trim() || 'No info'
-          return {
-            title: _0xf58c4a,
-            id:
-              _0x508f13 +
-              'dlcq ' +
-              _0x168058.quality +
-              '|' +
-              _0x8b1f11 +
-              '|' +
-              _0x4d21e5,
-          }
-        }),
-        _0x38e119 = {
-          title: '\uD83C\uDFAC Choose a download quality :)',
-          sections: [
-            {
-              title: 'Available Links',
-              rows: _0x16308d,
-            },
-          ],
-        }
-      config.BUTTON === 'true'
-        ? await _0x18a6ad.sendMessage(
-            _0x1b4c1e,
-            {
-              image: { url: config.LOGO },
-              caption: _0x4f85ac,
-              footer: config.FOOTER,
-              buttons: [
-                {
-                  buttonId: 'download_list',
-                  buttonText: { displayText: '\uD83C\uDFA5 Select Option' },
-                  type: 4,
-                  nativeFlowInfo: {
-                    name: 'single_select',
-                    paramsJson: JSON.stringify(_0x38e119),
-                  },
-                },
-              ],
-              headerType: 1,
-              viewOnce: true,
-            },
-            { quoted: _0x132031 }
-          )
-        : await _0x18a6ad.listMessage(_0x1b4c1e, _0x219b4c, _0x132031)
-    } catch (_0x47a414) {
-      console.error(_0x47a414)
-      _0x3f6009('\u274C දෝෂයක් හට ගැණිනි.')
-    }
-  }
-)
-const { delay } = require('@whiskeysockets/baileys')
-cmd(
-  {
-    pattern: 'dlcq',
+});
+
+  cmd({
+    pattern: "tvdll",
+    react: "⬇️",
     dontAddCommandList: true,
-    filename: __filename,
-  },
-  async (
-    _0xe7c53c,
-    _0x9d4e81,
-    _0x2cad04,
-    { from: _0x523d68, q: _0x365a2d, reply: _0x34df94 }
-  ) => {
-    if (!_0x365a2d.includes('|')) {
-      return _0x34df94(
-        '\u274C Invalid format. Use: .dlcq <quality>|<url>|<title>'
-      )
-    }
-    const [_0x28ad84, _0x436b17, _0xd7b847] = _0x365a2d.split('|'),
-      _0x5d7915 = _0x436b17?.trim(),
-      _0xe2c1 = _0xd7b847?.trim() || 'Cinesubz',
-      _0x38bf48 = ['360', '480', '720', '1080'],
-      _0x6434e1 = _0x38bf48.some((_0x1bc927) =>
-        _0x28ad84.toLowerCase().includes(_0x1bc927)
-      )
-    if (!_0x6434e1) {
-      return _0x34df94(
-        '\u274C Unsupported quality. Use 360, 480, 720, or 1080.'
-      )
-    }
+    filename: __filename
+}, async (conn, mek, m, { from, q, isMe, reply }) => {
+    if (!q) return await reply('*Please provide a direct URL!*');
+
     try {
-      const _0x485651 = await cinesubz_tvshow_info(_0x5d7915),
-        _0x4e0731 = _0x485651.data.episodes,
-        _0x479201 =
-          _0x485651.data.mainImage ||
-          'https://files.catbox.moe/3mvn78.png'
-      if (!_0x4e0731 || !_0x4e0731.length) {
-        return _0x34df94('\u274C No episodes found for this link.')
+        console.log("Query:", q);
+        await conn.sendMessage(from, { text: `*Downloading your movie..⬇️*` }, { quoted: mek });
+
+        const [dllink, img, title] = q.split("&");
+        if (!dllink || !img || !title) {
+            return await reply("*Invalid format. Make sure all 3 parts are provided with `&` separator.*");
+        }
+
+        const mh = await download(title)
+console.log(mh)
+	    
+        const mediaUrl = mh.result.direct.trim();
+     
+
+        const botimgUrl = dllink.trim();
+        const botimgResponse = await fetch(botimgUrl);
+        const botimgBuffer = await botimgResponse.buffer();
+        const resizedBotImg = await resizeImage(botimgBuffer, 200, 200);
+
+        const dat = Date.now();
+        const message = {
+            document: { url: mediaUrl },
+            caption: `*🎬 Name :* ${img}\n\n${config.NAME}`,
+            jpegThumbnail: resizedBotImg,
+            mimetype: "video/mp4",
+            fileName: `${img}.mp4`,
+        };
+
+        await conn.sendMessage(from, { react: { text: '⬆️', key: mek.key } });
+        await conn.sendMessage(from, { text: `*Uploading your movie..⬆️*` }, { quoted: mek });
+        await conn.sendMessage(config.JID || from, message);
+
+        await conn.sendMessage(from, { react: { text: '✔️', key: mek.key } });
+        await conn.sendMessage(from, { text: `*Movie sent successfully to JID:* ${config.JID || from} ✔`, quoted: mek });
+
+    } catch (error) {
+        console.error('❌ Error:', error);
+        await conn.sendMessage(from, { text: '*❌ Error fetching or sending.*' }, { quoted: mek });
+    }
+});
+
+cmd({
+    pattern: "dlc",
+    react: "⬇️",
+    filename: __filename
+}, async (conn, mek, m, { from, q, reply, prefix }) => {
+    if (!q) return reply('*කරුණාකර Cinesubz URL එකක් ලබා දෙන්න !*');
+
+    try {
+        const sadas = await cinesubz_tvshow_info(q);
+
+        if (!sadas.data || !Array.isArray(sadas.data.episodes) || sadas.data.episodes.length === 0) {
+            return reply("❌ Episode එකක්වත් හමු නොවුණා.");
+        }
+
+        const episodes = sadas.data.episodes;
+        const allLinks = episodes.map(ep => ep.link).filter(Boolean);
+        const showimg = sadas.data.mainImage || "https://i.ibb.co/hcyQfwy/7a265c4eee41e2b7.jpg";
+        const showTitle = sadas.data.title || "Cinesubz_Show";
+
+        const sampleEp = await cinesubz_tv_firstdl(allLinks[0]);
+
+        // Allowed qualities keywords to look for inside quality names
+        const allowedQualities = ["360", "480", "720", "1080"];
+
+        // Object.values() to get array of dl_links entries
+        const validOptions = Object.values(sampleEp.dl_links || {}).filter(item =>
+            allowedQualities.some(qty => item.quality?.toLowerCase().includes(qty))
+        );
+
+        if (!validOptions.length) {
+            console.log("❌ No valid quality matches. Found:", sampleEp.dl_links);
+            return reply("❌ Valid quality options not found.");
+        }
+
+        // Create rows for listMessage
+        let rows = validOptions.map(dl => ({
+            title: `${dl.quality} - ${dl.size || "Unknown Size"}`,
+            //description: 'මෙම Quality එකෙන් සියලු Episodes ලබාගන්න.',
+            rowId: `${prefix}dlcq ${dl.quality}|${q}|${showTitle}`
+        }));
+
+        const sections = [{
+            title: "_🎬 Download Quality තෝරන්න_",
+            rows
+        }];
+
+        const listMessage = {
+            text: `🎞 *${showTitle}*\n.`,
+            footer: config.FOOTER,
+            title: `📺 [Cinesubz Downloader]`,
+            buttonText: "🔽 Quality තෝරන්න",
+            sections
+        };
+
+const msg = `🎞 *${showTitle}*\n`
+
+	    
+const rowss = validOptions.map((v, i) => {
+    // Clean size and quality text by removing common tags
+    const cleanText = `${v.quality} - ${v.size || "Unknown Size"}`
+      .replace(/WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|Telegram BluRay SD|Telegram BluRay HD|Direct BluRay SD|Direct BluRay HD|Direct BluRay FHD|FHD|HD|SD|Telegram BluRay FHD/gi, "")
+      .trim() || "No info";
+
+    return {
+      title: cleanText,
+      id: `${prefix}dlcq ${v.quality}|${q}|${showTitle}`// Make sure your handler understands this format
+    };
+  });
+
+
+const listButtons = {
+    title: "🎬 Choose a download quality :)",
+    sections: [
+      {
+        title: "Available Links",
+        rows: rowss
       }
-      await _0x34df94(
-        '*\uD83D\uDCE5 Starting to download episodes in *' +
-          _0x28ad84 +
-          'Quality...'
-      )
-      for (let _0x442544 = 0; _0x442544 < _0x4e0731.length; _0x442544++) {
-        const _0x56f834 = _0x4e0731[_0x442544]
-        let _0x4599f6 = false
-        for (let _0x37315d = 1; _0x37315d <= 4; _0x37315d++) {
-          try {
-            const _0x5bd44a = await cinesubz_tv_firstdl(_0x56f834.link),
-              _0x302a01 = Object.values(_0x5bd44a.dl_links || {}),
-              _0x3a4149 = _0x302a01.find((_0x12575f) =>
-                _0x12575f.quality
-                  ?.toLowerCase()
-                  .includes(_0x28ad84.toLowerCase())
-              )
-            if (!_0x3a4149) {
-              throw new Error('Requested quality not available.')
-            }
-            const _0x39efb3 = await download(_0x3a4149.direct_link),
-              _0x244d22 = _0x39efb3?.result?.direct
-            if (!_0x244d22 || !_0x244d22.startsWith('http')) {
-              throw new Error('Invalid direct link')
-            }
-            const _0x5e1941 = await (
-                await fetch(_0x56f834.image || _0x479201)
-              ).buffer(),
-              _0x4fa3ff = _0x56f834.name || 'Episode_' + (_0x442544 + 1),
-              _0x1b6788 =
-                _0xe2c1.replace(/[^a-zA-Z0-9]/g, '_') +
-                '_E' +
-                (_0x442544 + 1) +
-                '.mp4'
-            await _0xe7c53c.sendMessage(config.JID || _0x523d68, {
-              document: { url: _0x244d22 },
-              caption:
-                '*\uD83D\uDCFA' +
-                _0xe2c1 +
-                '*\n*Episode ' +
-                _0x56f834.number +
-                ' - ' +
-                _0x4fa3ff +
-                '*\n\n*`[ ' +
-                _0x28ad84 +
-                ' ]`*\n\n' +
-                config.NAME,
-              jpegThumbnail: _0x5e1941,
-              mimetype: 'video/mp4',
-              fileName: _0x1b6788,
-            })
-            await delay(3000)
-            _0x4599f6 = true
-            break
-          } catch (_0x2714c8) {
-            console.log(
-              '\u274C Episode ' +
-                (_0x442544 + 1) +
-                ' Attempt ' +
-                _0x37315d +
-                ' Failed:',
-              _0x2714c8.message
-            )
-            _0x37315d === 4
-              ? await _0xe7c53c.sendMessage(
-                  _0x523d68,
-                  {
-                    text:
-                      '\u26A0️ Failed to download Episode ' +
-                      (_0x442544 + 1) +
-                      ' after 4 attempts.',
-                  },
-                  { quoted: _0x9d4e81 }
-                )
-              : await delay(2000)
-          }
+    ]
+  };
+
+
+	if (config.BUTTON === "true") {
+      await conn.sendMessage(from, {
+    image: { url: config.LOGO},
+    caption: msg,
+    footer: config.FOOTER,
+    buttons: [
+
+	    
+      {
+        buttonId: "download_list",
+        buttonText: { displayText: "🎥 Select Option" },
+        type: 4,
+        nativeFlowInfo: {
+          name: "single_select",
+          paramsJson: JSON.stringify(listButtons)
         }
       }
-      await _0x34df94('*\u2705 All episodes have been Downloaded.*')
-    } catch (_0xac37a3) {
-      console.error(_0xac37a3)
-      _0x34df94('\u274C An error occurred while processing your request.')
+	    
+    ],
+    headerType: 1,
+    viewOnce: true
+  }, { quoted: mek });
+    } else {
+
+
+
+
+
+	    
+        await conn.listMessage(from, listMessage, mek);
+	}
+
+    } catch (err) {
+        console.error(err);
+        reply("❌ දෝෂයක් හට ගැණිනි.");
     }
-  }
-)
+});
+
+
+const { delay } = require("@whiskeysockets/baileys");
+
+
+
+cmd({
+    pattern: "dlcq",
+    dontAddCommandList: true,
+    filename: __filename
+}, async (conn, mek, m, { from, q, reply }) => {
+    if (!q.includes("|")) return reply("❌ Invalid format. Use: .dlcq <quality>|<url>|<title>");
+
+    const [quality, rawUrl, rawTitle] = q.split("|");
+    const url = rawUrl?.trim();
+    const title = rawTitle?.trim() || "Cinesubz";
+
+    const allowedQualities = ["360", "480", "720", "1080"];
+    const isAllowed = allowedQualities.some(qty => quality.toLowerCase().includes(qty));
+    if (!isAllowed) return reply("❌ Unsupported quality. Use 360, 480, 720, or 1080.");
+
+    try {
+        const sadas = await cinesubz_tvshow_info(url);
+        const episodes = sadas.data.episodes;
+        const showimg = sadas.data.mainImage || "https://i.ibb.co/hcyQfwy/7a265c4eee41e2b7.jpg";
+
+        if (!episodes || !episodes.length) return reply("❌ No episodes found for this link.");
+
+        await reply(`*📥 Starting to download episodes in *${quality}* quality...*`);
+
+        for (let i = 0; i < episodes.length; i++) {
+            const ep = episodes[i];
+            let success = false;
+
+            for (let attempt = 1; attempt <= 4; attempt++) {
+                try {
+                    const dlInfo = await cinesubz_tv_firstdl(ep.link);
+                    const allDLs = Object.values(dlInfo.dl_links || {});
+                    const matchedDL = allDLs.find(dl =>
+                        dl.quality?.toLowerCase().includes(quality.toLowerCase())
+                    );
+                    if (!matchedDL) throw new Error("Requested quality not available.");
+
+                    const dldata = await download(matchedDL.direct_link);
+                    const mediaUrl = dldata?.result?.direct;
+                    if (!mediaUrl || !mediaUrl.startsWith("http")) throw new Error("Invalid direct link");
+
+
+                    const thumb = await (await fetch(ep.image || showimg)).buffer();
+                    const name = ep.name || `Episode_${i + 1}`;
+                    const safeName = `${title.replace(/[^a-zA-Z0-9]/g, "_")}_E${i + 1}.mp4`;
+
+                    await conn.sendMessage(config.JID || from, {
+                        document: { url: mediaUrl },
+                        caption: `*📺 Name: ${title}*\n*Episode ${ep.number} - ${name}*\n\n*\`[ ${quality} ]\`*\n\n${config.FOOTER}`,
+                        jpegThumbnail: thumb,
+                        mimetype: "video/mp4",
+                        fileName: safeName
+                    });
+
+                    await delay(3000); // delay between episodes
+                    success = true;
+                    break;
+                } catch (e) {
+                    console.log(`❌ Episode ${i + 1} Attempt ${attempt} Failed:`, e.message);
+                    if (attempt === 4) {
+                        await conn.sendMessage(from, {
+                            text: `⚠️ Failed to download Episode ${i + 1} after 4 attempts.`,
+                        }, { quoted: mek });
+                    } else {
+                        await delay(2000); // wait before next attempt
+                    }
+                }
+            }
+        }
+
+        await reply("*✅ All episodes have been processed.*");
+
+    } catch (err) {
+        console.error(err);
+        reply("❌ An error occurred while processing your request.");
+    }
+});
+
+
+
+
+
+
+//====================================================================================================
 cmd(
   {
     pattern: 'ctdetailss',
