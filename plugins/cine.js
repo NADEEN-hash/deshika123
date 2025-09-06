@@ -1096,7 +1096,7 @@ const listButtons = {
 })
 
 //newtv
-let isUploadingg = false; // Track upload status
+let isUploadinggg = false; // Track upload status
 
 
 
@@ -1115,7 +1115,7 @@ cmd({
         return await reply('*Please provide a direct URL!*');
     }
 
-    if (isUploadingg) {
+    if (isUploadinggg) {
         return await conn.sendMessage(from, { 
             text: '*A Episode is already being uploaded. Please wait a while before uploading another one.* ⏳', 
             quoted: mek 
@@ -1124,7 +1124,7 @@ cmd({
 
     let attempts = 0;
     const maxRetries = 5;
-    isUploadingg = false;
+    isUploadinggg = false;
 
     
     while (attempts < maxRetries) {
@@ -1189,7 +1189,7 @@ cmd({
         await conn.sendMessage(from, { text: "*Error fetching at this moment. Please try again later ❗*" }, { quoted: mek });
     }
 
-    isUploadingg = false;
+    isUploadinggg = false;
 });
 
 //newtv
