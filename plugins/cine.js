@@ -1218,9 +1218,9 @@ cmd({
     const rows = results.dl_links.map(dl => ({
       title: `${dl.quality} - ${dl.size}`,
       description: '',
-      rowId: prefix + `pakatv ${dllink}&${dl.direct_link}&${title}`
+      rowId: prefix + `pakatv ${dllink}±${dl.direct_link}±${title}`
     }));
-
+    console.log('📺Cinetv-dl:', ${dl.direct_link} );
     const sections = [{
       title: "🎥 Select your preferred quality below:",
       rows
