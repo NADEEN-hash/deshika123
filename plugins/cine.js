@@ -353,13 +353,13 @@ cmd({
 
                 if (check?.isUploaded === false) {
                     // New upload case
-                    const urlApi = `https://manojapi.infinityapi.org/api/v1/cinesubz-download?url=${encodeURIComponent(url)}&apiKey=sadasthemi20072000`; 
+                    const urlApi = `https://manojapi.infinityapi.org/api/v1/cinesubz-download?url=${encodeURIComponent(url)}&apiKey=hupa11`; 
                     const getDownloadUrls = await axios.get(urlApi);
 
                     downloadUrls = getDownloadUrls.data.results;
 
                     // Save in DB
-                    const payload = { url, downloadUrls, uploader: "VISPER-MD" }; 
+                    const payload = { url, downloadUrls, uploader: "NADEEN-MD" }; 
                     await axios.post(`${apilinkcine}api/save`, payload);
 
                 } else {
@@ -1140,7 +1140,7 @@ cmd({
 
                 if (check?.isUploaded === false) {
                     // New upload case
-                    const urlApi = `https://manojapi.infinityapi.org/api/v1/cinesubz-download?url=${encodeURIComponent(url)}&apiKey=sadasthemi20072000`; 
+                    const urlApi = `https://manojapi.infinityapi.org/api/v1/cinesubz-download?url=${encodeURIComponent(url)}&apiKey=hupa11`; 
                     const getDownloadUrls = await axios.get(urlApi);
 
                     downloadUrls = getDownloadUrls.data.results;
