@@ -1010,14 +1010,15 @@ rows.push(
         buttonText: { displayText: `${v.number}` },
         type: 1
           }
-		 
+		
 		  //{buttonId: prefix + 'cdetails ' + q, buttonText: {displayText: 'Details send'}, type: 1}
 		 
 		 
 		 );
         })
 
-
+     tvdata = `${v.link} `
+console.log (`Tv link`, tvdata )
 
 
   
