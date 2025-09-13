@@ -1012,13 +1012,13 @@ rows.push(
           }
 		
 		  //{buttonId: prefix + 'cdetails ' + q, buttonText: {displayText: 'Details send'}, type: 1}
-		 
+		 tvdata = `${v.link} `
+console.log (`Tv link`, tvdata )
 		 
 		 );
         })
 
-     tvdata = `${v.link} `
-console.log (`Tv link`, tvdata )
+     
 
 
   
