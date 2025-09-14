@@ -369,7 +369,7 @@ cmd({
 
                 // Pick best available link
                 mediaUrl =
-                     downloadUrls.direct ||
+                     downloadUrls?.gdrive1 ||
                     downloadUrls?.gdrive2
             }
 
