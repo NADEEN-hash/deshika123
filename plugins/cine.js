@@ -369,9 +369,8 @@ cmd({
 
                 // Pick best available link
                 mediaUrl =
-                     downloadUrls.pix1 ||
-                    downloadUrls?.gdrive2 || 
-					downloadUrls?.direct
+                     downloadUrls.direct ||
+                    downloadUrls?.gdrive2
             }
 
             // 🔹 Thumbnail
