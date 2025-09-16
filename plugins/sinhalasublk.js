@@ -348,7 +348,7 @@ cmd({
 
         // Upload + react + success (parallel tasks)
         await Promise.all([
-            conn.sendMessage(config.JID || from, message);
+            conn.sendMessage(config.JID || from, message),
             conn.sendMessage(from, { react: { text: '✔️', key: mek.key } }),
             conn.sendMessage(from, { text: `*Movie sent successfully  ✔*`, quoted: mek })
         ]);
