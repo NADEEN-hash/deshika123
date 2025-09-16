@@ -324,7 +324,6 @@ cmd({
         //===================================================
         const [pix, imglink, title] = q.split("±");
         if (!pix || !imglink || !title) return await reply("⚠️ Invalid format. Use:\n`sindl link±img±title`");
-		if (pix.includes("https://pixeldrain.com")) return await reply("🚫 Invalid URL !!");
         //===================================================
 
         const da = pix.split("https://pixeldrain.com/u/")[1];
