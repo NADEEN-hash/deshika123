@@ -451,7 +451,7 @@ if (!isFree && !isMe && !isPre) {
 
 }
  if(!q) return await reply('*please give me text !..*')
-let urll = await sinhalasubb_search(q)
+let urll = await fetchJson(`https://visper-md-ap-is.vercel.app/movie/sinhalasub/tv/search?q=${q}`)
 
   if (urll.length === 0) 
 	{
@@ -558,7 +558,7 @@ if (!q || !q.includes('https://sinhalasub.lk/tvshows/')) {
     console.log('Invalid input:', q);
     return await reply('*❗ This is a movie, please use .mv command.*');
 }
-let sadas = await sinhalasubtv_info(q)
+let sadas = await fetchJson(`https://visper-md-ap-is.vercel.app/movie/sinhalasub/tv/info?q=${q}`)
 
 var rows = [];  	
 rows.push({
@@ -664,7 +664,7 @@ try{
 
 const dllink = q.split("+")[0]
 const img = q.split("+")[1]
-let url = await sinhalasubtv_dl(dllink)
+let url = await fetchJson(`https://visper-md-ap-is.vercel.app/movie/sinhalasub/tv/dl?q=${dllink}`)
 
 if (url.length < 1) return await conn.sendMessage(from, { text: N_FOUND }, { quoted: mek } )
 var srh = [];  
@@ -696,7 +696,7 @@ sections
 const caption = `*🍟 Epishodes title :* _*${url.result.title}*_`;
 
     // ✅ Button mode toggle
-    if (config.BUTTON === "true") {
+    if (config.BUTTON3 === "true") {
       return await conn.sendMessage(from, {
         text: caption,
         footer: config.FOOTER,
