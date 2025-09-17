@@ -985,15 +985,15 @@ if (!q || !q.includes('https://cinesubz.net/tvshows')) {
     return await reply('*❗ This is a movie, please use .mv command.*');
 }
 
-let sadas = await cinesubz_tvshow_info(q)
-let msg = `*📽️ 𝗧ɪᴛʟᴇ ➮* *_${sadas.data.title || 'N/A'}_*
+let sadas = await fetchJson(`https://manojapi.infinityapi.org/api/v1/cinesubz-tvshow?url=${q}&apiKey=8e35f949-3ac8-4f35-bae9-cc8c401449d5`)
+let msg = `*📽️ 𝗧ɪᴛʟᴇ ➮* *_${sadas.results.title || 'N/A'}_*
 
-*📅 𝗥ᴇʟᴇꜱᴇᴅ ᴅᴀᴛᴇ ➮* _${sadas.data.date || 'N/A'}_
-*🌎 𝗖ᴏᴜɴᴛʀʏ ➮* _${sadas.data.country || 'N/A'}_
-*💃 𝗥ᴀᴛɪɴɢ ➮* _${sadas.data.imdb || 'N/A'}_
-*⏰ 𝗥ᴜɴᴛɪᴍᴇ ➮* _${sadas.data.runtime || 'N/A'}_
-*💁‍♂️ 𝗦ᴜʙᴛɪᴛʟᴇ ʙʏ ➮* _${sadas.data.director || 'N/A'}_
-*🎭 𝗚ᴇɴᴀʀᴇꜱ ➮* ${sadas.data.category.join(', ') || 'N/A'}
+*📅 𝗥ᴇʟᴇꜱᴇᴅ ᴅᴀᴛᴇ ➮* _${sadas.results.release_date || 'N/A'}_
+*🌎 𝗖ᴏᴜɴᴛʀʏ ➮* _${sadas.results.country || 'N/A'}_
+*💃 𝗥ᴀᴛɪɴɢ ➮* _${sadas.results.TMDb_Rating || 'N/A'}_
+*⏰ 𝗥ᴜɴᴛɪᴍᴇ ➮* _${sadas.results.duration || 'N/A'}_
+*💁‍♂️ 𝗦ᴜʙᴛɪᴛʟᴇ ʙʏ ➮* _${sadas.results.director.name || 'N/A'}_
+*🎭 𝗚ᴇɴᴀʀᴇꜱ ➮* ${sadas.results.categories.join(', ') || 'N/A'}
 `
 
  
@@ -1001,13 +1001,13 @@ var rows = [];
 
 rows.push(
     { buttonId: prefix + 'ctdetailss ' + q, buttonText: { displayText: 'Details Card' }, type: 1 },
-    { buttonId: prefix + 'dlc ' + q, buttonText: { displayText: 'All Epishodes Send\n' }, type: 1 }
+    { buttonId: prefix + 'dlcz ' + q, buttonText: { displayText: 'All Epishodes Send\n' }, type: 1 }
 );
 	
-  sadas.data.episodes.map((v) => {
+  sadas.results.epi.episodes.map((v) => {
 	rows.push({
-        buttonId: prefix + `cinefirstdl ${sadas.data.mainImage}±${v.link}±${sadas.data.title} *\`${v.number}\`*`,
-        buttonText: { displayText: `${v.number}` },
+        buttonId: prefix + `cinefirstdl ${sadas.results.thumb.url}±${v.link}±${sadas.results.title} *\`${v.chapter}\`*`,
+        buttonText: { displayText: `${v.chapter}` },
         type: 1
           }
 		
@@ -1022,22 +1022,22 @@ rows.push(
   
 const buttonMessage = {
  
-image: {url: sadas.data.mainImage.replace("-200x300", "")},	
+image: {url: sadas.results.thumb.url.replace("-200x300", "")},	
   caption: msg,
   footer: config.FOOTER,
   buttons: rows,
   headerType: 4
 }
 
-const rowss = sadas.data.episodes.map((v, i) => {
+const rowss = sadas.results.epi.episodes.map((v, i) => {
     // Clean size and quality text by removing common tags
-    const cleanText = `${v.number}`
+    const cleanText = `${v.chapter}`
       .replace(/WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|Telegram BluRay SD|Telegram BluRay HD|Direct BluRay SD|Direct BluRay HD|Direct BluRay FHD|FHD|HD|SD|Telegram BluRay FHD/gi, "")
       .trim() || "No info";
 
     return {
       title: cleanText,
-      id: prefix + `cinefirstdl ${sadas.data.mainImage}±${v.link}±${sadas.data.title} *\`${v.number}\`*` // Make sure your handler understands this format
+      id: prefix + `cinefirstdl ${sadas.results.thum.url}±${v.link}±${sadas.results.title} *\`${v.chapter}\`*` // Make sure your handler understands this format
     };
   });
 
@@ -1055,7 +1055,7 @@ const listButtons = {
 
 	if (config.BUTTON === "true") {
       await conn.sendMessage(from, {
-    image: { url: sadas.data.mainImage.replace("-200x300", "")},
+    image: { url: sadas.results.thum.url.replace("-200x300", "")},
     caption: msg,
     footer: config.FOOTER,
     buttons: [
@@ -1065,7 +1065,7 @@ const listButtons = {
             type: 1
         },
 	    {
-            buttonId: prefix + 'dlc ' + q,
+            buttonId: prefix + 'dlcz ' + q,
             buttonText: { displayText: "All Epishodes Send" },
             type: 1
         },
@@ -1209,7 +1209,7 @@ cmd({
 
     if (!img) return await reply('*🚫 Invalid format. Expected "link±imageURL".*');
 
-    const results = await cinesubz_tv_firstdl(img);
+    const results = await fetchJson(`https://manojapi.infinityapi.org/api/v1/cinesubz-tvshow?url=${img}&apiKey=8e35f949-3ac8-4f35-bae9-cc8c401449d5`);
     if (!results?.dl_links?.length) {
       return await conn.sendMessage(from, { text: '*❌ No download links found!*' }, { quoted: mek });
     }
@@ -1217,7 +1217,7 @@ cmd({
     const rows = results.dl_links.map(dl => ({
       title: `${dl.quality} - ${dl.size}`,
       description: '',
-      rowId: prefix + `pakatv ${dllink}±${dl.direct_link}±${title}`
+      rowId: prefix + `pakatv ${dllink}±${dl.link}±${title}`
     }));
     const sections = [{
       title: "🎥 Select your preferred quality below:",
@@ -1227,7 +1227,7 @@ cmd({
     const caption = `*🍿 Episode Title:* ${title}_*_\n\n*🔢 Choose a quality from the list below:*`;
 
     // 💬 Toggle List Message or Button Mode
-    if (config.BUTTON === "true") {
+    if (config.BUTTON3 === "true") {
       return await conn.sendMessage(from, {
         text: caption,
         footer: config.FOOTER,
@@ -1310,16 +1310,16 @@ cmd({
     if (!q) return reply('*කරුණාකර Cinesubz URL එකක් ලබා දෙන්න !*');
 
     try {
-        const sadas = await cinesubz_tvshow_info(q);
+        const sadas. = await fetchJson(`https://manojapi.infinityapi.org/api/v1/cinesubz-tvshow?url=${q}&apiKey=8e35f949-3ac8-4f35-bae9-cc8c401449d5`);
 
-        if (!sadas.data || !Array.isArray(sadas.data.episodes) || sadas.data.episodes.length === 0) {
+        if (!sadas.results.epi || !Array.isArray(sadas.results.epi.episodes) || sadas.results.epi.episodes.length === 0) {
             return reply("❌ Episode එකක්වත් හමු නොවුණා.");
         }
 
-        const episodes = sadas.data.episodes;
+        const episodes = sadas.results.epi.episodes;
         const allLinks = episodes.map(ep => ep.link).filter(Boolean);
-        const showimg = sadas.data.mainImage || "https://i.ibb.co/hcyQfwy/7a265c4eee41e2b7.jpg";
-        const showTitle = sadas.data.title || "Cinesubz_Show";
+        const showimg = sadas.results.thumb.url || "https://i.ibb.co/hcyQfwy/7a265c4eee41e2b7.jpg";
+        const showTitle = sadas.results.title || "Cinesubz_Show";
 
         const sampleEp = await cinesubz_tv_firstdl(allLinks[0]);
 
