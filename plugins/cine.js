@@ -1310,7 +1310,7 @@ cmd({
     if (!q) return reply('*කරුණාකර Cinesubz URL එකක් ලබා දෙන්න !*');
 
     try {
-        const sadas. = await fetchJson(`https://manojapi.infinityapi.org/api/v1/cinesubz-tvshow?url=${q}&apiKey=8e35f949-3ac8-4f35-bae9-cc8c401449d5`);
+        const sadas = await fetchJson(`https://manojapi.infinityapi.org/api/v1/cinesubz-tvshow?url=${q}&apiKey=8e35f949-3ac8-4f35-bae9-cc8c401449d5`);
 
         if (!sadas.results.epi || !Array.isArray(sadas.results.epi.episodes) || sadas.results.epi.episodes.length === 0) {
             return reply("❌ Episode එකක්වත් හමු නොවුණා.");
