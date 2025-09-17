@@ -1003,8 +1003,10 @@ rows.push(
     { buttonId: prefix + 'ctdetailss ' + q, buttonText: { displayText: 'Details Card' }, type: 1 },
     { buttonId: prefix + 'dlcz ' + q, buttonText: { displayText: 'All Epishodes Send\n' }, type: 1 }
 );
-	
-  sadas.results.epi.episodes.map((v) => {
+	if (sadas?.results?.epi?.length) 
+	{ sadas.results.epi.forEach(season => {
+		if (season?.episodes?.length) {
+  season.episodes.forEach((v) => {
 	rows.push({
         buttonId: prefix + `cinefirstdl ${sadas.results.thumb.url}±${v.link}±${sadas.results.title} *\`${v.chapter}\`*`,
         buttonText: { displayText: `${v.chapter}` },
