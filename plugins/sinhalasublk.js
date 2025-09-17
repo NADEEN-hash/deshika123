@@ -451,7 +451,7 @@ if (!isFree && !isMe && !isPre) {
 
 }
  if(!q) return await reply('*please give me text !..*')
-let urll = await fetchJson(`https://visper-md-ap-is.vercel.app/movie/sinhalasub/tv/search?q=${q}`)
+let urll = await sinhalasubb_search(q)
 
   if (urll.length === 0) 
 	{
@@ -558,7 +558,7 @@ if (!q || !q.includes('https://sinhalasub.lk/tvshows/')) {
     console.log('Invalid input:', q);
     return await reply('*❗ This is a movie, please use .mv command.*');
 }
-let sadas = await fetchJson(`https://visper-md-ap-is.vercel.app/movie/sinhalasub/tv/info?q=${q}`)
+let sadas = await sinhalasubtv_info(q)
 
 var rows = [];  	
 rows.push({
