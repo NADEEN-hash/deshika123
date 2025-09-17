@@ -1209,7 +1209,7 @@ cmd({
 
     if (!img) return await reply('*🚫 Invalid format. Expected "link±imageURL".*');
 
-    const results = await fetchJson(`https://manojapi.infinityapi.org/api/v1/cinesubz-tvshow?url=${img}&apiKey=8e35f949-3ac8-4f35-bae9-cc8c401449d5`);
+    const results = await fetchJson(`https://manojapi.infinityapi.org/api/v1/cinesubz-tvshow?url=${img}&apiKey=8e35f949-3ac8-4f35-bae9-cc8c401449d5`)
     if (!results?.dl_links?.length) {
       return await conn.sendMessage(from, { text: '*❌ No download links found!*' }, { quoted: mek });
     }
