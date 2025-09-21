@@ -965,7 +965,7 @@ cmd(
                               envData.PREFIX +
                               'send <Jid>',
                           },
-                          { quoted: _0x21b0a3 }
+                          { quoted: fkontak }
                         )
                         return await _0x2498df.sendMessage(_0x5cc45, {
                           react: {
@@ -1031,7 +1031,7 @@ cmd(
       let _0x2f5250 = await _0x582d74.sendMessage(
         _0x76e4c,
         { text: '*Testing...*' },
-        { quoted: _0x3c1eed }
+        { quoted: fkontak }
       )
       var _0x54b78d = new Date().getTime()
       await _0x582d74.edite(
@@ -1583,7 +1583,7 @@ cmd(
       await _0x6c610.sendMessage(
         _0x5e13ef.chat,
         { text: _0x46cd04 },
-        { quoted: _0x644eb6 }
+        { quoted: fkontak }
       )
       _0x5e13ef.react('\uD83C\uDF19')
     } catch (_0x2eb74e) {
@@ -1592,239 +1592,57 @@ cmd(
     }
   }
 )
-cmd(
-  {
-    pattern: 'forward',
-    react: '⏩',
-    alias: ['f','g'],
-    desc: 'forwerd film and msg',
-    use: '.f jid',
-    category: 'owner',
-    filename: __filename,
-  },
-  async (
-    _0x4ac7d8,
-    _0x3ef7a2,
-    _0x1a69c5,
-    {
-      from: _0x75d5e5,
-      l: _0x15d458,
-      prefix: _0x11a91d,
-      quoted: _0x2628fc,
-      body: _0x169351,
-      isCmd: _0x200343,
-      command: _0x55102b,
-      args: _0x1d7664,
-      q: _0x2ae25f,
-      isGroup: _0x11e1f1,
-      isSudo: _0x3aa8fb,
-      sender: _0x561def,
-      senderNumber: _0x2e5887,
-      botNumber2: _0xe90c96,
-      botNumber: _0x4b277c,
-      pushname: _0x3ba695,
-      isIsuru: _0x2b779a,
-      isTharu: _0x569faa,
-      isOwner: _0xb4ba3,
-      isSupporters: _0x2825a8,
-      groupMetadata: _0x43721a,
-      groupName: _0xddb744,
-      participants: _0x2a6c6c,
-      groupAdmins: _0x3165d6,
-      isBotAdmins: _0x3e143a,
-      isAdmins: _0xb56d03,
-      reply: _0x171a24,
-    }
-  ) => {
-    if (!_0xb56d03 && !_0x3aa8fb && !_0x3e143a && !_0xb4ba3) {
-        return await _0x171a24('*මේක ඕනෙනම් privte හදාගනින් bot 🫩*')
-      }
-    if (!_0x2ae25f || !_0x1a69c5.quoted) {
-      return _0x171a24(
-        '*Please give me a Jid and Quote a Message to continue.*'
-      )
-    }
-    let _0x523bf2 = _0x2ae25f.split(',').map((_0x3652e9) => _0x3652e9.trim())
-    if (_0x523bf2.length === 0) {
-      return _0x171a24('*Provide at least one Valid Jid. \u2049️*')
-    }
-    let _0x23e74c = { key: _0x3ef7a2.quoted?.fakeObj?.key }
-    if (_0x3ef7a2.quoted.documentWithCaptionMessage?.message?.documentMessage) {
-      let _0x27ff3f =
-        _0x3ef7a2.quoted.documentWithCaptionMessage.message.documentMessage
-      const _0x7940f6 = require('mime-types')
-      let _0x272829 = _0x7940f6.extension(_0x27ff3f.mimetype) || 'file'
-      _0x27ff3f.fileName = _0x27ff3f.fileName || 'file.' + _0x272829
-    }
-    _0x23e74c.message = _0x3ef7a2.quoted
-    let _0x4bbe10 = []
-    for (let _0x11c92a of _0x523bf2) {
-      try {
-        await _0x4ac7d8.forwardMessage(_0x11c92a, _0x23e74c, false)
-        _0x4bbe10.push(_0x11c92a)
-      } catch (_0x42e808) {
-        console.log(e)
-      }
-    }
-    if (_0x4bbe10.length > 0) {
-      return _0x171a24('*Message Forwarded*\n\n' + _0x4bbe10.join('\n'))
-    } else {
-      console.log(e)
-    }
+cmd({
+    pattern: "forward",
+    react: "⏩",
+alias: ["f"],
+     desc: "forwerd film and msg",
+    use: ".f jid",
+    category: "owner",
+    filename: __filename
+},
+async(conn, mek, m,{from, l, prefix, quoted, body, isCmd, isSudo, isOwner, isMe, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isIsuru, isTharu,  isSupporters, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+
+if ( !isMe && !isOwner && !isSudo ) return await reply('*📛OWNER COMMAND*')
+if (!q || !m.quoted) {
+return reply("*Please give me a Jid and Quote a Message to continue.*");
+}
+  // Split and trim JIDs
+  let jidList = q.split(',').map(jid => jid.trim());
+  if (jidList.length === 0) {
+    return reply("*Provide at least one Valid Jid. ⁉️*");
   }
-)
-cmd(
-  {
-    pattern: 'rename',
-    react: '\u23ED️',
-    alias: ['r', 'chang', 'ussamu', 'tarahawennaepa'],
-    desc: 'File name and caption change',
-    category: 'other',
-    use: '.rename file_name + caption',
-    filename: __filename,
-  },
-  async (
-    _0xd88f7a,
-    _0x289fb6,
-    _0x4279d9,
-    {
-      from: _0x20c0c2,
-      quoted: _0x1562b5,
-      q: _0x5a9b26,
-      botNumber2: _0x418c4f,
-      reply: _0x1c2bcd,
-      msr: _0x249300,
-      creator: _0x189026,
-    }
-  ) => {
-    try {
-      if (!_0x1562b5) {
-        return await _0x1c2bcd(
-          '*කරුණාකර document එකක් හෝ media file එකක් reply කරන්න \u2753*'
-        )
-      }
-      console.log('Quoted Object:', _0x1562b5)
-      if (
-        !_0x1562b5.message ||
-        (!_0x1562b5.message.documentMessage &&
-          !_0x1562b5.message.videoMessage &&
-          !_0x1562b5.message.imageMessage &&
-          !_0x1562b5.message.audioMessage)
-      ) {
-        return await _0x1c2bcd(
-          '\u274C *Quoted message එකේ media file එකක් හෝ document එකක් නොමැත!*'
-        )
-      }
-      let _0x2b9410 = '',
-        _0x1dce42 = ''
-      const _0x2a2cb3 = _0x5a9b26 || ''
-      if (_0x2a2cb3.includes('+')) {
-        const _0x38bbac = _0x2a2cb3.split('+')
-        _0x2b9410 = _0x38bbac[0]?.trim()
-        _0x1dce42 = _0x38bbac[1]?.trim()
-      } else {
-        _0x2b9410 = _0x2a2cb3.trim()
-      }
-      const _0x5a8e6a = _0x1dce42 || _0x2b9410 || 'Renamed'
-      let _0x2f1eba =
-        _0x1562b5.message?.documentMessage ||
-        _0x1562b5.message?.videoMessage ||
-        _0x1562b5.message?.imageMessage ||
-        _0x1562b5.message?.audioMessage
-      if (!_0x2f1eba) {
-        return await _0x1c2bcd(
-          '\u274C *Media type එක හෝ file name එක සොයා ගැනීමේ දෝෂයක් ඇත!*'
-        )
-      }
-      _0x2f1eba.fileName = _0x2b9410
-      _0x2f1eba.caption = _0x5a8e6a
-      const _0x442cc5 = {
-        key: {
-          remoteJid: _0x20c0c2,
-          fromMe: true,
-          id: _0x1562b5.key.id,
-          participant: _0x418c4f,
-        },
-        message: _0x1562b5.message,
-      }
-      await _0xd88f7a.forwardMessage(_0x20c0c2, _0x442cc5, false)
-      await _0xd88f7a.sendMessage(_0x20c0c2, {
-        react: {
-          text: '\u2714',
-          key: _0x289fb6.key,
-        },
-      })
-    } catch (_0x28fee8) {
-      console.log('Error:', _0x28fee8)
-      await _0xd88f7a.sendMessage(_0x20c0c2, {
-        react: {
-          text: '\u274C',
-          key: _0x289fb6.key,
-        },
-      })
-      await _0xd88f7a.sendMessage(
-        _0x20c0c2,
-        { text: _0x249300.err },
-        { quoted: _0x289fb6 }
-      )
-      await _0xd88f7a.sendMessage(
-        _0x189026,
-        { text: '\u274C *Error Occurred!*\n\n' + _0x28fee8 },
-        { quoted: _0x289fb6 }
-      )
-    }
+  // Prepare the message to forward
+  let Opts = {
+    key: mek.quoted?.["fakeObj"]?.["key"]
+  };
+  // Handle document message
+  if (mek.quoted.documentWithCaptionMessage?.message?.documentMessage) {
+    let docMessage = mek.quoted.documentWithCaptionMessage.message.documentMessage;
+    const mimeTypes = require("mime-types");
+    let ext = mimeTypes.extension(docMessage.mimetype) || "file";
+    docMessage.fileName = docMessage.fileName || `file.${ext}`;
   }
-)
-cmd(
-  {
-    pattern: 'directdl',
-    react: '\uD83C\uDF5F',
-    alias: ['dn'],
-    desc: 'Direct downloder',
-    category: 'movie',
-    use: '.download < Direct Link >',
-    dontAddCommandList: false,
-    filename: __filename,
-  },
-  async (
-    _0xea77b3,
-    _0x279c6e,
-    _0x5b007c,
-    { from: _0x1f6236, q: _0x49faee, sender: _0x3166fa, reply: _0x2277b2 }
-  ) => {
-    try {
-      if (!_0x49faee) {
-        return _0x2277b2('\u2757 කරුණාකර download link එකක් ලබා දෙන්න.')
-      }
-      const _0x464d07 = _0x49faee.trim()
-      if (!/^(https?:\/\/[^\s]+)/['nadeen-movie-botz'](_0x464d07)) {
-        return _0x2277b2(
-          '\u2757 දීලා තියෙන URL එක වැරදි. කරුණාකර link එක හොඳින් බලන්න.'
-        )
-      }
-      await _0xea77b3.sendMessage(_0x1f6236, {
-        react: {
-          text: '\u2B07️',
-          key: _0x279c6e.key,
-        },
-      })
-      await _0xea77b3.sendMessage(_0x1f6236, {
-        document: { url: _0x464d07 },
-        caption: '\n\n> *NADEEN-MD*',
-        mimetype: 'video/mp4',
-        fileName: 'test.mp4',
-      })
-      await _0xea77b3.sendMessage(_0x1f6236, {
-        react: {
-          text: '\u2705',
-          key: _0x279c6e.key,
-        },
-      })
-    } catch (_0x1d7fbd) {
-      _0x2277b2('\u2757 Error: ' + _0x1d7fbd.message)
-    }
-  }
-)
+  
+  Opts.message = mek.quoted;
+  let successfulJIDs = [];
+  // Forward the message to each JID
+  for (let i of jidList) {
+try {
+await conn.forwardMessage(i, Opts, false);
+successfulJIDs.push(i);
+} catch (error) {
+console.log(e);
+}
+}
+  // Response based on successful forwards
+if (successfulJIDs.length > 0) {
+return reply(`*Message Forwarded*\n\n` + successfulJIDs.join("\n"))
+} else {
+console.log(e)
+}
+});
+
 cmd(
   {
     pattern: 'id',
@@ -1889,6 +1707,100 @@ cmd(
     }
   }
 )
+cmd({
+  pattern: "rename",
+  alias: ["r"],
+  desc: "Forward media/messages with optional rename and caption",
+  use: ".r jid1,jid2 | filename (without ext) | new caption (quote a message)",
+  category: "main",
+  filename: __filename
+},
+async (conn, mek, m, {
+  reply, isSudo, isOwner, isMe, q
+}) => {
+if ( !isMe && !isOwner && !isSudo ) return await reply('*📛OWNER COMMAND*')
+  if (!q || !m.quoted) {
+    return reply("*Please provide JIDs and quote a message to forward.*");
+  }
+
+  const mime = require("mime-types");
+
+  // Split into jid list, optional filename, and optional caption
+  const parts = q.split('|').map(part => part.trim());
+  const jidPart = parts[0];
+  const newFileName = parts[1]; // only name without extension
+  const newCaption = parts[2];  // optional
+
+  const jidList = jidPart.split(',').map(j => j.trim()).filter(j => j);
+  if (jidList.length === 0) {
+    return reply("*Provide at least one valid JID.*");
+  }
+
+  const quotedMsg = mek.quoted;
+  let messageContent = quotedMsg?.message || quotedMsg;
+
+  const opts = {
+    key: quotedMsg?.fakeObj?.key,
+    message: JSON.parse(JSON.stringify(messageContent)) // clone safely
+  };
+
+  // If it's a document, rename the file
+  if (opts.message?.documentMessage) {
+    const docMsg = opts.message.documentMessage;
+    const ext = mime.extension(docMsg.mimetype) || "file"; // get correct extension
+    if (newFileName) {
+      docMsg.fileName = `${newFileName}.${ext}`; // filename + original mimetype ext
+    } else {
+      docMsg.fileName = `Forwarded_File_${Date.now()}.${ext}`; // default if no name given
+    }
+  }
+
+  // If it's a media with caption, replace caption
+  if (newCaption) {
+    const typesWithCaption = ["imageMessage", "videoMessage", "documentMessage", "audioMessage"];
+    for (const type of typesWithCaption) {
+      if (opts.message[type]) {
+        opts.message[type].caption = newCaption;
+      }
+    }
+  }
+
+  const successful = [];
+
+  for (let jid of jidList) {
+    try {
+      await conn.forwardMessage(jid, opts, false);
+      successful.push(jid);
+    } catch (err) {
+      console.log(`❌ Failed to forward to ${jid}:`, err);
+    }
+  }
+
+  if (successful.length > 0) {
+    return reply(`✅ *Message forwarded to:*\n${successful.join("\n")}`);
+  } else {
+    return reply("❌ *Failed to forward message to any JID.*");
+  }
+});
+
+
+async function checkFileSize(url, maxMB = 150) {
+  return new Promise((resolve, reject) => {
+    let totalBytes = 0;
+    https.get(url, res => {
+      res.on('data', chunk => {
+        totalBytes += chunk.length;
+        const sizeMB = totalBytes / (1024 * 1024);
+        if (sizeMB > maxMB) {
+          res.destroy(); // abort download
+          reject(new Error(`File exceeds ${maxMB} MB!`));
+        }
+      });
+      res.on('end', () => resolve(totalBytes));
+      res.on('error', err => reject(err));
+    });
+  });
+}
 cmd(
   {
     pattern: 'requestpairfdrsgh',
