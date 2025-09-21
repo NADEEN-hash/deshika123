@@ -319,7 +319,7 @@ cmd({
             quoted: mek 
         });
     }
-
+console.log(`Input:`, q)
     try {
         //===================================================
         const [pix, imglink, title] = q.split("±");
@@ -327,6 +327,7 @@ cmd({
         //===================================================
 
         const da = pix.split("https://pixeldrain.com/u/")[1];
+		console.log(da)
         if (!da) return await reply("⚠️ Couldn’t extract Pixeldrain file ID.");
 
         const fhd = `https://pixeldrain.com/api/file/${da}`;
