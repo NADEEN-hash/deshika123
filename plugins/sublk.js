@@ -156,7 +156,8 @@ ${config.FOOTER}
     let rows = [];
     res.downloads.forEach((dl, i) => {
         rows.push({
-            buttonId: `${prefix}sindl ${res.poster}±${dl.finalLink}±${res.title}±[${dl.quality}]`,
+            buttonId: `${prefix}sindl ${res.poster}±${dl.finalLink}±${res.title}
+            [${dl.quality}]`,
             buttonText: { 
                 displayText: `${dl.size} (${dl.quality})`
                   .replace(/WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|HDRip|FHD|HD|SD/gi, "")
@@ -182,7 +183,8 @@ ${config.FOOTER}
 
         return {
             title: cleanText,
-            id: `${prefix}sindl ${res.poster}±${dl.finalLink}±${res.title}±[${dl.quality}]`
+            id: `${prefix}sindl ${res.poster}±${dl.finalLink}±${res.title}
+            [${dl.quality}]`
         };
     });
 
