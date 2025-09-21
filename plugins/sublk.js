@@ -156,7 +156,7 @@ ${config.FOOTER}
     let rows = [];
     res.downloads.forEach((dl, i) => {
         rows.push({
-            buttonId: `${prefix}sindl ${res.poster}±${dl.finalLink}±${res.title}
+            buttonId: `${prefix}sbuzndl ${dl.finalLink}±${res.poster}±${res.title}
             [${dl.quality}]`,
             buttonText: { 
                 displayText: `${dl.size} (${dl.quality})`
@@ -183,7 +183,7 @@ ${config.FOOTER}
 
         return {
             title: cleanText,
-            id: `${prefix}sindl ${res.poster}±${dl.finalLink}±${res.title}
+            id: `${prefix}sbuzndl ${dl.finalLink}±${res.poster}±${res.title}
             [${dl.quality}]`
         };
     });
@@ -228,3 +228,57 @@ ${config.FOOTER}
 }
 })
 
+let isUploadinggg = false; // Track upload status
+
+cmd({
+    pattern: "sbuzndl",
+    react: "⬇️",
+    dontAddCommandList: true,
+    filename: __filename
+}, async (conn, mek, m, { from, q, reply }) => {
+    if (isUploadinggg) {
+        return await conn.sendMessage(from, { 
+            text: '*A movie is already being uploaded. Please wait until it finishes.* ⏳', 
+            quoted: mek 
+        });
+    }
+console.log(`Input:`, q)
+    try {
+        //===================================================
+        const [pix, imglink, title] = q.split("±");
+        if (!pix || !imglink || !title) return await reply("⚠️ Invalid format. Use:\n`sindl link±img±title`");
+        //===================================================
+
+        const da = pix.split("https://pixeldrain.com/u/")[1];
+		console.log(da)
+        if (!da) return await reply("⚠️ Couldn’t extract Pixeldrain file ID.");
+
+        const fhd = `https://pixeldrain.com/api/file/${da}`;
+        isUploadinggg = true; // lock start
+
+        //===================================================
+        const botimg = imglink.trim();
+        const message = {
+            document: { url: fhd },
+            caption: `🎬 ${title}\n\n${config.NAME}\n\n${config.FOOTER}`,
+            mimetype: "video/mp4",
+            jpegThumbnail: await (await fetch(botimg)).buffer(),
+            fileName: `${title}.mp4`,
+        };
+
+        // Send "uploading..." msg without blocking
+        conn.sendMessage(from, { text: '*Uploading your movie.. ⬆️*', quoted: mek });
+
+        // Upload + react + success (parallel tasks)
+        await Promise.all([
+            conn.sendMessage(config.JID || from, message),
+            conn.sendMessage(from, { react: { text: '✔️', key: mek.key } })
+        ]);
+
+    } catch (e) {
+        reply('🚫 *Error Occurred !!*\n\n' + e.message);
+        console.error("sindl error:", e);
+    } finally {
+        isUploadinggg = false; // reset lock always
+    }
+});
