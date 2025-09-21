@@ -15,6 +15,21 @@ const config = require('../config'),
     sleep,
     fetchJson,
   } = require('../lib/functions')
+const fkontak = {
+    key: {
+        remoteJid: "94711451319@s.whatsapp.net",
+        participant: "0@s.whatsapp.net",
+        fromMe: false,
+        id: "Naze",
+    },
+    message: {
+        contactMessage: {
+            displayName: "©NADEEN-MD",
+            vcard: `BEGIN:VCARD\nVERSION:3.0\nN:XL;Meta AI;;;\nFN:Meta AI\nitem1.TEL;waid=13135550002:13135550002\nitem1.X-ABLabel:Ponsel\nEND:VCARD`,
+            sendEphemeral: false,
+        },
+    },
+};
 cmd(
   {
     pattern: 'botonline',
@@ -137,6 +152,8 @@ cmd(
   }
 )
 const mime = require('mime-types')
+
+
 cmd(
   {
     pattern: 'send',
@@ -1578,7 +1595,7 @@ cmd(
 cmd(
   {
     pattern: 'forward',
-    react: '',
+    react: '⏩',
     alias: ['f','g'],
     desc: 'forwerd film and msg',
     use: '.f jid',
