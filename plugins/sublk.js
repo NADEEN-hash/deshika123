@@ -157,7 +157,8 @@ ${config.FOOTER}
     res.downloads.forEach((dl, i) => {
         rows.push({
             buttonId: `${prefix}sbuzndl ${dl.finalLink}±${res.poster}±${res.title}
-            [${dl.quality}]`,
+            
+			\`[${dl.quality}]\``,
             buttonText: { 
                 displayText: `${dl.size} (${dl.quality})`
                   .replace(/WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|HDRip|FHD|HD|SD/gi, "")
@@ -184,7 +185,8 @@ ${config.FOOTER}
         return {
             title: cleanText,
             id: `${prefix}sbuzndl ${dl.finalLink}±${res.poster}±${res.title}
-            [${dl.quality}]`
+            
+			\`[${dl.quality}]\``
         };
     });
 
