@@ -9,7 +9,7 @@
     "stop":"pm2 stop nadeen",
     "restart":"pm2 restart nadeen"},
 "dependencies": {
-    "@whiskeysockets/baileys": "npm:baileys-pro",
+    "@whiskeysockets/baileys": "npm:visper-baileys",
     "@adiwajshing/keyed-db": "latest",
     "@ffmpeg-installer/ffmpeg": "latest",
     "axios": "latest",
