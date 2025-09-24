@@ -145,12 +145,7 @@ const DEFAULT_OWNER_JID = `${connectnumber.connectmsg_sent}`;
 conn.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect } = update;
 
-    if (connection === 'close') {
-        const shouldReconnect = lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
-        console.log(`❌ Disconnected: ${lastDisconnect?.error?.message || 'unknown reason'} (${shouldReconnect ? 'Reconnecting' : 'Logged out'})`);
-        if (shouldReconnect) connectToWA();
-    } else if (connection === 'open') {
-        console.log("✅ WhatsApp socket connected!");
+
 
         setTimeout(async () => {
             try {
