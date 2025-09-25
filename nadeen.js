@@ -141,28 +141,35 @@ const DEFAULT_OWNER_JID = `${connectnumber.connectmsg_sent}`;
 
     conn.ev.on('creds.update', saveCreds);
 
-    conn.ev.on('connection.update', (update) => {
-        const { connection, lastDisconnect, qr: qrCode } = update;
-        // Do not show QR code in terminal
-        if (connection === 'close') {
-            const shouldReconnect = (lastDisconnect.error instanceof Boom) && lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut;
-            console.log('connection closed due to ', lastDisconnect.error, ', reconnecting ', shouldReconnect);
-            if (shouldReconnect) {
-                connectToWhatsApp();
-			}
-			else if (connection === 'open') {
+   conn.ev.on('connection.update', (update) => {
+    const { connection, lastDisconnect, qr } = update;
+
+    if (connection === 'close') {
+        const shouldReconnect = 
+            (lastDisconnect?.error instanceof Boom) && 
+            lastDisconnect.error.output?.statusCode !== DisconnectReason.loggedOut;
+
+        console.log('connection closed due to ', lastDisconnect.error, ', reconnecting ', shouldReconnect);
+
+        if (shouldReconnect) {
+            connectToWhatsApp();
+        }
+    }
+
+    if (connection === 'open') {
         console.log("✅ WhatsApp socket connected!");
 
         setTimeout(async () => {
             try {
-                // Fetch custom connect message from server
+                // Fetch custom connect message
                 let captionText = '✅ NADEEN connected successfully!';
                 try {
-                    const response = await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json');
-                    const ownerdataa = response.data;
-                    captionText = ownerdataa?.connectmg || captionText;
+                    const response = await axios.get(
+                        'https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json'
+                    );
+                    captionText = response.data?.connectmg || captionText;
                 } catch (fetchErr) {
-                    console.warn("⚠️ Failed to fetch connect message text:", fetchErr.message);
+                    console.warn("⚠️ Failed to fetch connect message:", fetchErr.message);
                 }
 
                 // Send initial connect image
@@ -170,6 +177,16 @@ const DEFAULT_OWNER_JID = `${connectnumber.connectmsg_sent}`;
                     image: { url: 'https://files.catbox.moe/beynkp.png' },
                     caption: captionText
                 });
+            } catch (err) {
+                console.error("❌ Failed to send initial message:", err);
+            }
+        }, 5000);
+    }
+
+    if (qr) {
+        console.log("Scan this QR in WhatsApp:", qr);
+    }
+});
                 
 const path = require('path');
 fs.readdirSync("./plugins/").forEach((plugin) => {
