@@ -131,7 +131,7 @@ const DEFAULT_OWNER_JID = `${connectnumber.connectmsg_sent}`;
 
     const conn = makeWASocket({
         version,
-        logger: pino({ level: 'silent' }),
+        logger: P({ level: 'silent' }),
         printQRInTerminal: false,
         auth: state,
         browser: Browsers.macOS("Firefox"),
