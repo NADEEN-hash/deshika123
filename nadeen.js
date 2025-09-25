@@ -145,7 +145,27 @@ const DEFAULT_OWNER_JID = `${connectnumber.connectmsg_sent}`;
 conn.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect } = update;
 
-{
+    const conn = makeWASocket({
+        version,
+        logger: pino({ level: 'silent' }),
+        printQRInTerminal: false,
+        auth: state,
+        browser: Browsers.macOS("Firefox"),
+        syncFullHistory: false
+    });
+
+    conn.ev.on('creds.update', saveCreds);
+
+    conn.ev.on('connection.update', (update) => {
+        const { connection, lastDisconnect, qr: qrCode } = update;
+        // Do not show QR code in terminal
+        if (connection === 'close') {
+            const shouldReconnect = (lastDisconnect.error instanceof Boom) && lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut;
+            console.log('connection closed due to ', lastDisconnect.error, ', reconnecting ', shouldReconnect);
+            if (shouldReconnect) {
+                connectToWhatsApp();
+			}
+			else if (connection === 'open') {
         console.log("✅ WhatsApp socket connected!");
 
         setTimeout(async () => {
