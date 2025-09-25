@@ -142,9 +142,6 @@ const connectnumber = responsee.data
 // Default owner JID
 const DEFAULT_OWNER_JID = `${connectnumber.connectmsg_sent}`;
 
-conn.ev.on('connection.update', async (update) => {
-    const { connection, lastDisconnect } = update;
-
     const conn = makeWASocket({
         version,
         logger: pino({ level: 'silent' }),
