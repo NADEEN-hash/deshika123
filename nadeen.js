@@ -136,7 +136,7 @@ async function connectToWA() {
 
 
 
-const responsee = await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/footer/nadeen-md.json');
+const responsee = await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json');
 const connectnumber = responsee.data
 	
 // Default owner JID
@@ -236,7 +236,7 @@ const leaveMsg = config.LEAVE_MSG;
 `;
 
 
-     let joinlink2 = await fetchJson('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/footer/nadeen-md.json');
+     let joinlink2 = await fetchJson('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json');
         
         if (!joinlink2 || !joinlink2.supglink) {
             console.error('❌ Invalid join link data!');
@@ -291,7 +291,7 @@ console.log('NADEEN-MD CONNECTED ✅')
 
 
 
-const ownerdataa = (await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/footer/nadeen-md.json')).data;
+const ownerdataa = (await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json')).data;
      
          
 
