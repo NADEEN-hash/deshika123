@@ -293,6 +293,7 @@ joinGroupFromJson();
             }
         }, 2000);
     }
+		}
 });
       
 
