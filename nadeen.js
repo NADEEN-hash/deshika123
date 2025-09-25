@@ -121,20 +121,7 @@ async function connectToWA() {
         state,
         saveCreds
     } = await useMultiFileAuthState(__dirname + `/auth_info_baileys`)
-    const conn = makeWASocket({
-        logger: P({
-            level: "fatal"
-        }).child({
-            level: "fatal"
-        }),
-        printQRInTerminal: true,
-        generateHighQualityLinkPreview: true,
-        auth: state,
-        defaultQueryTimeoutMs: undefined,
-        msgRetryCounterCache
-    })
-
-
+    
 
 const responsee = await axios.get('https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json');
 const connectnumber = responsee.data
