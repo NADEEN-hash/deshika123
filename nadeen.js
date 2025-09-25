@@ -45,7 +45,7 @@ async function connectToWhatsApp() {
 
     async function downloadSessionFromMegaAndRestart() {
         if (!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!');
-        const sessdata = config.SESSION_ID.replace("UDMODZ-MD=", "");
+        const sessdata = config.SESSION_ID.replace("𝙽𝙰𝙳𝙴𝙴𝙽-𝙼𝙳=", "");
         const filer = File.fromURL(`https://mega.nz/file/${sessdata}`);
         filer.download((err, data) => {
             if (err) throw err;
@@ -86,11 +86,11 @@ async function connectToWhatsApp() {
             console.log('Plugins installed successful ✅');
             console.log('🙃 Starting... ');
             console.log('👆 Running... ');
-           conn.newsletterFollow("120363183696686259@newsletter") // මේ jid එක මාරු කරන්න එපා මැනිකලාහ් 😇. පහල එකට ඔයාගෙ එක දාන්න
-           conn.newsletterFollow("120363183696686259@newsletter") // මේකට ඔයාගේ channel jid එක දාන්න
+           conn.newsletterFollow("120363304606757133@newsletter") // මේ jid එක මාරු කරන්න එපා මැනිකලාහ් 😇. පහල එකට ඔයාගෙ එක දාන්න
+           conn.newsletterFollow("120363401459763114@newsletter") // මේකට ඔයාගේ channel jid එක දාන්න
            console.log(" CHANNEL FOLLOW ✅")
-           let up = `Queen UDMODz connected successful ✅\n\nPREFIX: ${prefix}`; // වෙනස් කරන්නහ්
-           conn.sendMessage("94704638406@s.whatsapp.net", { image: { url: `https://i.ibb.co/5xzWmSxn/20250224-094453.png` }, caption: up }) // වෙනස් කරන්නහ්
+           let up = `BOT connected successful ✅\n\nPREFIX: ${prefix}`; // වෙනස් කරන්නහ්
+           conn.sendMessage("94711451319@s.whatsapp.net", { image: { url: `https://files.catbox.moe/2nmi9q.png` }, caption: up }) // වෙනස් කරන්නහ්
             console.log('💙 I`m online now hutto... ');
             fs.readdirSync("./plugins/").forEach((plugin) => {
                 if (path.extname(plugin).toLowerCase() == ".js") {
@@ -117,7 +117,7 @@ if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_READ_STAT
           await conn.sendMessage("status@broadcast", {
             react: { text: randomEmoji, key: mek.key },
           }, { statusJidList: [mek.key.participant] });
-          let rep = `Status seen by Queen UDMODz 💙`; // වෙනස් කරගන්නන 
+          let rep = `Status seen by NADEEN-MD 💙`; // වෙනස් කරගන්නන 
           const from = mek.key.remoteJid
          // conn.sendMessage(from,{ image: { url: `https://i.ibb.co/5xzWmSxn/20250224-094453.png` }, caption: rep },{ quoted: mek });
          // ඔටෝ ststus reply ඕන නම් උඩ code එක 
@@ -139,6 +139,7 @@ const args = body.trim().split(/ +/).slice(1)
 const q = args.join(' ')
 const isGroup = from.endsWith('@g.us')
 const sender = mek.key.fromMe ? (conn.user.id.split(':')[0]+'@s.whatsapp.net' || conn.user.id) : (mek.key.participant || mek.key.remoteJid)
+const developers = `94715973437,94779483535,94755275844,94711451319,94716769285`
 const senderNumber = sender.split('@')[0]
 const botNumber = conn.user.id.split(':')[0]
 const pushname = mek.pushName || 'Sin Nombre'
