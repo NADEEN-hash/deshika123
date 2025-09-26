@@ -131,7 +131,6 @@ async (conn, m, mek, { from, q, prefix, reply }) => {
 try {
     if (!q || !q.includes('https://dinkamovieslk.blogspot.com/')) {
         console.log('Invalid input:', q);
-		 const [url, year] = q.split("&");
         return await reply('*❗ Invalid link. Please search using .dndl and select a movie.*');
     }
 
@@ -143,7 +142,6 @@ try {
     let msg = `*☘️ 𝗧ɪᴛʟᴇ ➮* *_${res.title || 'N/A'}_*
 
 *📎 Link:* ${q}
-*📆 Year:* ${year || 'N/A'}
 *📖 Description:* 
 _${res.description || 'N/A'}_
 
