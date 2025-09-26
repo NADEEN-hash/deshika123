@@ -262,10 +262,10 @@ console.log(`Input:`, q)
             fileName: `${title}`,
         };
 
+		conn.sendMessage(from, { text: '*Uploading your movie.. ⬆️*', quoted: mek });
         // Upload + react + success (parallel tasks)
         await Promise.all([
             conn.sendMessage(config.JID || from, message),
-			conn.sendMessage(from, { text: '*Uploading your movie.. ⬆️*', quoted: mek });
             conn.sendMessage(from, { react: { text: '✔️', key: mek.key } })
         ]);
 
