@@ -70,7 +70,8 @@ try {
 
     const caption = `*_DINKAMOVIES MOVIE SEARCH RESULT 🎬_*
 
-*\`🎡Input :\`* ${q}
+*\`🎞Input :\`* ${q}
+
 _Total results:_ ${url.length}`
 
     // Also create listButtons for button mode
@@ -130,6 +131,7 @@ async (conn, m, mek, { from, q, prefix, reply }) => {
 try {
     if (!q || !q.includes('https://dinkamovieslk.blogspot.com/')) {
         console.log('Invalid input:', q);
+		 const [url, year] = q.split("&");
         return await reply('*❗ Invalid link. Please search using .dndl and select a movie.*');
     }
 
@@ -140,7 +142,8 @@ try {
 
     let msg = `*☘️ 𝗧ɪᴛʟᴇ ➮* *_${res.title || 'N/A'}_*
 
-*📎Link:* ${q}
+*📎 Link:* ${url}
+*📆 Year:* ${year}
 *📖 Description:* 
 _${res.description || 'N/A'}_
 
@@ -151,7 +154,7 @@ ${config.FOOTER}
     let rows = [];
     res.download_links.forEach((dl, i) => {
         rows.push({
-            buttonId: `${prefix}dnkzndl ${dl.url}±${res.image_links}±${res.title}
+            buttonId: `${prefix}dnkzndl ${dl.url}±${res.image_links[0]}±${res.title}
             
 			\`[${dl.quality}]\``,
             buttonText: { 
@@ -179,7 +182,7 @@ ${config.FOOTER}
 
         return {
             title: cleanText,
-            id: `${prefix}dnkzndl ${dl.url}±${res.image_links}±${res.title}
+            id: `${prefix}dnkzndl ${dl.url}±${res.image_links[0]}±${res.title}
             
 			\`[${dl.quality}]\``
         };
