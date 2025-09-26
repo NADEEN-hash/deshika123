@@ -34,7 +34,7 @@ cmd({
   pattern: "dnk",	
   react: '🔎',
   category: "movie",
-  alias: ["dinka"],
+  alias: ["dinkamv"],
   desc: "cinesubz.co movie search",
   use: ".cine 2025",
   filename: __filename
