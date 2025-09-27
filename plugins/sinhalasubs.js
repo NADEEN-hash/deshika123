@@ -173,7 +173,7 @@ ${config.FOOTER}
     };
 
     // List buttons (nativeFlow style)
-    const rowss = res.download_links.map((dl, i) => {
+    const rowss = res.downloadLinks.map((dl, i) => {
         const cleanText = `${dl.size} (${dl.quality})`
           .replace(/WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|HDRip|FHD|HD|SD/gi, "")
           .trim() || "No info";
