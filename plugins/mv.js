@@ -129,11 +129,6 @@ cmd(
             type: 1,
           },
           {
-            buttonId: _0x131b0e + 'hdhub ' + _0x2d6ddb,
-            buttonText: { displayText: '_\uD83C\uDFACHDHUB4U Results_' },
-            type: 1,
-          },
-          {
             buttonId: _0x131b0e + 'niki ' + _0x2d6ddb,
             buttonText: { displayText: '_\uD83C\uDFACNIKI Results_' },
             type: 1,
