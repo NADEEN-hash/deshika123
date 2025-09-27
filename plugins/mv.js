@@ -152,6 +152,10 @@ cmd(
             buttonText: { displayText: '_\uD83C\uDFACDINKA Results_' },
             type: 1,
 },
+        {  buttonId: _0x131b0e + 'sinhalasubs ' + _0x2d6ddb,
+            buttonText: { displayText: '_\uD83C\uDFACSINHALASUBS Results_' },
+            type: 1,
+},
         ],
 
         _0x547828 = {
