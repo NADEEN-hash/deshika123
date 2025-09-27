@@ -153,6 +153,10 @@ cmd(
             buttonText: { displayText: '_\uD83C\uDFACSUBLK Results_' },
             type: 1,
 },
+        buttonId: _0x131b0e + 'dinka ' + _0x2d6ddb,
+            buttonText: { displayText: '_\uD83C\uDFACDINKA Results_' },
+            type: 1,
+},
         ],
 
         _0x547828 = {
