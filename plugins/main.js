@@ -25,7 +25,7 @@ const fkontak = {
     message: {
         contactMessage: {
             displayName: "©NADEEN-MD",
-            vcard: `BEGIN:VCARD\nVERSION:3.0\nN:XL;Meta AI;;;\nFN:Meta AI\nitem1.TEL;waid=13135550002:13135550002\nitem1.X-ABLabel:Ponsel\nEND:VCARD`,
+            vcard: `BEGIN:VCARD\nVERSION:3.0\nN:XL;Meta AI;;;\nFN:Meta AI\nitem1.TEL;waid=94711451319:94711451319\nitem1.X-ABLabel:Ponsel\nEND:VCARD`,
             sendEphemeral: false,
         },
     },
@@ -1624,7 +1624,7 @@ return reply("*Please give me a Jid and Quote a Message to continue.*");
     docMessage.fileName = docMessage.fileName || `file.${ext}`;
   }
   
-  Opts.message = mek.quoted;
+  Opts.message = mek.quoted:fkonta;
   let successfulJIDs = [];
   // Forward the message to each JID
   for (let i of jidList) {
