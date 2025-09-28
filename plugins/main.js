@@ -1624,7 +1624,7 @@ return reply("*Please give me a Jid and Quote a Message to continue.*");
     docMessage.fileName = docMessage.fileName || `file.${ext}`;
   }
   
-  Opts.message = mek.quoted:fkonta;
+  Opts.message = mek.quoted.fkonta;
   let successfulJIDs = [];
   // Forward the message to each JID
   for (let i of jidList) {
