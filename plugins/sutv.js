@@ -152,7 +152,7 @@ async (conn, mek, m, { from, q, prefix, reply }) => {
         const srh = episodeData.episodes.map(episode => ({
             title: episode.title.replace("Sinhala Subtitles | සිංහල උපසිරසි සමඟ", "").trim(),
             description: '',
-            rowId: prefix + 'tvdetails ' + episode.link
+            rowId: prefix + 'tvdetails ' + episode.url
         }));
 
         const sections = [{
@@ -171,9 +171,9 @@ async (conn, mek, m, { from, q, prefix, reply }) => {
         const caption = `_*EPISODE LIST 📺*_\n\n*\`Show:\`* ${q.split('/').pop()}`;
 
         // Button mode for episode list
-        const rowss = episodeData.map(episode => ({
+        const rowss = episodeData.episodes.map(episode => ({
             title: episode.title.replace(/WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|Telegram BluRay SD|Telegram BluRay HD|Direct BluRay SD|Direct BluRay HD|Direct BluRay FHD|FHD|HD|SD|Telegram BluRay FHD/gi, "").trim() || "No info",
-            id: prefix + `tvdetails ${episode.link}`
+            id: prefix + `tvdetails ${episode.url}`
         }));
 
         const listButtons = {
