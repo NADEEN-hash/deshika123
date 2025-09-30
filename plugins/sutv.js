@@ -229,28 +229,25 @@ async (conn, mek, m, { from, q, prefix, reply }) => {
             return await conn.sendMessage(from, { text: '*No details found ❌*' }, { quoted: mek });
         }
 
-        const msg = `*☘️ 𝗧ɪᴛʟᴇ ➮* _${episodeDetails.title || 'N/A'}_\n\n` +
-                    `*📅 𝗥ᴇʟᴇᴀꜱᴇᴅ ᴅᴀᴛᴇ ➮* _${episodeDetails.date || 'N/A'}_\n` +
-                    `*🌎 𝗖ᴏᴜɴᴛʀʏ ➮* _${episodeDetails.country || 'N/A'}_\n` +
-                    `*💃 𝗥ᴀᴛɪɴɢ ➮* _${episodeDetails.rating || 'N/A'}_\n` +
-                    `*⏰ 𝗥ᴜɴᴛɪᴍᴇ ➮* _${episodeDetails.duration || 'N/A'}_\n` +
-                    `*💁‍♂️ 𝗦ᴜʙᴛɪᴛʟᴇ ʙʏ ➮* _${episodeDetails.author || 'N/A'}_\n`;
+        const msg = `*☘️ Title ➮* _${episodeDetails.title || 'N/A'}_\n\n` +
+                    `*📊 Description ➮* _${episodeDetails.description || 'N/A'}_\n` +
+                    `*📎 Link ➮* _${episodeDetails.tv_show_url || 'N/A'}_\n`;
 
         const rows = [
-            { buttonId: prefix + 'daqt ' + q, buttonText: { displayText: 'Send Details 💡' }, type: 1 },
-            { buttonId: prefix + 'ch ' + q, buttonText: { displayText: 'Send Images 💡' }, type: 1 }
+            { buttonId: prefix + 'daqtx ' + q, buttonText: { displayText: 'Send Details 💡' }, type: 1 },
+            { buttonId: prefix + 'chx ' + q, buttonText: { displayText: 'Send Images 💡' }, type: 1 }
         ];
 
-        episodeDetails.downloadLinks.forEach(link => {
+        episodeDetails.downloadLinks.map(link => {
             rows.push({
-                buttonId: prefix + `tvdl ${link.link}±${episodeDetails.images[1] || config.LOGO}±${episodeDetails.title}`,
-                buttonText: { displayText: `${link.size} - ${link.quality}` },
+                buttonId: prefix + `tvdl ${link.url}±${episodeDetails.image_url || config.LOGO}±${episodeDetails.title}`,
+                buttonText: { displayText: `${link.name}` },
                 type: 1
             });
         });
 
         const buttonMessage = {
-            image: { url: episodeDetails.images[0] || config.LOGO },
+            image: { url: episodeDetails.image_url || config.LOGO },
             caption: msg,
             footer: config.FOOTER,
             buttons: rows,
@@ -258,8 +255,8 @@ async (conn, mek, m, { from, q, prefix, reply }) => {
         };
 
         const rowss = episodeDetails.downloadLinks.map(link => ({
-            title: `${link.size} - ${link.quality}`.replace(/WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|Telegram BluRay SD|Telegram BluRay HD|Direct BluRay SD|Direct BluRay HD|Direct BluRay FHD|FHD|HD|SD|Telegram BluRay FHD/gi, "").trim() || "No info",
-            id: prefix + `tvdl ${link.link}±${episodeDetails.images[1] || config.LOGO}±${episodeDetails.title}`
+            title: `${link.name}`.replace(/WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|Telegram BluRay SD|Telegram BluRay HD|Direct BluRay SD|Direct BluRay HD|Direct BluRay FHD|FHD|HD|SD|Telegram BluRay FHD/gi, "").trim() || "No info",
+            id: prefix + `tvdl ${link.url}±${episodeDetails.image_url || config.LOGO}±${episodeDetails.title}`
         }));
 
         const listButtons = {
@@ -272,17 +269,17 @@ async (conn, mek, m, { from, q, prefix, reply }) => {
 
         if (config.BUTTON === "true") {
             await conn.sendMessage(from, {
-                image: { url: episodeDetails.images[0] || config.LOGO },
+                image: { url: episodeDetails.image_url || config.LOGO },
                 caption: msg,
                 footer: config.FOOTER,
                 buttons: [
                     {
-                        buttonId: prefix + 'daqt ' + q,
+                        buttonId: prefix + 'daqtx ' + q,
                         buttonText: { displayText: "Details Send" },
                         type: 1
                     },
                     {
-                        buttonId: prefix + 'ch ' + q,
+                        buttonId: prefix + 'chx ' + q,
                         buttonText: { displayText: "Images Send" },
                         type: 1
                     },
@@ -360,7 +357,7 @@ async (conn, mek, m, { from, q, reply }) => {
 
 // Command 5: Send episode details (reusing daqt from sinhalasub)
 cmd({
-    pattern: "daqt",
+    pattern: "daqtx",
     react: "🎥",
     desc: "Send detailed information for a TV show episode",
     filename: __filename
@@ -374,16 +371,13 @@ async (conn, mek, m, { from, q, reply }) => {
 
         const details = (await axios.get('https://mv-visper-full-db.pages.dev/Main/main_var.json')).data;
 
-        const msg = `*☘️ 𝗧ɪᴛʟᴇ ➮* _${episodeDetails.title || 'N/A'}_\n\n` +
-                    `*📅 �_Rᴇʟᴇᴀꜱᴇᴅ ᴅᴀᴛᴇ ➮* _${episodeDetails.date || 'N/A'}_\n` +
-                    `*🌎 𝗖ᴏᴜɴᴛʀʏ ➮* _${episodeDetails.country || 'N/A'}_\n` +
-                    `*💃 𝗥ᴀᴛɪɴɢ ➮* _${episodeDetails.rating || 'N/A'}_\n` +
-                    `*⏰ 𝗥ᴜɴᴛɪᴍᴇ ➮* _${episodeDetails.duration || 'N/A'}_\n` +
-                    `*💁‍♂️ 𝗦ᴜʙᴛɪᴛʟᴇ ʙʏ ➮* _${episodeDetails.author || 'N/A'}_\n\n` +
+        const msg = `*☘️ Title ➮* _${episodeDetails.title || 'N/A'}_\n\n` +
+                    `*📊 Description ➮* _${episodeDetails.description || 'N/A'}_\n` +
+                    `*📎 Url ➮* _${episodeDetails.country || 'N/A'}_\n` +
                     `> 🌟 Follow us: *${details.chlink}*`;
 
         await conn.sendMessage(config.JID || from, {
-            image: { url: episodeDetails.images[0] || config.LOGO },
+            image: { url: episodeDetails.image_url || config.LOGO },
             caption: msg
         });
 
@@ -396,7 +390,7 @@ async (conn, mek, m, { from, q, reply }) => {
 
 // Command 6: Send images (reusing ch from sinhalasub, if needed)
 cmd({
-    pattern: "ch",
+    pattern: "chx",
     react: "🖼️",
     desc: "Send images for a TV show episode",
     filename: __filename
