@@ -10,7 +10,6 @@ const config = require('../config'),
     Json,
     runtime,
     sleep,
-    fetchJson,
   } = require('../lib/functions')// Assuming config contains settings like FOOTER, LOGO, BUTTON, JID, etc.
 let isUploading = false; // Track upload status for downloads
 
