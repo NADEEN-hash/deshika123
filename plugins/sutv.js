@@ -70,7 +70,7 @@ async (conn, m, mek, { from, q, prefix, isPre, isMe, isSudo, isOwner, reply }) =
         const srh = searchResults.map(item => ({
             title: item.title.replace("Sinhala Subtitles | සිංහල උපසිරසි සමඟ", "").trim(),
             description: '',
-            rowId: prefix + 'tvepisodes ' + item.link
+            rowId: prefix + 'tvepisodes ' + item.url
         }));
 
         const sections = [{
@@ -91,7 +91,7 @@ async (conn, m, mek, { from, q, prefix, isPre, isMe, isSudo, isOwner, reply }) =
         // Button mode for search results
         const rowss = searchResults.map(item => ({
             title: item.title.replace(/WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|Telegram BluRay SD|Telegram BluRay HD|Direct BluRay SD|Direct BluRay HD|Direct BluRay FHD|FHD|HD|SD|Telegram BluRay FHD/gi, "").trim() || "No info",
-            id: prefix + `tvepisodes ${item.link}`
+            id: prefix + `tvepisodes ${item.url}`
         }));
 
         const listButtons = {
