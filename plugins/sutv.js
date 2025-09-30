@@ -1,5 +1,17 @@
 const axios = require('axios');
-const config = require('../config'); // Assuming config contains settings like FOOTER, LOGO, BUTTON, JID, etc.
+const config = require('../config'),
+ { cmd, commands } = require('../command'),
+    {
+    getBuffer,
+    getGroupAdmins,
+    getRandom,
+    h2k,
+    isUrl,
+    Json,
+    runtime,
+    sleep,
+    fetchJson,
+  } = require('../lib/functions')// Assuming config contains settings like FOOTER, LOGO, BUTTON, JID, etc.
 let isUploading = false; // Track upload status for downloads
 
 // Helper function to fetch JSON data
