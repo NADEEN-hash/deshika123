@@ -140,6 +140,7 @@ async (conn, mek, m, { from, q, prefix, reply }) => {
         if (!q) return reply('🚩 *Please provide a TV show URL*');
 
         const episodeUrl = `https://episodesub.netlify.app/.netlify/functions/episodes?url=${encodeURIComponent(q)}`;
+     console.log(episodeUrl)
         const episodeData = await fetchJson(episodeUrl);
 
         if (!episodeData || episodeData.length === 0) {
@@ -148,7 +149,7 @@ async (conn, mek, m, { from, q, prefix, reply }) => {
         }
 
         // Prepare episode list for display
-        const srh = episodeData.map(episode => ({
+        const srh = episodeData.episodes.map(episode => ({
             title: episode.title.replace("Sinhala Subtitles | සිංහල උපසිරසි සමඟ", "").trim(),
             description: '',
             rowId: prefix + 'tvdetails ' + episode.link
