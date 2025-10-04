@@ -361,6 +361,61 @@ console.log(`Input:`, q)
     }
 });
 
+let isUploadinggg = false; // Track upload status
+
+cmd({
+    pattern: "dinsindl",
+    react: "⬇️",
+    dontAddCommandList: true,
+    filename: __filename
+}, async (conn, mek, m, { from, q, reply }) => {
+    if (isUploadinggg) {
+        return await conn.sendMessage(from, { 
+            text: '*A movie is already being uploaded. Please wait until it finishes.* ⏳', 
+            quoted: mek 
+        });
+    }
+console.log(`Input:`, q)
+    try {
+        //===================================================
+        const [pix, imglink, title] = q.split("±");
+        if (!pix || !imglink || !title) return await reply("⚠️ Invalid format. Use:\n`sindl link±img±title`");
+        //===================================================
+
+        const da = pix.split("https://pixeldrain.com/u/")[1];
+		console.log(da)
+        if (!da) return await reply("⚠️ Couldn’t extract Pixeldrain file ID.");
+
+        const fhd = `https://pixeldrain.com/api/file/${da}`;
+        isUploadinggg = true; // lock start
+
+        //===================================================
+        const botimg = imglink.trim();
+        const message = {
+            document: { url: fhd },
+            caption: `🎬 ${title}\n\n\`🎞️𝗗ɪɴᴋᴀ 𝗠ᴏᴠɪᴇꜱ 𝗟ᴋ🎞️\`\n\n> *•ɴᴀᴅᴇᴇɴ-ᴍᴅ•*`,
+            mimetype: "video/mp4",
+            jpegThumbnail: await (await fetch(botimg)).buffer(),
+            fileName: `📽️DINKA📽️${title}.mp4`,
+        };
+
+        // Send "uploading..." msg without blocking
+        conn.sendMessage(from, { text: '*Uploading your movie.. ⬆️*', quoted: mek });
+
+        // Upload + react + success (parallel tasks)
+        await Promise.all([
+            conn.sendMessage(config.JID || from, message),
+            conn.sendMessage(from, { react: { text: '✔️', key: mek.key } }),
+            conn.sendMessage(from, { text: `*Movie sent successfully  ✔*`, quoted: mek })
+        ]);
+
+    } catch (e) {
+        reply('🚫 *Error Occurred !!*\n\n' + e.message);
+        console.error("sindl error:", e);
+    } finally {
+        isUploadinggg = false; // reset lock always
+    }
+});
 cmd({
     pattern: "daqt",
     alias: ["mdv"],
