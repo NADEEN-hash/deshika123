@@ -361,7 +361,7 @@ console.log(`Input:`, q)
     }
 });
 
-let isUploadinggg = false; // Track upload status
+let isUploadingggg = false; // Track upload status
 
 cmd({
     pattern: "dinsindl",
@@ -369,7 +369,7 @@ cmd({
     dontAddCommandList: true,
     filename: __filename
 }, async (conn, mek, m, { from, q, reply }) => {
-    if (isUploadinggg) {
+    if (isUploadingggg) {
         return await conn.sendMessage(from, { 
             text: '*A movie is already being uploaded. Please wait until it finishes.* ⏳', 
             quoted: mek 
@@ -387,7 +387,7 @@ console.log(`Input:`, q)
         if (!da) return await reply("⚠️ Couldn’t extract Pixeldrain file ID.");
 
         const fhd = `https://pixeldrain.com/api/file/${da}`;
-        isUploadinggg = true; // lock start
+        isUploadingggg = true; // lock start
 
         //===================================================
         const botimg = imglink.trim();
@@ -413,7 +413,7 @@ console.log(`Input:`, q)
         reply('🚫 *Error Occurred !!*\n\n' + e.message);
         console.error("sindl error:", e);
     } finally {
-        isUploadinggg = false; // reset lock always
+        isUploadingggg = false; // reset lock always
     }
 });
 cmd({
