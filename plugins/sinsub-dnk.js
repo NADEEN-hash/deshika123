@@ -276,7 +276,7 @@ cmd(
         _0xc0974.push({
           buttonId:
             _0x3a0d7b +
-            ('sindl2 ' +
+            ('dinsindl ' +
               _0x1d49de.link +
               '\xB1' +
               _0x3274e0.images[1] +
@@ -919,3 +919,4 @@ cmd(
     }
   }
 )
+
