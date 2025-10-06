@@ -984,15 +984,15 @@ if (!q || !q.includes('https://cinesubz.net/tvshows')) {
     return await reply('*❗ This is a movie, please use .mv command.*');
 }
 
-let sadas = await fetchJson(`https://manojapi.infinityapi.org/api/v1/cinesubz-tvshow?url=${q}&apiKey=8e35f949-3ac8-4f35-bae9-cc8c401449d5`)
-let msg = `*📽️ 𝗧ɪᴛʟᴇ ➮* *_${sadas.results.title || 'N/A'}_*
+let sadas = await cinesubz_tvshow_info(q)
+let msg = `*☘️ 𝗧ɪᴛʟᴇ ➮* *_${sadas.data.title || 'N/A'}_*
 
-*📅 𝗥ᴇʟᴇꜱᴇᴅ ᴅᴀᴛᴇ ➮* _${sadas.results.release_date || 'N/A'}_
-*🌎 𝗖ᴏᴜɴᴛʀʏ ➮* _${sadas.results.country || 'N/A'}_
-*💃 𝗥ᴀᴛɪɴɢ ➮* _${sadas.results.TMDb_Rating || 'N/A'}_
-*⏰ 𝗥ᴜɴᴛɪᴍᴇ ➮* _${sadas.results.duration || 'N/A'}_
-*💁‍♂️ 𝗦ᴜʙᴛɪᴛʟᴇ ʙʏ ➮* _${sadas.results.director.name || 'N/A'}_
-*🎭 𝗚ᴇɴᴀʀᴇꜱ ➮* ${sadas.results.categories.join(', ') || 'N/A'}
+*📅 𝗥ᴇʟᴇꜱᴇᴅ ᴅᴀᴛᴇ ➮* _${sadas.data.date || 'N/A'}_
+*🌎 𝗖ᴏᴜɴᴛʀʏ ➮* _${sadas.data.country || 'N/A'}_
+*💃 𝗥ᴀᴛɪɴɢ ➮* _${sadas.data.imdb || 'N/A'}_
+*⏰ 𝗥ᴜɴᴛɪᴍᴇ ➮* _${sadas.data.runtime || 'N/A'}_
+*💁‍♂️ 𝗦ᴜʙᴛɪᴛʟᴇ ʙʏ ➮* _${sadas.data.director || 'N/A'}_
+*🎭 𝗚ᴇɴᴀʀᴇꜱ ➮* ${sadas.data.category.join(', ') || 'N/A'}
 `
 
  
@@ -1000,45 +1000,44 @@ var rows = [];
 
 rows.push(
     { buttonId: prefix + 'ctdetailss ' + q, buttonText: { displayText: 'Details Card' }, type: 1 },
-    { buttonId: prefix + 'dlcz ' + q, buttonText: { displayText: 'All Epishodes Send\n' }, type: 1 }
+    { buttonId: prefix + 'dlc ' + q, buttonText: { displayText: 'All Epishodes Send\n' }, type: 1 }
 );
+	
+  sadas.data.episodes.map((v) => {
+	rows.push({
+        buttonId: prefix + `cinefirstdl ${sadas.data.mainImage}±${v.link}±${sadas.data.title} *\`${v.number}\`*`,
+        buttonText: { displayText: `${v.number}` },
+        type: 1
+          }
+		 
+		  //{buttonId: prefix + 'cdetails ' + q, buttonText: {displayText: 'Details send'}, type: 1}
+		 
+		 
+		 );
+        })
 
-sadas.results.epi.forEach((season) => {
-  season.episodes.forEach((v) => {
-    rows.push({
-      buttonId: prefix + 'cineFirstId ' + sadas.results.thumb.url + '=' + v.link + '=' + sadas.results.title + ' *' + v.chapter + '*',
-      buttonText: { displayText: `${v.chapter}` },
-      type: 1
-    });
-  });
-});
 
-    
-		
-				
-
-     
 
 
   
 const buttonMessage = {
  
-image: {url: sadas.results.thumb.url.replace("-200x300", "")},	
+image: {url: sadas.data.mainImage.replace("-200x300", "")},	
   caption: msg,
   footer: config.FOOTER,
   buttons: rows,
   headerType: 4
 }
 
-const rowss = sadas.results.epi.episodes.map((v, i) => {
+const rowss = sadas.data.episodes.map((v, i) => {
     // Clean size and quality text by removing common tags
-    const cleanText = `${v.chapter}`
+    const cleanText = `${v.number}`
       .replace(/WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|Telegram BluRay SD|Telegram BluRay HD|Direct BluRay SD|Direct BluRay HD|Direct BluRay FHD|FHD|HD|SD|Telegram BluRay FHD/gi, "")
       .trim() || "No info";
 
     return {
       title: cleanText,
-      id: prefix + `cinefirstdl ${sadas.results.thum.url}±${v.link}±${sadas.results.title} *\`${v.chapter}\`*` // Make sure your handler understands this format
+      id: prefix + `cinefirstdl ${sadas.data.mainImage}±${v.link}±${sadas.data.title} *\`${v.number}\`*` // Make sure your handler understands this format
     };
   });
 
@@ -1056,7 +1055,7 @@ const listButtons = {
 
 	if (config.BUTTON === "true") {
       await conn.sendMessage(from, {
-    image: { url: sadas.results.thum.url.replace("-200x300", "")},
+    image: { url: sadas.data.mainImage.replace("-200x300", "")},
     caption: msg,
     footer: config.FOOTER,
     buttons: [
@@ -1066,7 +1065,7 @@ const listButtons = {
             type: 1
         },
 	    {
-            buttonId: prefix + 'dlcz ' + q,
+            buttonId: prefix + 'dlc ' + q,
             buttonText: { displayText: "All Epishodes Send" },
             type: 1
         },
@@ -1095,104 +1094,7 @@ const listButtons = {
 }
 })
 
-//newtv
-let isUploadinggg = false; // Track upload status
 
-
-
-
-
-const cinesubzDownBase2 = "https://drive2.cscloud12.online";
-const apilinkcine2 = "https://cinesubz-store.vercel.app/";
-
-cmd({
-    pattern: "pakatv",
-    react: "⬇️",
-    dontAddCommandList: true,
-    filename: __filename
-}, async (conn, mek, m, { from, q, isMe, reply }) => {
-    if (!q) {
-        return await reply('*Please provide a direct URL!*');
-    }
-
-    if (isUploadinggg) {
-        return await conn.sendMessage(from, { 
-            text: '*A Episode is already being uploaded. Please wait a while before uploading another one.* ⏳', 
-            quoted: mek 
-        });
-    }
-
-    let attempts = 0;
-    const maxRetries = 5;
-    isUploadinggg = false;
-
-    
-    while (attempts < maxRetries) {
-        try {
-            const [datae, datas, dat] = q.split("±");
-            let url = datas;
-            let mediaUrl = url;
-            let downloadUrls = null;
-
-            // 🔹 Check only if it's from Cinesubz
-            if (url.includes(cinesubzDownBase2)) {
-                const check = await fetchJson(`${apilinkcine2}api/get/?url=${encodeURIComponent(url)}`);
-
-                if (check?.isUploaded === false) {
-                    // New upload case
-                    const urlApi = `https://manojapi.infinityapi.org/api/v1/cinesubz-download?url=${encodeURIComponent(url)}&apiKey=f897676e-6f86-4a8b-bd0e-300816ddd63d`; 
-                    const getDownloadUrls = await axios.get(urlApi);
-
-                    downloadUrls = getDownloadUrls.data.results;
-
-                    // Save in DB
-                    const payload = { url, downloadUrls, uploader: "VISPER-MD" }; 
-                    await axios.post(`${apilinkcine2}api/save`, payload);
-
-                } else {
-                    // Already uploaded
-                    downloadUrls = check.downloadUrls;
-                }
-
-                // Pick best available link
-                mediaUrl =
-                     downloadUrls.direct ||
-                    downloadUrls?.gdrive2 
-            }
-
-            // 🔹 Thumbnail
-            const botimg = datae;
-
-            await conn.sendMessage(from, { react: { text: '⬆️', key: mek.key } });
-            const up_mg = await conn.sendMessage(from, { text: '*Uploading your movie..⬆️*' });
-
-            // 🔹 Send document
-            await conn.sendMessage(config.JID || from, { 
-                document: { url: mediaUrl },
-                caption: `🎞️ ${dat}\n\n${config.FOOTER}`,
-                mimetype: "video/mp4",
-                jpegThumbnail: await (await fetch(botimg)).buffer(),
-                fileName: `${dat}.mp4`
-            });
-
-            await conn.sendMessage(from, { delete: up_mg.key });
-            await conn.sendMessage(from, { react: { text: '✔️', key: mek.key } });
-
-            break; // ✅ success → exit loop
-        } catch (error) {
-            attempts++;
-            console.error(`Attempt ${attempts}: Error fetching or sending:`, error);
-        }
-    }
-
-    if (attempts >= maxRetries) {
-        await conn.sendMessage(from, { text: "*Error fetching at this moment. Please try again later ❗*" }, { quoted: mek });
-    }
-
-    isUploadinggg = false;
-});
-
-//newtv
 
 cmd({
   pattern: "cinefirstdl",	
@@ -1210,7 +1112,7 @@ cmd({
 
     if (!img) return await reply('*🚫 Invalid format. Expected "link±imageURL".*');
 
-    const results = await fetchJson(`https://manojapi.infinityapi.org/api/v1/cinesubz-tvshow?url=${img}&apiKey=8e35f949-3ac8-4f35-bae9-cc8c401449d5`)
+    const results = await cinesubz_tv_firstdl(img);
     if (!results?.dl_links?.length) {
       return await conn.sendMessage(from, { text: '*❌ No download links found!*' }, { quoted: mek });
     }
@@ -1218,8 +1120,9 @@ cmd({
     const rows = results.dl_links.map(dl => ({
       title: `${dl.quality} - ${dl.size}`,
       description: '',
-      rowId: prefix + `pakatv ${dllink}±${dl.link}±${title}`
+      rowId: prefix + `tvdll ${dllink}&${title}&${dl.direct_link}`
     }));
+
     const sections = [{
       title: "🎥 Select your preferred quality below:",
       rows
@@ -1228,7 +1131,7 @@ cmd({
     const caption = `*🍿 Episode Title:* ${title}_*_\n\n*🔢 Choose a quality from the list below:*`;
 
     // 💬 Toggle List Message or Button Mode
-    if (config.BUTTON3 === "true") {
+    if (config.BUTTON === "true") {
       return await conn.sendMessage(from, {
         text: caption,
         footer: config.FOOTER,
@@ -1311,16 +1214,16 @@ cmd({
     if (!q) return reply('*කරුණාකර Cinesubz URL එකක් ලබා දෙන්න !*');
 
     try {
-        const sadas = await fetchJson(`https://manojapi.infinityapi.org/api/v1/cinesubz-tvshow?url=${q}&apiKey=8e35f949-3ac8-4f35-bae9-cc8c401449d5`);
+        const sadas = await cinesubz_tvshow_info(q);
 
-        if (!sadas.results.epi || !Array.isArray(sadas.results.epi.episodes) || sadas.results.epi.episodes.length === 0) {
+        if (!sadas.data || !Array.isArray(sadas.data.episodes) || sadas.data.episodes.length === 0) {
             return reply("❌ Episode එකක්වත් හමු නොවුණා.");
         }
 
-        const episodes = sadas.results.epi.episodes;
+        const episodes = sadas.data.episodes;
         const allLinks = episodes.map(ep => ep.link).filter(Boolean);
-        const showimg = sadas.results.thumb.url || "https://i.ibb.co/hcyQfwy/7a265c4eee41e2b7.jpg";
-        const showTitle = sadas.results.title || "Cinesubz_Show";
+        const showimg = sadas.data.mainImage || "https://i.ibb.co/hcyQfwy/7a265c4eee41e2b7.jpg";
+        const showTitle = sadas.data.title || "Cinesubz_Show";
 
         const sampleEp = await cinesubz_tv_firstdl(allLinks[0]);
 
@@ -1475,7 +1378,7 @@ cmd({
 
                     await conn.sendMessage(config.JID || from, {
                         document: { url: mediaUrl },
-                        caption: `*📺 Name: ${title}*\n*Episode ${ep.number} - ${name}*\n\n*\`[ ${quality} ]\`*\n\n${config.FOOTER}`,
+                        caption: `*📺 Name: ${title}*\n*Episode ${ep.number} - ${name}*\n\n*\`[ ${quality} ]\`*\n\n${config.NAME}`,
                         jpegThumbnail: thumb,
                         mimetype: "video/mp4",
                         fileName: safeName
@@ -1508,69 +1411,141 @@ cmd({
 
 
 
+cmd({
+    pattern: "ctdetailss",	
+    react: '🎥',
+    desc: "moive downloader",
+    filename: __filename
+},
+async (conn, m, mek, { from, q, isMe, reply }) => {
+try{
 
 
-//====================================================================================================
-cmd(
-  {
-    pattern: 'ctdetailss',
-    react: '\uD83C\uDFA5',
-    desc: 'moive downloader',
-    filename: __filename,
-  },
-  async (
-    _0x10d11b,
-    _0x265434,
-    _0x385715,
-    { from: _0x26004b, q: _0x3fc711, isMe: _0x5e8bd0, reply: _0x29b044 }
-  ) => {
-    try {
-      if (!_0x3fc711) {
-        return await _0x29b044('*please give me text !..*')
-      }
-      let _0x29c3e0 = await fetchJson(
-        'https://darksadas-yt-cineszub-tv-shows.vercel.app/?url=' +
-          _0x3fc711 +
-          '&apikey=pramashi'
-      )
-      const _0x49ef83 = (
-        await axios.get(
-          'https://raw.githubusercontent.com/Nadeenpoorna-app/main-data/refs/heads/main/master.json'
-        )
-      ).data
-      let _0x2ba954 =
-        '*\u2618️ \uD835\uDDE7ɪᴛʟᴇ \u27AE* *_' +
-        (_0x29c3e0.data.title || 'N/A') +
-        '_*\n\n*\uD83D\uDCC5 \uD835\uDDE5ᴇʟᴇꜱᴇᴅ ᴅᴀᴛᴇ \u27AE* _' +
-        (_0x29c3e0.data.date || 'N/A') +
-        '_\n*\uD83C\uDF0E \uD835\uDDD6ᴏᴜɴᴛʀʏ \u27AE* _' +
-        (_0x29c3e0.data.country || 'N/A') +
-        '_\n*\uD83D\uDC83 \uD835\uDDE5ᴀᴛɪɴɢ \u27AE* _' +
-        (_0x29c3e0.data.imdb || 'N/A') +
-        '_\n*\u23F0 \uD835\uDDE5ᴜɴᴛɪᴍᴇ \u27AE* _' +
-        (_0x29c3e0.data.runtime || 'N/A') +
-        '_\n*\uD83D\uDC81‍\u2642️ \uD835\uDDE6ᴜʙᴛɪᴛʟᴇ ʙʏ \u27AE* _' +
-        (_0x29c3e0.data.subtitle_author || 'N/A') +
-        '_\n*\uD83C\uDFAD \uD835\uDDDAᴇɴᴀʀᴇꜱ \u27AE* ' +
-        (_0x29c3e0.data.genres.join(', ') || 'N/A') +
-        '\n\n> 💃🏻 Follow us : *\n' +
-        _0x49ef83.chlink +
-        '*\n\n*㋛ 𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝙽𝙰𝙳𝙴𝙴𝙽 〽️𝙳*'
-      await _0x10d11b.sendMessage(config.JID || _0x26004b, {
-        image: { url: _0x29c3e0.data.image.replace('-200x300', '') },
-        caption: _0x2ba954,
-      })
-      await _0x10d11b.sendMessage(_0x26004b, {
-        react: {
-          text: '\u2714️',
-          key: _0x385715.key,
-        },
-      })
-    } catch (_0x52b0d3) {
-      console.error('Error fetching or sending', _0x52b0d3)
-      await _0x10d11b.sendMessage(_0x26004b, '*Error fetching or sending *', {
-        quoted: _0x385715,
-      })
+     if(!q) return await reply('*please give me text !..*')
+let sadas = await fetchJson(`https://darksadas-yt-cineszub-tv-shows.vercel.app/?url=${q}&apikey=pramashi`)
+	const details = (await axios.get('https://mv-visper-full-db.pages.dev/Main/main_var.json')).data
+     
+
+let msg = `*☘️ 𝗧ɪᴛʟᴇ ➮* *_${sadas.data.title || 'N/A'}_*
+
+*📅 𝗥ᴇʟᴇꜱᴇᴅ ᴅᴀᴛᴇ ➮* _${sadas.data.date || 'N/A'}_
+*🌎 𝗖ᴏᴜɴᴛʀʏ ➮* _${sadas.data.country || 'N/A'}_
+*💃 𝗥ᴀᴛɪɴɢ ➮* _${sadas.data.imdb || 'N/A'}_
+*⏰ 𝗥ᴜɴᴛɪᴍᴇ ➮* _${sadas.data.runtime || 'N/A'}_
+*💁‍♂️ 𝗦ᴜʙᴛɪᴛʟᴇ ʙʏ ➮* _${sadas.data.subtitle_author || 'N/A'}_
+*🎭 𝗚ᴇɴᴀʀᴇꜱ ➮* ${sadas.data.genres.join(', ') || 'N/A'}
+
+> 🌟 Follow us : *${details.chlink}*`
+
+await conn.sendMessage(config.JID || from, { image: { url: sadas.data.image.replace("-200x300", "") }, caption: msg })
+
+
+
+ await conn.sendMessage(from, { react: { text: '✔️', key: mek.key } });
+    } catch (error) {
+        console.error('Error fetching or sending', error);
+        await conn.sendMessage(from, '*Error fetching or sending *', { quoted: mek });
     }
-  }
-)
+});
+
+
+
+//newtv
+let isUploadinggg = false; // Track upload status
+
+
+
+
+
+const cinesubzDownBase2 = "https://drive2.cscloud12.online";
+const apilinkcine2 = "https://cinesubz-store.vercel.app/";
+
+cmd({
+    pattern: "pakatv",
+    react: "⬇️",
+    dontAddCommandList: true,
+    filename: __filename
+}, async (conn, mek, m, { from, q, isMe, reply }) => {
+    if (!q) {
+        return await reply('*Please provide a direct URL!*');
+    }
+
+    if (isUploadinggg) {
+        return await conn.sendMessage(from, { 
+            text: '*A Episode is already being uploaded. Please wait a while before uploading another one.* ⏳', 
+            quoted: mek 
+        });
+    }
+
+    let attempts = 0;
+    const maxRetries = 5;
+    isUploadinggg = false;
+
+    
+    while (attempts < maxRetries) {
+        try {
+            const [datae, datas, dat] = q.split("±");
+            let url = datas;
+            let mediaUrl = url;
+            let downloadUrls = null;
+
+            // 🔹 Check only if it's from Cinesubz
+            if (url.includes(cinesubzDownBase2)) {
+                const check = await fetchJson(`${apilinkcine2}api/get/?url=${encodeURIComponent(url)}`);
+
+                if (check?.isUploaded === false) {
+                    // New upload case
+                    const urlApi = `https://manojapi.infinityapi.org/api/v1/cinesubz-download?url=${encodeURIComponent(url)}&apiKey=f897676e-6f86-4a8b-bd0e-300816ddd63d`; 
+                    const getDownloadUrls = await axios.get(urlApi);
+
+                    downloadUrls = getDownloadUrls.data.results;
+
+                    // Save in DB
+                    const payload = { url, downloadUrls, uploader: "VISPER-MD" }; 
+                    await axios.post(`${apilinkcine2}api/save`, payload);
+
+                } else {
+                    // Already uploaded
+                    downloadUrls = check.downloadUrls;
+                }
+
+                // Pick best available link
+                mediaUrl =
+                     downloadUrls.direct ||
+                    downloadUrls?.gdrive2 
+            }
+
+            // 🔹 Thumbnail
+            const botimg = datae;
+
+            await conn.sendMessage(from, { react: { text: '⬆️', key: mek.key } });
+            const up_mg = await conn.sendMessage(from, { text: '*Uploading your movie..⬆️*' });
+
+            // 🔹 Send document
+            await conn.sendMessage(config.JID || from, { 
+                document: { url: mediaUrl },
+                caption: `🎞️ ${dat}\n\n${config.FOOTER}`,
+                mimetype: "video/mp4",
+                jpegThumbnail: await (await fetch(botimg)).buffer(),
+                fileName: `${dat}.mp4`
+            });
+
+            await conn.sendMessage(from, { delete: up_mg.key });
+            await conn.sendMessage(from, { react: { text: '✔️', key: mek.key } });
+
+            break; // ✅ success → exit loop
+        } catch (error) {
+            attempts++;
+            console.error(`Attempt ${attempts}: Error fetching or sending:`, error);
+        }
+    }
+
+    if (attempts >= maxRetries) {
+        await conn.sendMessage(from, { text: "*Error fetching at this moment. Please try again later ❗*" }, { quoted: mek });
+    }
+
+    isUploadinggg = false;
+});
+
+//newtv
+
