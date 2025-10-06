@@ -1120,7 +1120,7 @@ cmd({
     const rows = results.dl_links.map(dl => ({
       title: `${dl.quality} - ${dl.size}`,
       description: '',
-      rowId: prefix + `tvdll ${dllink}&${title}&${dl.direct_link}`
+      rowId: prefix + `pakatv ${dllink}&${title}&${dl.direct_link}`
     }));
 
     const sections = [{
@@ -1484,8 +1484,8 @@ cmd({
     
     while (attempts < maxRetries) {
         try {
-            const [datae, datas, dat] = q.split("±");
-            let url = datas;
+            const [datae, dat, datas] = q.split("&");
+            let url = datas.replace('https://google.com/server5/1:', 'https://drive2.cscloud12.online/server5');
             let mediaUrl = url;
             let downloadUrls = null;
 
