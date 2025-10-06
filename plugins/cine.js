@@ -1177,7 +1177,7 @@ cmd({
 console.log(mh)
 	    
         const mediaUrl = mh.result.direct.trim();
-     
+     console.log('Url:', mediaUrl);
 
         const botimgUrl = dllink.trim();
         const botimgResponse = await fetch(botimgUrl);
