@@ -1514,7 +1514,7 @@ console.log('Input', q)
                      downloadUrls.direct ||
                     downloadUrls?.gdrive2 
             }
-
+console.log ('Final:', mediaUrl)
             // 🔹 Thumbnail
             const botimg = datae;
 
