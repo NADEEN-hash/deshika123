@@ -928,7 +928,6 @@ sections
       id: prefix + `cinetvdl ${url.data[i].link}`// Make sure your handler understands this format
     };
   });
-console.log(' input:',  ${url.data[i].link});
   // Compose the listButtons object
   const listButtons = {
     title: "Choose a Movie :)",
