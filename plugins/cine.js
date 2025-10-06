@@ -1065,7 +1065,7 @@ const listButtons = {
             type: 1
         },
 	    {
-            buttonId: prefix + 'dlc ' + q,
+            buttonId: prefix + 'dlcxx ' + q,
             buttonText: { displayText: "All Epishodes Send" },
             type: 1
         },
@@ -1131,7 +1131,7 @@ cmd({
     const caption = `*🍿 Episode Title:* ${title}_*_\n\n*🔢 Choose a quality from the list below:*`;
 
     // 💬 Toggle List Message or Button Mode
-    if (config.BUTTON === "true") {
+    if (config.BUTTON3 === "true") {
       return await conn.sendMessage(from, {
         text: caption,
         footer: config.FOOTER,
