@@ -925,11 +925,10 @@ sections
 
     return {
       title: cleanText,
-      id: prefix + `cinetvdl ${url.data[i].link}`
-		console.log(' input:',  ${url.data[i].link});// Make sure your handler understands this format
+      id: prefix + `cinetvdl ${url.data[i].link}`// Make sure your handler understands this format
     };
   });
-
+console.log(' input:',  ${url.data[i].link});
   // Compose the listButtons object
   const listButtons = {
     title: "Choose a Movie :)",
