@@ -1485,7 +1485,7 @@ console.log('Input', q)
     while (attempts < maxRetries) {
         try {
             const [datae, dat, datas] = q.split("&");
-            let url = datas.replace('https://google.com/', 'https://drive2.cscloud12.online/');
+            let url = datas.replace('https://google.com/', 'https://drive2.cscloud12.online/').replace('/1:', '');
             let mediaUrl = url;
             let downloadUrls = null;
 
