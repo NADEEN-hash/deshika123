@@ -1469,7 +1469,7 @@ cmd({
     if (!q) {
         return await reply('*Please provide a direct URL!*');
     }
-
+console.log('Input', q)
     if (isUploadinggg) {
         return await conn.sendMessage(from, { 
             text: '*A Episode is already being uploaded. Please wait a while before uploading another one.* ⏳', 
