@@ -166,7 +166,7 @@ conn.ev.on('connection.update', async (update) => {
 
                 // Send initial connect image
                 await conn.sendMessage(DEFAULT_OWNER_JID, {
-                    image: { url: 'https://files.catbox.moe/beynkp.png' },
+                    image: { url: 'https://files.catbox.moe/g6gr5u.jpg' },
                     caption: captionText
                 });
 const mvSize = config.MV_SIZE;
