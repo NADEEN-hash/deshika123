@@ -80,7 +80,7 @@ cmd(
           },
         ],
         _0x26fff2 = {
-          image: { url: config.LOGO },
+          image: { url: 'https://files.catbox.moe/lh32a1.jpg' },
           caption:
             '_*MOVIE DL-X SEARCH SYSTEM \uD83D\uDCFA*_\n\n*`\uD83D\uDCF2Input :`* ' +
             _0x1a495c +
