@@ -159,7 +159,7 @@ cmd(
         ],
 
         _0x547828 = {
-          image: { url: 'https://files.catbox.moe/beynkp.png' },
+          image: { url: 'https://files.catbox.moe/g6gr5u.jpg' },
           caption:
             '_*\uD83C\uDFACMOVIE DL-X SEARCH SYSTEM \uD83C\uDFAC*_\n\n*`\uD83D\uDCF2Input :`* ' +
             _0x2d6ddb +
