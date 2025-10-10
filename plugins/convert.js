@@ -1659,6 +1659,73 @@ cmd(
     }
   }
 )
+
+cmd(
+  {
+    pattern: 'uploadapk',
+    react: '\u2714️',
+    alias: ['upapk'],
+    desc: 'Movie Searcher',
+    category: 'movie',
+    use: '.downjid < Jid > & < Name >',
+    dontAddCommandList: false,
+    filename: __filename,
+  },
+  async (
+    _0x194d6c,
+    _0x1da2d1,
+    _0x443fde,
+    {
+      from: _0x1b02ff,
+      l: _0x2ba2a2,
+      quoted: _0x1f76ae,
+      body: _0x40d207,
+      isCmd: _0x4276ac,
+      command: _0xae1ba8,
+      mentionByTag: _0x409105,
+      db_pool: _0x15c892,
+      args: _0xd1e7bb,
+      q: _0xdc18f6,
+      isGroup: _0x23755c,
+      sender: _0x3249c5,
+      senderNumber: _0x215f7b,
+      botNumber2: _0x594285,
+      botNumber: _0x4bdba8,
+      pushname: _0x4d05b5,
+      isMe: _0x31b4c9,
+      isOwner: _0x2919b8,
+      groupMetadata: _0x4709b6,
+      groupName: _0x4c41ea,
+      participants: _0x21403e,
+      groupAdmins: _0x3f0162,
+      isBotAdmins: _0x450f50,
+      isCreator: _0xbe3a61,
+      isDev: _0xb2838d,
+      isAdmins: _0x32e4c,
+      reply: _0x5e3757,
+    }
+  ) => {
+    try {
+      if (!_0x443fde.quoted) {
+        return _0x5e3757('*ℹ Please mention a Derect Link*')
+      }
+      if (!_0xdc18f6) {
+        return
+      }
+      const _0x2424b2 = _0xdc18f6.split(' & ')[0],
+        _0x43f4d7 = _0xdc18f6.split(' & ')[1]
+      await _0x194d6c.sendMessage(_0x2424b2, {
+        document: { url: _0x443fde.quoted.msg },
+        caption: '\n' + _0x43f4d7 + '\n\n> *•ɴᴀᴅᴇᴇɴ-ᴍᴅ•* ',
+        mimetype: 'application/vnd.android.package-archive',
+        fileName: '🎬NADEEN MD🎬' + _0x43f4d7 + '.apk',
+      })
+    } catch (_0x2f4d1c) {
+      _0x5e3757('\u2757 Error' + _0x2f4d1c)
+      _0x2ba2a2(_0x2f4d1c)
+    }
+  }
+)
 cmd(
   {
     pattern: 'gitclone',
