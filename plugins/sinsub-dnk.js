@@ -199,124 +199,135 @@ cmd(
     }
   }
 )
-cmd(
-  {
-    pattern: 'sininfo2',
-    alias: ['mdv'],
+cmd({
+    pattern: "sininfo2",
+    alias: ["mdv"],
     use: '.moviedl <url>',
-    react: '\uD83C\uDFA5',
-    desc: 'download movies from sinhalasub.lk',
-    filename: __filename,
-  },
-  async (
-    _0x4f83ce,
-    _0x37c510,
-    _0x9f9653,
-    {
-      from: _0xea5932,
-      l: _0x1867a4,
-      quoted: _0x5b8a4f,
-      body: _0x1edc87,
-      isCmd: _0x5eaa81,
-      command: _0x22ed5b,
-      args: _0x291435,
-      q: _0x3ab1d4,
-      isGroup: _0x5b3116,
-      prefix: _0x3a0d7b,
-      sender: _0x15bece,
-      senderNumber: _0x13f3cd,
-      botNumber2: _0xf43054,
-      botNumber: _0x26de09,
-      pushname: _0x643daf,
-      isMe: _0x35487d,
-      isOwner: _0x140a67,
-      groupMetadata: _0x15b3e9,
-      groupName: _0x5e14fb,
-      participants: _0x197eab,
-      groupAdmins: _0x5d0b87,
-      isBotAdmins: _0x43071c,
-      isAdmins: _0x13d143,
-      reply: _0x30ed0f,
-    }
-  ) => {
-    try {
-      if (!_0x3ab1d4) {
-        return _0x30ed0f('\uD83D\uDEA9 *Please give me a url*')
-      }
-      let _0x3274e0 = await sinhalasub_info(_0x3ab1d4)
-      if (!_0x3ab1d4 || !_0x3ab1d4.includes('https://sinhalasub.lk/movies/')) {
-        return (
-          console.log('Invalid input:', _0x3ab1d4),
-          await _0x30ed0f(
-            '*\u2757 This is a TV series, please use .sisubtv command.*'
-          )
-        )
-      }
-      if (_0x3274e0.length < 1) {
-        return await _0x4f83ce.sendMessage(
-          _0xea5932,
-          { text: "\uD83D\uDEA9 *I couldn't find anything :(*" },
-          { quoted: _0x37c510 }
-        )
-      }
-      var _0xc0974 = []
-      _0xc0974.push(
-        {
-          buttonId: _0x3a0d7b + 'daqt2 ' + _0x3ab1d4,
-          buttonText: { displayText: 'Send Details Card' },
-          type: 1,
-        },
-        {
-          buttonId: _0x3a0d7b + 'ch2' + _0x3ab1d4,
-          buttonText: { displayText: 'Send Images\n' },
-          type: 1,
-        }
-      )
-      _0x3274e0.downloadLinks.map((_0x1d49de) => {
-        _0xc0974.push({
-          buttonId:
-            _0x3a0d7b +
-            ('dinsindl ' +
-              _0x1d49de.link +
-              '\xB1' +
-              _0x3274e0.images[1] +
-              '\xB1' +
-              _0x3274e0.title +
-              '\n\t\n\t*`[ ' +
-              _0x1d49de.quality +
-              ' ]`*'),
-          buttonText: {
-            displayText: _0x1d49de.size + ' - ' + _0x1d49de.quality,
+    react: "🎥",
+    desc: "download movies from sinhalasub.lk",
+    //category: "search",
+    filename: __filename
+
+},
+
+async(conn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, prefix, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+try{
+if (!q) return reply('🚩 *Please give me a url*')
+
+let sadass = await fetchJson(`https://visper-md-ap-is.vercel.app/movie/sinhalasub/info?q=${q}`)
+	if (!q || !q.includes('https://sinhalasub.lk/movies/')) {
+    console.log('Invalid input:', q);
+    return await reply('*❗ This is a TV series, please use .tv command.*');
+}
+const sadas = sadass.result;
+if (sadas.length < 1) return await conn.sendMessage(from, { text: "🚩 *I couldn't find anything :(*" }, { quoted: mek } )
+var rows = [];  	
+rows.push(
+    { buttonId: prefix + 'daqt ' + q, buttonText: { displayText: 'Send Details 💡' }, type: 1 },
+    { buttonId: prefix + 'ch ' + q, buttonText: { displayText: 'Send Images 💡\n' }, type: 1 }
+);
+sadas.downloadLinks.map((v) => {
+rows.push({
+ buttonId: prefix + `sindl2 ${v.link}±${sadas.images[1]}±${sadas.title}
+	
+	*\`[ ${v.quality} ]\`*`,
+        buttonText: { displayText: `${v.size} - ${v.quality}` },
+        type: 1
           },
-          type: 1,
+		 
+	 );
         })
-      })
-      const _0x3105ec =
-          '*\u2618️ \uD835\uDDE7ɪᴛʟᴇ ☞*_' +
-          (_0x3274e0.title || 'N/A') +
-          '*_\n\n*\uD83D\uDCC5 \uD835\uDDE5ᴇʟᴇꜱᴇᴅ ᴅᴀᴛᴇ ☞* _' +
-          (_0x3274e0.date || 'N/A') +
-          '_\n*\uD83C\uDF0E \uD835\uDDD6ᴏᴜɴᴛʀʏ ☞* _' +
-          (_0x3274e0.country || 'N/A') +
-          '_\n*\uD83D\uDC83 \uD835\uDDE5ᴀᴛɪɴɢ ☞* _' +
-          (_0x3274e0.rating || 'N/A') +
-          '_\n*\u23F0 \uD835\uDDE5ᴜɴᴛɪᴍᴇ ☞* _' +
-          (_0x3274e0.duration || 'N/A') +
-          '_\n',
-        _0x3ecbc4 = {
-          image: { url: _0x3274e0.images[0] || images },
-          caption: _0x3105ec,
-          footer: config.FOOTER,
-          buttons: _0xc0974,
-          headerType: 4,
+ const msg = `*🌾 𝗧ɪᴛʟᴇ ➮* *_${sadas.title || 'N/A'}_*
+
+*📅 𝗥ᴇʟᴇꜱᴇᴅ ᴅᴀᴛᴇ ➮* _${sadas.date || 'N/A'}_
+*🌎 𝗖ᴏᴜɴᴛʀʏ ➮* _${sadas.country || 'N/A'}_
+*💃 𝗥ᴀᴛɪɴɢ ➮* _${sadas.rating || 'N/A'}_
+*⏰ 𝗥ᴜɴᴛɪᴍᴇ ➮* _${sadas.duration || 'N/A'}_
+*🕵️ 𝗦ᴜʙᴛɪᴛʟᴇ ʙʏ ➮* _${sadas.author || 'N/A'}_
+`
+const buttonMessage = {
+ 
+image: {url: sadas.images[0] || images},	
+  caption: msg,
+  footer: config.FOOTER,
+  buttons: rows,
+  headerType: 4
+}
+
+
+
+
+	
+
+
+
+
+const rowss = sadas.downloadLinks.map((v, i) => {
+    // Clean size and quality text by removing common tags
+    const cleanText = `${v.size} - ${v.quality}`
+      .replace(/WEBDL|WEB DL|BluRay HD|BluRay SD|BluRay FHD|Telegram BluRay SD|Telegram BluRay HD|Direct BluRay SD|Direct BluRay HD|Direct BluRay FHD|FHD|HD|SD|Telegram BluRay FHD/gi, "")
+      .trim() || "No info";
+
+    return {
+      title: cleanText,
+      id: prefix + `sindl ${v.link}±${sadas.images[1]}±${sadas.title}
+	
+	*\`[ ${v.quality} ]\`*` // Make sure your handler understands this format
+    };
+  });
+
+
+const listButtons = {
+    title: "🎬 Choose a download link :)",
+    sections: [
+      {
+        title: "Available Links",
+        rows: rowss
+      }
+    ]
+  };
+
+if (config.BUTTON === "true") {
+      await conn.sendMessage(from, {
+    image: { url: sadas.images[0] || images},
+    caption: msg,
+    footer: config.FOOTER,
+    buttons: [
+{
+            buttonId: prefix + 'daqt ' + q,
+            buttonText: { displayText: "Details Send" },
+            type: 1
+        },
+	   
+	 {
+            buttonId: prefix + 'ch ' + q,
+            buttonText: { displayText: "Images Send" },
+            type: 1
+        },   
+      {
+        buttonId: "download_list",
+        buttonText: { displayText: "🎥 Select Option" },
+        type: 4,
+        nativeFlowInfo: {
+          name: "single_select",
+          paramsJson: JSON.stringify(listButtons)
         }
-      return await _0x4f83ce.buttonMessage(_0xea5932, _0x3ecbc4, _0x37c510)
-    } catch (_0x2466ea) {
-      _0x30ed0f('\uD83D\uDEAB *Error Accurated !!*\n\n' + _0x2466ea)
-      console.log(_0x2466ea)
+      }
+	    
+    ],
+    headerType: 1,
+    viewOnce: true
+  }, { quoted: mek });
+    } else {
+      return await conn.buttonMessage(from, buttonMessage, mek)
     }
-  }
-)
+
+} catch (e) {
+   reply('🚫 *Error Accurated !!*\n\n' + e )
+console.log(e)
+}
+})
+
 let isUploading = false
 cmd(
   {
@@ -919,4 +930,5 @@ cmd(
     }
   }
 )
+
 
