@@ -378,7 +378,7 @@ cmd({
             // 🔹 Send document
             await conn.sendMessage(config.DINKA || from, { 
                 document: { url: mediaUrl },
-                caption: `🎬 ${dat}\n\n\`📹𝗗ɪɴᴋᴀ 𝗠ᴏᴠɪᴇꜱ 𝗟ᴋ📹\`\n\n> *•ɴᴀᴅᴇᴇɴ-ᴍᴅ•*`,
+                caption: `🎬 ${dat}\n\n\`🎬𝗗ɪɴᴋᴀ 𝗠ᴏᴠɪᴇꜱ 𝗟ᴋ🎬\`\n\n> *•ɴᴀᴅᴇᴇɴ-ᴍᴅ•*`,
                 mimetype: "video/mp4",
                 jpegThumbnail: await (await fetch(botimg)).buffer(),
                 fileName: `📽️DINKA📽️${dat}.mp4`
