@@ -223,7 +223,7 @@ const sadas = sadass.result;
 if (sadas.length < 1) return await conn.sendMessage(from, { text: "🚩 *I couldn't find anything :(*" }, { quoted: mek } )
 var rows = [];  	
 rows.push(
-    { buttonId: prefix + 'daqt ' + q, buttonText: { displayText: 'Send Details 💡' }, type: 1 },
+    { buttonId: prefix + 'daqt2 ' + q, buttonText: { displayText: 'Send Details 💡' }, type: 1 },
     { buttonId: prefix + 'ch ' + q, buttonText: { displayText: 'Send Images 💡\n' }, type: 1 }
 );
 sadas.downloadLinks.map((v) => {
@@ -270,7 +270,7 @@ const rowss = sadas.downloadLinks.map((v, i) => {
 
     return {
       title: cleanText,
-      id: prefix + `sindl ${v.link}±${sadas.images[1]}±${sadas.title}
+      id: prefix + `sindl2 ${v.link}±${sadas.images[1]}±${sadas.title}
 	
 	*\`[ ${v.quality} ]\`*` // Make sure your handler understands this format
     };
@@ -287,14 +287,14 @@ const listButtons = {
     ]
   };
 
-if (config.BUTTON === "true") {
+if (config.BUTTON2 === "true") {
       await conn.sendMessage(from, {
     image: { url: sadas.images[0] || images},
     caption: msg,
     footer: config.FOOTER,
     buttons: [
 {
-            buttonId: prefix + 'daqt ' + q,
+            buttonId: prefix + 'daqt2 ' + q,
             buttonText: { displayText: "Details Send" },
             type: 1
         },
@@ -930,6 +930,7 @@ cmd(
     }
   }
 )
+
 
 
 
