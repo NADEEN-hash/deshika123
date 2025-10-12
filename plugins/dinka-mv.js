@@ -38,7 +38,7 @@ try {
     if (!q) return await reply('*Please give me a movie name 🎥*')
 
     // Fetch data from SUB.LK API
-    let url = await fetchJson(`https://nadeenweb.netlify.app/api/Search/search?text=${encodeURIComponent(q)}`)
+    let url = await fetchJson(`https://nadeennn.netlify.app/api/Search/search?text=${encodeURIComponent(q)}`)
 
     if (!url || url.length === 0) {
         await conn.sendMessage(from, { react: { text: '❌', key: mek.key } });
@@ -134,7 +134,7 @@ try {
         return await reply('*❗ Invalid link. Please search using .dndl and select a movie.*');
     }
 
-    let data = await fetchJson(`https://lovely-shortbread-bee19c.netlify.app//api/details/functions?url=${q}`);
+    let data = await fetchJson(`https://detailsnadeen.netlify.app/api/details/functions?url=${q}`);
     const res = data;
 
     if (!res) return await reply('*🚩 No details found !*');
