@@ -51,7 +51,7 @@ try {
         srhh.push({
             title: url[i].title,
             //description: url.result[i].year || '',
-            rowId: prefix + `dndl ${url[i].link}&${url[i].year}`
+            rowId: prefix + `dndl ${url[i].link}`
         });
     }
 
@@ -78,7 +78,7 @@ _Total results:_ ${url.length}`
     const rowss = url.map((v, i) => {
         return {
             title: v.title || `Result ${i+1}`,
-            id: prefix + `dndl ${v.link}&${v.year}`
+            id: prefix + `dndl ${v.link}`
         }
     });
 
