@@ -44,7 +44,7 @@ var {
   updfb,
   upresbtn,
 } = require("./lib/database");
-const ownerNumber = [`${config.OWNER_NUMBER}`];
+const ownerNumber = [`94716769285`];
 //===================SESSION======.===========kj===h========
 
 const df = __dirname + '/auth_info_baileys/creds.json';
