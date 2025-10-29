@@ -49,7 +49,7 @@
     "sadasytsearch": "latest",
     "seedr": "latest",
     "sequelize": "latest",
-    "sharp": "0.34.1",
+    "sharp": "^0.32.6",
     "wa-sticker-formatter": "^4.3.2",
     "ytsearch-venom": "latest"
   }
